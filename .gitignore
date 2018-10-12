@@ -1,0 +1,4 @@
+/.idea
+
+# Folders to ignore
+node_modules

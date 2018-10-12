@@ -17,7 +17,6 @@ public class Customer {
     private String firstName;                       //they’ll be mapped to columns that share the same name as the properties themselves.
     private String lastName;
 
-    //todo: Frage: wozu ist dieser Konstruktor
     protected Customer() {}
 
     public Customer(String firstName, String lastName) {
