@@ -55,17 +55,6 @@
 
                     </div>
 
-                    <div class="button-wrapper mt-4">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="input-group input-group-lg">
-                                    <button data-action="/de/account/login" data-state="account" class="btn btn-outline-secondary btn-lg btn-block edit-btn">
-                                        LOGIN
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
