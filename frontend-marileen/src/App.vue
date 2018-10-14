@@ -1,14 +1,34 @@
+
 <template>
-    <div class="full-width center-content">
-        <hello-component name="mari" />
+    <div class="app">
+        <hello v-if="userIsLoggedIn"></hello>
+        <registration v-else></registration>
     </div>
 </template>
 
 <script>
-    import HelloComponent from './components/HelloComponent.vue'
+
+    import Registration from './components/Register.vue';
+    import Hello from './components/HelloComponent.vue';
+
     export default {
-        components: {
-            HelloComponent
+        data : () => {
+            return {
+                userIsLoggedIn : false
+            }
+        },
+        methods : {
+            askUserServiceIfUserIsLoggedIn() {
+                this.userIsLoogedIn = false;
+            }
+        },
+        components : {
+            Registration,
+            Hello
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    //
+</style>

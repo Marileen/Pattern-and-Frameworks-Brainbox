@@ -2,7 +2,7 @@
 <template>
     <div>
         <h1>Hello {{ name }} - {{ age }}!</h1>
-        <button v-on:click="incAge()"></button>
+        <button v-on:click="incAge()">+1</button>
     </div>
 </template>
 
