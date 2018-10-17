@@ -2,6 +2,7 @@ package lernapp.model;
 
 import javax.persistence.*;
 
+// unser User
 @Entity(name = "user")
 public class User {
 
