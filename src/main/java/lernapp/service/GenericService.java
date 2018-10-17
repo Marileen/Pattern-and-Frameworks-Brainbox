@@ -6,6 +6,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+// enables core functions for the App
 public class GenericService<T> {
 
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
