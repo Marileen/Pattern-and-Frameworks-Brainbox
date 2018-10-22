@@ -8,11 +8,12 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class UserService<User> {
+public class UserService <User> {
 
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
     private final Class<User> entityType;
+
 
     public UserService(Class<User> entityType) {
         this.entityType = entityType;

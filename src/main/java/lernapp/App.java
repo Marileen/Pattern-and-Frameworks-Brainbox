@@ -9,13 +9,14 @@ public class App {
 
     public static void main(String[] args) {
 
-        // Inject services
-        UserService userService = new UserService(User.class);
-        QuestionService questionService = new QuestionService(Question.class);
+        /* Inject services
+        UserService userService = new UserService(User);
+        QuestionService questionService = new QuestionService(Question);
+        */
 
         // Create users
         User marileen = new User("Marileen","Stamer","marileen.stamer@stud.fh-luebeck.de", "123");
-        marileen = userService.save(marileen);
+        marileen = new User.save(marileen);
 
         // Create Questions
         Question ersteFrage = new Question(

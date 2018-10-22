@@ -8,11 +8,11 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class QuestionService{
+public class QuestionService<Question>{
 
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
-    // private final Class<Question> entityType;
+    private final Class<Question> entityType;
 
     public QuestionService(Class<Question> entityType) {
         this.entityType = entityType;
@@ -20,7 +20,7 @@ public class QuestionService{
 
     // Query an entity by id
     public Question queryById(Long id) {
-        return EMF.createEntityManager().find(<Question>, id);
+        return EMF.createEntityManager().find(entityType, id);
     }
 
     // Query all entities
