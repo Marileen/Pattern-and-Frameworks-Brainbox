@@ -34,7 +34,7 @@ public class Question {
     public Question(String question, String answer,int topicNr, int questionID) {
         this.question = question;
         this.answer = answer;
-        this.topicNr = topicNr;
+        this.topicID = topicID;
         this.questionID = questionID;
     }
 

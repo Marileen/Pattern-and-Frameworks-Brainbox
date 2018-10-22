@@ -4,15 +4,14 @@ package lernapp;
         import lernapp.model.User;
         import lernapp.service.QuestionService;
         import lernapp.service.UserService;
-        import lernapp.service.GenericService;
 
 public class App {
 
     public static void main(String[] args) {
 
         // Inject services
-        UserService userService = new UserService();
-        QuestionService questionService = new QuestionService();
+        UserService userService = new UserService(User.class);
+        QuestionService questionService = new QuestionService(Question.class);
 
         // Create users
         User marileen = new User("Marileen","Stamer","marileen.stamer@stud.fh-luebeck.de", "123");
