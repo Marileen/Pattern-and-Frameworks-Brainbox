@@ -26,6 +26,14 @@ public class App {
                 );
         ersteFrage = questionService.save(ersteFrage);
 
+        Question zweiteFrage = new Question(
+                "Was ist der Unterschied zwischen persist und merge?",
+                "Merge = Referenz<br> Persist = Objekt selbst wird gespeichert - wie ein create?",
+                10,
+                002
+        );
+        zweiteFrage = questionService.save(zweiteFrage);
+
 
         // Close database connection
         // GenericService.EMF.close();

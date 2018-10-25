@@ -15,6 +15,7 @@ public class QuestionService {
 
     // Query an entity by id
     public Question queryById(Long id) {
+
         return EMF.createEntityManager().find(Question.class, id);
     }
 
@@ -57,13 +58,13 @@ public class QuestionService {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
 
-        // kopie von object wird gespeichert
+        // kopie von object wird gespeichert - insert/update
         //Question result = em.merge(entity);
 
-        // object selbst wird gespeichert
+        // object selbst wird gespeichert - create?
         em.persist(entity);
 
-        //entity.answer = "blubb"; //könnte man machen, wird dann mit persistiert
+        entity.answer = "blubb"; //könnte man machen, wird dann mit persistiert
 
         em.getTransaction().commit();
         em.close();
