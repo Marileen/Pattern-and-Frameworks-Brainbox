@@ -14,7 +14,7 @@ public class Question {
     /*@ManyToOne // various questions belong to one topic
     @JoinColumn(name = "topicNr") Topic topic;
     */
-    public int topicNr;
+    public int topicID;
 
     @Id
     @Column(nullable = false)

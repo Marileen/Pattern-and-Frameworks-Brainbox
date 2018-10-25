@@ -8,27 +8,19 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class UserService <User> {
+public class UserService {
 
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
-    private final Class<User> entityType;
-
-
-    public UserService(Class<User> entityType) {
-        this.entityType = entityType;
-    }
-
-
     // Query an entity by id
     public User queryById(Long id) {
-        return EMF.createEntityManager().find(entityType, id);
+        return EMF.createEntityManager().find(User.class, id);
     }
 
     // Query all entities
     public List<User> queryAll() {
-        String queryString = "SELECT t FROM " + entityType.getName() + " t";
-        TypedQuery<User> query = EMF.createEntityManager().createQuery(queryString, entityType);
+        String queryString = "SELECT t FROM " + User.class.getName() + " t";
+        TypedQuery<User> query = EMF.createEntityManager().createQuery(queryString, User.class);
         return query.getResultList();
     }
 
@@ -46,7 +38,7 @@ public class UserService <User> {
     public void deleteById(Long id) {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
-        User result = em.find(entityType, id);
+        User result = em.find(User.class, id);
         if (result != null) em.remove(result);
         em.getTransaction().commit();
         em.close();

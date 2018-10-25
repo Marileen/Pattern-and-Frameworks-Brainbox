@@ -9,14 +9,13 @@ public class App {
 
     public static void main(String[] args) {
 
-        /* Inject services
-        UserService userService = new UserService(User);
-        QuestionService questionService = new QuestionService(Question);
-        */
+        /* Inject services */
+        UserService userService = new UserService();
+        QuestionService questionService = new QuestionService();
 
         // Create users
         User marileen = new User("Marileen","Stamer","marileen.stamer@stud.fh-luebeck.de", "123");
-        marileen = new User.save(marileen);
+        userService.save(marileen);
 
         // Create Questions
         Question ersteFrage = new Question(
@@ -29,6 +28,6 @@ public class App {
 
 
         // Close database connection
-        GenericService.EMF.close();
+        // GenericService.EMF.close();
     }
 }
