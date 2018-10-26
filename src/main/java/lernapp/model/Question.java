@@ -1,6 +1,8 @@
 package lernapp.model;
 
+import lernapp.model.Topic;
 import javax.persistence.*;
+
 
 @Entity(name = "question")
 public class Question {
@@ -11,10 +13,11 @@ public class Question {
     @Column(nullable = false)
     public String answer;
 
-    /*@ManyToOne // various questions belong to one topic
-    @JoinColumn(name = "topicNr") Topic topic;
-    */
-    public int topicID;
+    // various questions belong to one topic
+    @ManyToOne @JoinColumn(name = "topicID")
+    Topic topic;
+
+    //public int topicID;
 
     @Id
     @Column(nullable = false)
@@ -24,14 +27,14 @@ public class Question {
        1) n:m LearningState-Question
        2) 1:n Topic-Question -> in die Klasse Topic muss die steuernde Einheit:
           @OneToMany(mappedBy = "") und das Set an Questions, die zu diesem Topic gehören
-          für die automatische Vergabe von topicNr in Topic dann @GeneratedValue?
+          für die automatische Vergabe von topicID in Topic dann @GeneratedValue?
        3) QuestionService
     */
 
     public Question () {
     }
 
-    public Question(String question, String answer,int topicNr, int questionID) {
+    public Question(String question, String answer,int topicID, int questionID) {
         this.question = question;
         this.answer = answer;
         this.topicID = topicID;
