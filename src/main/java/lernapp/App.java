@@ -49,7 +49,6 @@ public class App {
         );
         ersterKurs = questionService.save(ersterKurs);
 
-
         // create LearningState
         LearningState ersterLS = new LearningState(
                 8,
