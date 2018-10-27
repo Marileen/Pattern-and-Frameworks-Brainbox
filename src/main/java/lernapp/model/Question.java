@@ -5,7 +5,12 @@ import javax.persistence.*;
 
 
 @Entity(name = "question")
+// @Table(name = "questions")
 public class Question {
+
+    @Id
+    @Column(nullable = false)
+    public int questionID;
 
     @Column(nullable = false)
     public String question;
@@ -13,15 +18,17 @@ public class Question {
     @Column(nullable = false)
     public String answer;
 
-    // various questions belong to one topic
-    @ManyToOne @JoinColumn(name = "topicID")
-    Topic topic;
+    @Column(nullable = false) // evtl. brauchen wir hier: insertable = false, updatable = false
+    public int topicID;
 
-    //public int topicID;
+    //various questions belong to one topic
+    // Fremdschlüsselspalte = Bezug zu Topic
+    /*
+    @ManyToOne
+    @JoinColumn(name = "topicID")
+    public Topic topic;
+    */
 
-    @Id
-    @Column(nullable = false)
-    public int questionID;
 
     /* Relationships
        1) n:m LearningState-Question
@@ -34,11 +41,11 @@ public class Question {
     public Question () {
     }
 
-    public Question(String question, String answer,int topicID, int questionID) {
+    public Question(int questionID, String question, String answer, int topicID) {
+        this.questionID = questionID;
         this.question = question;
         this.answer = answer;
         this.topicID = topicID;
-        this.questionID = questionID;
     }
 
     // getter und setter einfügen

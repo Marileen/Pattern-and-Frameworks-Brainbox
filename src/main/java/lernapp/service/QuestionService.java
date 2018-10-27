@@ -1,7 +1,6 @@
 package lernapp.service;
 
-import lernapp.model.Question;
-import lernapp.model.User;
+import lernapp.model.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -71,6 +70,74 @@ public class QuestionService {
         return entity;
     }
 
+    public Topic save (Topic entity) {
+        EntityManager em = EMF.createEntityManager();
+        em.getTransaction().begin();
+
+        // kopie von object wird gespeichert - insert/update
+        Topic result = em.merge(entity);
+
+        // object selbst wird gespeichert - create?
+        //em.persist(entity);
+
+        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
+
+        em.getTransaction().commit();
+        em.close();
+        return entity;
+    }
+
+    public Course save(Course entity) {
+        EntityManager em = EMF.createEntityManager();
+        em.getTransaction().begin();
+
+        // kopie von object wird gespeichert - insert/update
+        Course result = em.merge(entity);
+
+        // object selbst wird gespeichert - create?
+        //em.persist(entity);
+
+        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
+
+        em.getTransaction().commit();
+        em.close();
+        return entity;
+    }
+
+    public LearningState save(LearningState entity) {
+        EntityManager em = EMF.createEntityManager();
+        em.getTransaction().begin();
+
+        // kopie von object wird gespeichert - insert/update
+        LearningState result = em.merge(entity);
+
+        // object selbst wird gespeichert - create?
+        //em.persist(entity);
+
+        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
+
+        em.getTransaction().commit();
+        em.close();
+        return entity;
+    }
+
+    public User_Question_LS save(User_Question_LS entity) {
+        EntityManager em = EMF.createEntityManager();
+        em.getTransaction().begin();
+
+        // kopie von object wird gespeichert - insert/update
+        User_Question_LS result = em.merge(entity);
+
+        // object selbst wird gespeichert - create?
+        //em.persist(entity);
+
+        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
+
+        em.getTransaction().commit();
+        em.close();
+        return entity;
+    }
+
     // Delete entity by id
     public void deleteById(Long id) {
         EntityManager em = EMF.createEntityManager();
@@ -80,5 +147,7 @@ public class QuestionService {
         em.getTransaction().commit();
         em.close();
     }
+
+
 }
 

@@ -5,7 +5,13 @@ import lernapp.model.*;
 import javax.persistence.*;
 import java.util.Set;
 
+@Entity(name = "topic")
 public class Topic {
+
+    // topicIDs dreeistellig machen? vs. CourseIDs zweistellig?
+    @Id
+    @Column(nullable = false)
+    public int topicID;
 
     @Column(nullable = false)
     public String topicName;
@@ -13,17 +19,23 @@ public class Topic {
     @Column
     public String topicDescription;
 
+   // Column für den Fremdschlüssel anlegen, oder nicht?
     @Column(nullable=false)
     public int courseID;
 
-    @Id
-    @Column(nullable = false)
-    public int topicID;
+    /*
+    @OneToMany(mappedBy = "topicID")
+    public Set<Question> question;
+    */
 
-    @OneToMany(mappedBy = "topic")
-    Set<Question> questionSet;
+    public Topic () {
+    }
 
-    @ManyToOne @JoinColumn(name = "courseID")
-    Course course;
+    public Topic(int topicID, String topicName, String topicDescription, int courseID) {
+        this.topicID = topicID;
+        this.topicName = topicName;
+        this.topicDescription = topicDescription;
+        this.courseID = courseID;
 
+    }
 }

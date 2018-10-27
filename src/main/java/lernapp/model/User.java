@@ -6,6 +6,10 @@ import javax.persistence.*;
 @Entity(name = "user")
 public class User {
 
+    @Id
+    @Column(nullable = false)
+    public String email;
+
     @Column(nullable = false)
     public String firstname;
 
@@ -14,9 +18,6 @@ public class User {
     @Column(nullable = false)
     public String password;
 
-    @Id
-    @Column(nullable = false)
-    public String email;
 
 //    @ManyToMany(mappedBy = "user")
 //    public List<Learningstate> orders;
@@ -25,10 +26,10 @@ public class User {
     public User() {
     }
 
-    public User(String firstname, String lastname, String email,  String password) {
+    public User(String email, String firstname, String lastname,  String password) {
+        this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.email = email;
         this.password = password;
     }
 
