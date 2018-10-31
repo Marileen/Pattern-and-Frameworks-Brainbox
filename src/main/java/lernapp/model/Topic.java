@@ -10,7 +10,7 @@ public class Topic {
 
     // topicIDs dreeistellig machen? vs. CourseIDs zweistellig?
     @Id
-    @Column(nullable = false)
+    @Column(name = "topicID", nullable = false)
     public int topicID;
 
     @Column(nullable = false)
@@ -23,12 +23,12 @@ public class Topic {
     @Column(nullable=false)
     public int courseID;
 
-    /*
-    @OneToMany(mappedBy = "topicID")
+
+    @OneToMany(mappedBy = "topic")
     public Set<Question> question;
-    */
 
     public Topic () {
+
     }
 
     public Topic(int topicID, String topicName, String topicDescription, int courseID) {

@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 @Entity(name = "question")
-// @Table(name = "questions")
+//@Table(name = "questions")
 public class Question {
 
     @Id
@@ -18,17 +18,14 @@ public class Question {
     @Column(nullable = false)
     public String answer;
 
-    @Column(nullable = false) // evtl. brauchen wir hier: insertable = false, updatable = false
-    public int topicID;
+    //@Column(nullable = false) // evtl. brauchen wir hier: insertable = false, updatable = false
+    //public int topicID;
 
     //various questions belong to one topic
-    // Fremdschlüsselspalte = Bezug zu Topic
-    /*
     @ManyToOne
-    @JoinColumn(name = "topicID")
-    public Topic topic;
-    */
-
+    // Fremdschlüsselspalte = Bezug zu Topic
+    @JoinColumn(name="fkTopic")
+    private Topic topic;
 
     /* Relationships
        1) n:m LearningState-Question
@@ -38,17 +35,45 @@ public class Question {
        3) QuestionService
     */
 
-    public Question () {
+    public Question() {
     }
 
-    public Question(int questionID, String question, String answer, int topicID) {
+    public Question(int questionID, String question, String answer,  Topic topic) {
         this.questionID = questionID;
         this.question = question;
         this.answer = answer;
-        this.topicID = topicID;
+        this.topic = topic;
     }
 
-    // getter und setter einfügen
+    public int getQuestionID() {
+        return questionID;
+    }
 
+    public void setQuestionID(int questionID) {
+        this.questionID = questionID;
+    }
 
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
 }

@@ -16,56 +16,57 @@ public class App {
         User marileen = new User("marileen.stamer@stud.fh-luebeck.de","Marileen","Stamer", "123");
         userService.save(marileen);
 
-        // Create Questions
-        Question ersteFrage = new Question(
-                001,
-                "Was brauchen wir alles für das Projekt?",
-                "Mindestens schon mal JPA, Datenbank, Java-Code, zwei Frontends",
-                10
-                );
-        ersteFrage = questionService.save(ersteFrage);
 
-        Question zweiteFrage = new Question(
-                002,
-                "Was ist der Unterschied zwischen persist und merge?",
-                "Merge = Referenz<br> Persist = Objekt selbst wird gespeichert - wie ein create?",
-                10
+        // create Courses
+        Course ersterKurs = new Course(
+                1,
+                "DB"
         );
-        zweiteFrage = questionService.save(zweiteFrage);
+        ersterKurs = questionService.save(ersterKurs);
 
         // create Topics
         Topic erstesThema = new Topic(
                 10,
                 "Datenbanken",
                 "Alle Fragen dieser Topic drehen sich um Datenbanken",
-                8
+                1
         );
         erstesThema = questionService.save(erstesThema);
 
-        // create Courses
-        Course ersterKurs = new Course(
-                8,
-                "DB"
+        // Create Questions
+        Question ersteFrage = new Question(
+                1,
+                "Was brauchen wir alles für das Projekt?",
+                "Mindestens schon mal JPA, Datenbank, Java-Code, zwei Frontends",
+                erstesThema
         );
-        ersterKurs = questionService.save(ersterKurs);
+        ersteFrage = questionService.save(ersteFrage);
+
+        Question zweiteFrage = new Question(
+                2,
+                "Was ist der Unterschied zwischen persist und merge?",
+                "Merge = Referenz<br> Persist = Objekt selbst wird gespeichert - wie ein create?",
+                erstesThema
+        );
+        zweiteFrage = questionService.save(zweiteFrage);
 
         // create LearningState
-        LearningState ersterLS = new LearningState(
-                8,
-                "DB",
-                "URL des Bilds",
-                "Beschreibung des LearningStates"
-        );
-        ersterLS = questionService.save(ersterLS);
+//        LearningState ersterLS = new LearningState(
+//                8,
+//                "DB",
+//                "URL des Bilds",
+//                "Beschreibung des LearningStates"
+//        );
+//        ersterLS = questionService.save(ersterLS);
 
 
         // create User_Question_LS
-        User_Question_LS ersterUQLS = new User_Question_LS(
-                8,
-                9,
-                3
-        );
-        ersterUQLS = questionService.save(ersterUQLS);
+//        User_Question_LS ersterUQLS = new User_Question_LS(
+//                8,
+//                9,
+//                3
+//        );
+//        ersterUQLS = questionService.save(ersterUQLS);
 
 
         // Close database connection

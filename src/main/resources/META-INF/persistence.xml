@@ -5,6 +5,10 @@
 
         <class>lernapp.model.User</class>
         <class>lernapp.model.Question</class>
+        <class>lernapp.model.LearningState</class>
+        <class>lernapp.model.Topic</class>
+        <class>lernapp.model.Course</class>
+        <class>lernapp.model.User_Question_LS</class>
         <!--<exclude-unlisted-classes>false</exclude-unlisted-classes>-->
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver" />
