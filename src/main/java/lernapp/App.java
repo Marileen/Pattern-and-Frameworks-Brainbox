@@ -19,7 +19,6 @@ public class App {
 
         // create Courses
         Course ersterKurs = new Course(
-                1,
                 "DB"
         );
         ersterKurs = questionService.save(ersterKurs);
@@ -29,7 +28,7 @@ public class App {
                 10,
                 "Datenbanken",
                 "Alle Fragen dieser Topic drehen sich um Datenbanken",
-                1
+                ersterKurs
         );
         erstesThema = questionService.save(erstesThema);
 

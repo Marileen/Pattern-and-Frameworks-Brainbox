@@ -27,15 +27,20 @@ public class Topic {
     @OneToMany(mappedBy = "topic")
     public Set<Question> question;
 
+    //various topics belong to one course
+    @ManyToOne
+    // Fremdschlüsselspalte
+    @JoinColumn(name="fkCourse")
+    private Course course;
+
     public Topic () {
 
     }
 
-    public Topic(int topicID, String topicName, String topicDescription, int courseID) {
+    public Topic(int topicID, String topicName, String topicDescription, Course course) {
         this.topicID = topicID;
         this.topicName = topicName;
         this.topicDescription = topicDescription;
-        this.courseID = courseID;
-
+        this.course = course;
     }
 }

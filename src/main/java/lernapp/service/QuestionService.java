@@ -75,10 +75,10 @@ public class QuestionService {
         em.getTransaction().begin();
 
         // kopie von object wird gespeichert - insert/update
-        Topic result = em.merge(entity);
+        //Topic result = em.merge(entity);
 
         // object selbst wird gespeichert - create?
-        //em.persist(entity);
+        em.persist(entity);
 
         //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
 
@@ -92,10 +92,10 @@ public class QuestionService {
         em.getTransaction().begin();
 
         // kopie von object wird gespeichert - insert/update
-        Course result = em.merge(entity);
+        //Course result = em.merge(entity);
 
         // object selbst wird gespeichert - create?
-        //em.persist(entity);
+        em.persist(entity);
 
         //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
 

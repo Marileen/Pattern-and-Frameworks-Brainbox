@@ -8,23 +8,20 @@ import java.util.Set;
 @Entity(name = "course")
 public class Course {
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column
     public int courseID;
 
     @Column
     public String courseName;
 
-    /*
-    @OneToMany(mappedBy = "topic")
-    Set<Topic> topicSet;
-    */
+    @OneToMany(mappedBy = "course")
+    public Set<Topic> topicSet;
 
     public Course(){
     }
 
-    public Course(int courseID, String courseName){
-        this.courseID = courseID;
+    public Course(String courseName){
         this.courseName = courseName;
     }
 
