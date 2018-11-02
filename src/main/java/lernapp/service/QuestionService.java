@@ -25,24 +25,23 @@ public class QuestionService {
     *
     */
 
-    public Question testMethode(Question qust) {
+    // Create or update an entity
+    public <T> T save (T entity) {
 
-        // ...
-        return qust;
+        EntityManager em = EMF.createEntityManager();
+        em.getTransaction().begin();
+
+        //Kopie von object wird gespeichert (insert/update)
+        //Question result = em.merge(entity);
+
+        //Das Objekt selbst wird gespeichert (create)
+        em.persist(entity);
+
+        em.getTransaction().commit();
+        em.close();
+
+        return entity;
     }
-
-    public User testMethode(User u) {
-
-        // ...
-        return u;
-    }
-
-    public <T> T fancyMethode(T blubb) {
-
-        // ...
-        return blubb;
-    }
-
 
 
     // Query all entities
@@ -50,92 +49,6 @@ public class QuestionService {
         String queryString = "SELECT t FROM " + Question.class.getName() + " t";
         TypedQuery<Question> query = EMF.createEntityManager().createQuery(queryString, Question.class);
         return query.getResultList();
-    }
-
-    // Create or update an entity
-    public Question save(Question entity) {
-        EntityManager em = EMF.createEntityManager();
-        em.getTransaction().begin();
-
-        // kopie von object wird gespeichert - insert/update
-        //Question result = em.merge(entity);
-
-        // object selbst wird gespeichert - create?
-        em.persist(entity);
-
-        entity.answer = "blubb"; //könnte man machen, wird dann mit persistiert
-
-        em.getTransaction().commit();
-        em.close();
-        return entity;
-    }
-
-    public Topic save (Topic entity) {
-        EntityManager em = EMF.createEntityManager();
-        em.getTransaction().begin();
-
-        // kopie von object wird gespeichert - insert/update
-        //Topic result = em.merge(entity);
-
-        // object selbst wird gespeichert - create?
-        em.persist(entity);
-
-        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
-
-        em.getTransaction().commit();
-        em.close();
-        return entity;
-    }
-
-    public Course save(Course entity) {
-        EntityManager em = EMF.createEntityManager();
-        em.getTransaction().begin();
-
-        // kopie von object wird gespeichert - insert/update
-        //Course result = em.merge(entity);
-
-        // object selbst wird gespeichert - create?
-        em.persist(entity);
-
-        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
-
-        em.getTransaction().commit();
-        em.close();
-        return entity;
-    }
-
-    public LearningState save(LearningState entity) {
-        EntityManager em = EMF.createEntityManager();
-        em.getTransaction().begin();
-
-        // kopie von object wird gespeichert - insert/update
-        LearningState result = em.merge(entity);
-
-        // object selbst wird gespeichert - create?
-        //em.persist(entity);
-
-        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
-
-        em.getTransaction().commit();
-        em.close();
-        return entity;
-    }
-
-    public User_Question_LS save(User_Question_LS entity) {
-        EntityManager em = EMF.createEntityManager();
-        em.getTransaction().begin();
-
-        // kopie von object wird gespeichert - insert/update
-        User_Question_LS result = em.merge(entity);
-
-        // object selbst wird gespeichert - create?
-        //em.persist(entity);
-
-        //entity.topicName = "blubb"; //könnte man machen, wird dann mit persistiert
-
-        em.getTransaction().commit();
-        em.close();
-        return entity;
     }
 
     // Delete entity by id
