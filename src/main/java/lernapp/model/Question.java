@@ -10,10 +10,10 @@ public class Question {
 
     @Id
     @Column(nullable = false)
-    public int questionID;
+    private int questionID;
 
     @Column(nullable = false)
-    public String question;
+    private String question;
 
     @Column(nullable = false)
     public String answer;
@@ -24,7 +24,7 @@ public class Question {
     //various questions belong to one topic
     @ManyToOne
     // Fremdschlüsselspalte = Bezug zu Topic
-    @JoinColumn(name="fkTopic")
+    @JoinColumn(name = "fkTopic", nullable = false)
     private Topic topic;
 
     /* Relationships

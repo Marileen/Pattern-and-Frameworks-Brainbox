@@ -10,13 +10,13 @@ public class Course {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column
-    public int courseID;
+    private int courseID;
 
     @Column
-    public String courseName;
+    private String courseName;
 
     @OneToMany(mappedBy = "course")
-    public Set<Topic> topicSet;
+    private Set<Topic> topicSet;
 
     public Course(){
     }
@@ -25,18 +25,16 @@ public class Course {
         this.courseName = courseName;
     }
 
-    // SETTER
+    // Getter and Setter
     public void setCourseID(int courseID) {
         this.courseID = courseID;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    //GETTER
     public int getCourseID() {
         return courseID;
+    }
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getCourseName() {

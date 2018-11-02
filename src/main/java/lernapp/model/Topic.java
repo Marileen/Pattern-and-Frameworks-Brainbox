@@ -11,29 +11,24 @@ public class Topic {
     // topicIDs dreeistellig machen? vs. CourseIDs zweistellig?
     @Id
     @Column(name = "topicID", nullable = false)
-    public int topicID;
+    private int topicID;
 
     @Column(nullable = false)
-    public String topicName;
+    private String topicName;
 
     @Column
-    public String topicDescription;
-
-   // Column für den Fremdschlüssel anlegen, oder nicht?
-    @Column(nullable=false)
-    public int courseID;
-
+    private String topicDescription;
 
     @OneToMany(mappedBy = "topic")
-    public Set<Question> question;
+    private Set<Question> question;
 
     //various topics belong to one course
     @ManyToOne
     // Fremdschlüsselspalte
-    @JoinColumn(name="fkCourse")
+    @JoinColumn(name = "fkCourse", nullable = false)
     private Course course;
 
-    public Topic () {
+    public Topic() {
 
     }
 
@@ -41,6 +36,48 @@ public class Topic {
         this.topicID = topicID;
         this.topicName = topicName;
         this.topicDescription = topicDescription;
+        this.course = course;
+    }
+
+    // Getter und Setter
+
+    public int getTopicID() {
+        return topicID;
+    }
+
+    public void setTopicID(int topicID) {
+        this.topicID = topicID;
+    }
+
+    public String getTopicName() {
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
+    }
+
+    public String getTopicDescription() {
+        return topicDescription;
+    }
+
+    public void setTopicDescription(String topicDescription) {
+        this.topicDescription = topicDescription;
+    }
+
+    public Set<Question> getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Set<Question> question) {
+        this.question = question;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
         this.course = course;
     }
 }
