@@ -29,15 +29,14 @@ public class Course {
     public void setCourseID(int courseID) {
         this.courseID = courseID;
     }
-
     public int getCourseID() {
         return courseID;
     }
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-
     public String getCourseName() {
         return courseName;
     }
+
 }

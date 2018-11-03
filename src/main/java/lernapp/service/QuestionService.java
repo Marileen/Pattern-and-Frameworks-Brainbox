@@ -8,24 +8,19 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class QuestionService {
+public class QuestionService<T> {
 
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
-    // Query an entity by id
-    public Question queryById(Long id) {
 
-        return EMF.createEntityManager().find(Question.class, id);
-    }
-
-    /*
-    *
-    * Test um Generics zu verstehen
-    *
-    *
-    */
-
-    // Create or update an entity
+    /**
+     * Generic Method for saving all types of Entities
+     * The Entity will be persisted to the database (not merged)
+     *
+     * @param  entity  the Entity to be saved
+     * @return entity
+     *
+     */
     public <T> T save (T entity) {
 
         EntityManager em = EMF.createEntityManager();
@@ -44,11 +39,21 @@ public class QuestionService {
     }
 
 
-    // Query all entities
-    public List<Question> queryAll() {
-        String queryString = "SELECT t FROM " + Question.class.getName() + " t";
-        TypedQuery<Question> query = EMF.createEntityManager().createQuery(queryString, Question.class);
+    /**
+     * Generic Method to query all entities
+     *
+     * @return List<T>
+     *
+     */
+    public List<T> queryAll (Class<T> entityType) {
+        String queryString = "SELECT t FROM " + entityType.getName() + " t";
+        TypedQuery<T> query = EMF.createEntityManager().createQuery(queryString, entityType);
         return query.getResultList();
+    }
+
+    // Query an entity by id
+    public Question queryById(Long id) {
+        return EMF.createEntityManager().find(Question.class, id);
     }
 
     // Delete entity by id

@@ -3,10 +3,19 @@ package lernapp;
 import lernapp.model.*;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
+
+import java.net.URI;
 
 public class App {
 
     public static void main(String[] args) {
+
+        // HTTP Server starten
+        ResourceConfig rc = new ResourceConfig().packages("lernapp");
+        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8050"), rc, true);
 
         /* Inject services */
         UserService userService = new UserService();
@@ -18,10 +27,10 @@ public class App {
 
 
         // create Courses
-        Course ersterKurs = new Course(
+        lernapp.model.Course ersterKurs = new lernapp.model.Course(
                 "DB"
         );
-        ersterKurs = questionService.save(ersterKurs);
+        questionService.save(ersterKurs);
 
         // create Topics
         Topic erstesThema = new Topic(
@@ -30,7 +39,7 @@ public class App {
                 "Alle Fragen dieser Topic drehen sich um Datenbanken",
                 ersterKurs
         );
-        erstesThema = questionService.save(erstesThema);
+        questionService.save(erstesThema);
 
         // Create Questions
         Question ersteFrage = new Question(
@@ -39,7 +48,7 @@ public class App {
                 "Mindestens schon mal JPA, Datenbank, Java-Code, zwei Frontends",
                 erstesThema
         );
-        ersteFrage = questionService.save(ersteFrage);
+        questionService.save(ersteFrage);
 
         Question zweiteFrage = new Question(
                 2,
@@ -47,7 +56,7 @@ public class App {
                 "Merge = Referenz<br> Persist = Objekt selbst wird gespeichert - wie ein create?",
                 erstesThema
         );
-        zweiteFrage = questionService.save(zweiteFrage);
+        questionService.save(zweiteFrage);
 
         // create LearningState
 //        LearningState ersterLS = new LearningState(
