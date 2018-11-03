@@ -13,7 +13,7 @@ import java.util.*;
 // ist dann unter der url im Browser aufzurufen
 
 @Path("/courses")
-public class courses {
+public class CoursesResource {
 
     QuestionService questionService = new QuestionService();
 
