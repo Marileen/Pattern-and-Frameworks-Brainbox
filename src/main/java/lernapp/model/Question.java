@@ -8,14 +8,19 @@ import javax.persistence.*;
 //@Table(name = "questions")
 public class Question {
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
     private int questionID;
 
-    @Column(nullable = false)
+//    @Lob annotation is used to map fields/properties of large value to a corresponding database-supported large object type.
+//    A Lob may be either a binary or character type.
+
+    @Lob
+    @Column(nullable = false )
     private String question;
 
-    @Column(nullable = false)
+    @Lob
+    @Column(nullable = false )
     public String answer;
 
     //@Column(nullable = false) // evtl. brauchen wir hier: insertable = false, updatable = false
@@ -38,8 +43,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(int questionID, String question, String answer,  Topic topic) {
-        this.questionID = questionID;
+    public Question(String question, String answer,  Topic topic) {
         this.question = question;
         this.answer = answer;
         this.topic = topic;

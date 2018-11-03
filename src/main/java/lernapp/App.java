@@ -93,23 +93,81 @@ public class App {
         questionService.save(asList(dbQueries , erDiagrams, knowledge, corporateStrategy, mediaLaws , rasterGraphics, transformations2D));
 
         // Create Questions
-        Question ersteFrage = new Question(
-                1,
-                "Was brauchen wir alles für das Projekt?",
-                "Mindestens schon mal JPA, Datenbank, Java-Code, zwei Frontends",
+        Question  Frage1 = new Question(
+                "Wie lautet die Definition der 1. Normalform?",
+                "<p>Die Erste Normalform (1NF) ist dann gegeben, wenn alle Informationen in einer Tabelle <strong>atomar</strong> vorliegen.</p><p>Das bedeutet, dass jede Information innerhalb einer Tabelle eine eigene Tabellenspalte bekommt und zusammenhängende Informationen, wie zum Beispiel die Postleitzahl (PLZ) und der Ort, nicht in einer Tabellenspalte vorliegen dürfen.</p>",
                 knowledge
         );
-        questionService.save(ersteFrage);
 
-        Question zweiteFrage = new Question(
-                2,
-                "Was ist der Unterschied zwischen persist und merge?",
-                "Merge = Referenz<br> Persist = Objekt selbst wird gespeichert - wie ein create?",
+        Question  Frage2 = new Question(
+                "Was ist ein Fremdschlüssel?",
+                "Der Fremdschlüssel kann Bestandteil einer Tabelle in einer relationalen Datenbank sein. Dabei handelt es sich um eine Schlüsselspalte, die auf einen Primärschlüssel einer anderen oder aber derselben Tabelle verweist. Es kann sich dabei um einen einfachen oder zusammengesetzten Schlüssel handeln. Das hängt davon ab, wie der Primärschlüssel der referenzierten Tabelle aufgebaut ist.",
                 knowledge
         );
-        questionService.save(zweiteFrage);
+
+        Question  Frage3 = new Question(
+                "Nennen und erklären Sie Ihnen bekannte Unternehmenskennzahlen.",
+                "<p>Wirtschaftlichkeit (Produktivität, Wirtschaftlichkeit)</p><p>Rentabilität (Erfolg, Eigenkapitalrentabilität, Gesamtkapitalrentabilität, Umsatzrentabilität)</p><p>Liquidität (Liquidität ersten Grades, Liquidität zweiten Grades, Liquidität dritten Grades)</p>",
+                corporateStrategy
+        );
+
+        Question  Frage4 = new Question(
+                "Was bedeutet \"Wirtschaften\"?",
+                "Inhalt des Wirtschaftens ist der rational gesteuerte Einsatz knapper Güter zur Befriedigung von Bedürfnissen. Das Wirtschaften wird notwendig, weil die Güter, die zur Befriedigung der menschlichen Bedürfnisse wie Nahrung und Kleider benötigt werden, in der Regel knapp sind.",
+                corporateStrategy
+        );
+
+
+        Question  Frage5 = new Question(
+                "Welche Urheberrechte gibt es?",
+                "Urheberpersönlichkeitsrecht (Buch Seite 323 §12), Verwertungsrechte (Buch Seite 324 §15), Sonstige Rechte (Buch Seite 327 §25)",
+                mediaLaws
+        );
+
+        Question  Frage6 = new Question(
+                "Test lorem ipsum?",
+                "antwort lorem ipsum",
+                mediaLaws
+        );
+
+
+        Question  Frage7 = new Question(
+                "Telemediengesetz  -  Was bedeutet  Providerhaftung? ",
+                "Bis vor wenigen Jahren war die Haftung der Provider für rechtswidrige Inhalte auf Internetseiten, die von ihnen betrieben oder technisch betreut werden, juristisch umstritten. Die Frage der Verantwortlichkeit ist mittlerweile in Deutschland durch das Telemediengesetz – TMG (§§ 7 ff. TMG) geklärt, welches das Teledienstegesetz – TDG (§ 8 TDG) und den Mediendienstestaatsvertrag – MDStV (§ 6 MDStV) im Jahr 2007 abgelöst hat. Die näheren Voraussetzungen der Providerhaftung regeln die §§ 7-10 TMG. Die Regelung gilt für Zivilrecht, Strafrecht und Öffentliches Recht gleichermaßen.",
+                mediaLaws
+        );
+
+
+        Question  Frage8 = new Question(
+                "Was bedeutet Aliasing und wo taucht es auf?",
+                "Aliasing bezeichnet das Auftreten von Überfaltungsfehlern in Abtastsystemen. Bei der Ausgabe von Geraden auf Rasterausgabegeräten entsteht als Folge von Aliasing ein störender treppenförmiger Verlauf.",
+                rasterGraphics
+        );
+
+        Question  Frage9 = new Question(
+                "Was versteht man unter der treibenden Komponente?",
+                "Wird verwendet bei der Rasterkonvertierung. Darunter ist die Komponente zu verstehen, die bei jedem Schritt um eins inkrementiert wird. Die Berechnung der jeweils anderen Komponente erfolgt in Abhängigkeit von der treibenden Komponente.",
+                rasterGraphics
+        );
+
+
+        Question  Frage10 = new Question(
+                "Beschreibe kurz den Bresenham Geraden Algorithmus",
+                "Ihm liegt als Entscheidungskriterium die minimale Entfernung der idealen Gerade zum Pixelmittelpunkt zu Grunde",
+                rasterGraphics
+        );
+        Question  Frage11 = new Question(
+                "Geben Sie eine Matrix an, die eine 2D-Spiegelung an der Winkelhalbierenden im 2. Quadranten in homogenen Koordinaten beschreibt",
+                "Hier würde man wohl eher eine Grafik einfügen",
+                transformations2D
+        );
+
+
+        //save Questions
+        questionService.save( asList(Frage1, Frage2, Frage3, Frage4, Frage5, Frage6, Frage7, Frage8, Frage9, Frage10, Frage11) );
 
         // create LearningState
+        // Hier nur einen Beispielhaft anlegen, der wird ja eigentlich eher erst bei Benutzung der App angelegt
 //        LearningState ersterLS = new LearningState(
 //                8,
 //                "DB",

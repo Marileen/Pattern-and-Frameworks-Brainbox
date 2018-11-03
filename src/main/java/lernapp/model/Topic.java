@@ -8,7 +8,6 @@ import java.util.Set;
 @Entity(name = "topic")
 public class Topic {
 
-    // topicIDs dreeistellig machen? vs. CourseIDs zweistellig?
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "topicID", nullable = false)
     private int topicID;
