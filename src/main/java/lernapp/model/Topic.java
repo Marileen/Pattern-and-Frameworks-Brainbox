@@ -9,7 +9,7 @@ import java.util.Set;
 public class Topic {
 
     // topicIDs dreeistellig machen? vs. CourseIDs zweistellig?
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "topicID", nullable = false)
     private int topicID;
 
@@ -32,8 +32,7 @@ public class Topic {
 
     }
 
-    public Topic(int topicID, String topicName, String topicDescription, Course course) {
-        this.topicID = topicID;
+    public Topic(String topicName, String topicDescription, Course course) {
         this.topicName = topicName;
         this.topicDescription = topicDescription;
         this.course = course;

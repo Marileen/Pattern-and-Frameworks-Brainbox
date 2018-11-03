@@ -8,6 +8,9 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.net.URI;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 
 public class App {
 
@@ -17,7 +20,7 @@ public class App {
         ResourceConfig rc = new ResourceConfig().packages("lernapp");
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8050"), rc, true);
 
-        /* Inject services */
+        // Inject services
         UserService userService = new UserService();
         QuestionService questionService = new QuestionService();
 
@@ -27,26 +30,74 @@ public class App {
 
 
         // create Courses
-        lernapp.model.Course ersterKurs = new lernapp.model.Course(
+        lernapp.model.Course dbCourse = new lernapp.model.Course(
                 "DB"
         );
-        questionService.save(ersterKurs);
-
-        // create Topics
-        Topic erstesThema = new Topic(
-                10,
-                "Datenbanken",
-                "Alle Fragen dieser Topic drehen sich um Datenbanken",
-                ersterKurs
+        lernapp.model.Course bwlCourse = new lernapp.model.Course(
+                "BWL"
         );
-        questionService.save(erstesThema);
+        lernapp.model.Course itRechtCourse = new lernapp.model.Course(
+                "IT Recht"
+        );
+        lernapp.model.Course cgCourse = new lernapp.model.Course(
+                "Computergrafik"
+        );
+
+        // save the Courses to the database
+        questionService.save( asList(dbCourse, bwlCourse, itRechtCourse, cgCourse) );
+
+        // create Topics for dbCourse
+        Topic dbQueries = new Topic(
+                "DB Abfragen",
+                "Abfragen erstellen zu bestimmten Szenarien (anhand von ER Diagrammen)",
+                dbCourse
+        );
+        Topic erDiagrams = new Topic(
+                "ER Diagramme",
+                "ER Diagramme zu Klassen erstellen und andersherum",
+                dbCourse
+        );
+        Topic knowledge = new Topic(
+                "Wissenfragen",
+                "Alle Fragen dieser Topic drehen sich um Datenbanken",
+                dbCourse
+        );
+
+        // create Topics for bwlCourse
+        Topic corporateStrategy = new Topic(
+                "Unternehmensstrategie",
+                "Grundlegenden Instrumente des strategischen Managements, die Bedeutung der Managementaufgabe und ihre wesentlichen Inhalte bzw. Phasen, Aspekten der Unternehmensumwelt und des Unternehmens selbst.",
+                bwlCourse
+        );
+
+        // create Topics for itRechtCourse
+        Topic mediaLaws = new Topic(
+                "Mediengesetze",
+                "Mediengesetze nach ihren unterschiedlichen medialen Erscheinungsformen.",
+                itRechtCourse
+        );
+
+        // create Topics for cgCourse
+        Topic rasterGraphics = new Topic(
+                "Methoden der Rastergrafik ",
+                "Darstellung von geometrischen Objekten mit Anwendungsprogrammen auf Rasterausgabegeräten (Rasterkonvertierung)",
+                cgCourse
+        );
+        Topic transformations2D = new Topic(
+                "2D-Transformationen ",
+                "Mathematische Grundlagen der elementargeometrischen Transformationen in der Ebene: Translation, Rotation und Skalierung",
+                cgCourse
+        );
+
+        //save the Topics to the Database
+        questionService.save(asList(dbQueries , erDiagrams, knowledge, corporateStrategy, mediaLaws , rasterGraphics, transformations2D));
 
         // Create Questions
         Question ersteFrage = new Question(
                 1,
                 "Was brauchen wir alles für das Projekt?",
                 "Mindestens schon mal JPA, Datenbank, Java-Code, zwei Frontends",
-                erstesThema
+                knowledge
         );
         questionService.save(ersteFrage);
 
@@ -54,7 +105,7 @@ public class App {
                 2,
                 "Was ist der Unterschied zwischen persist und merge?",
                 "Merge = Referenz<br> Persist = Objekt selbst wird gespeichert - wie ein create?",
-                erstesThema
+                knowledge
         );
         questionService.save(zweiteFrage);
 

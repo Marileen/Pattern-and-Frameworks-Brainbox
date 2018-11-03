@@ -14,7 +14,7 @@ public class QuestionService<T> {
 
 
     /**
-     * Generic Method for saving all types of Entities
+     * Generic Method for saving ONE ENTITY of any types of Entities
      * The Entity will be persisted to the database (not merged)
      *
      * @param  entity  the Entity to be saved
@@ -27,7 +27,7 @@ public class QuestionService<T> {
         em.getTransaction().begin();
 
         //Kopie von object wird gespeichert (insert/update)
-        //Question result = em.merge(entity);
+        //T result = em.merge(entity);
 
         //Das Objekt selbst wird gespeichert (create)
         em.persist(entity);
@@ -36,6 +36,33 @@ public class QuestionService<T> {
         em.close();
 
         return entity;
+    }
+
+    /**
+     * Generic Method for saving A LIST OF ENTITIES of any types of Entities
+     * The Entity will be persisted to the database (not merged)
+     *
+     * @param  entities the Entity-List
+     * @return entity
+     *
+     */
+    public <T> List<T> save (List<T> entities) {
+
+        EntityManager em = EMF.createEntityManager();
+        em.getTransaction().begin();
+
+        //Kopie von object wird gespeichert (insert/update)
+        //T result = em.merge(entity);
+
+        //Das Objekt selbst wird gespeichert (create)
+        for (T item : entities) {
+            em.persist(item);
+        }
+
+        em.getTransaction().commit();
+        em.close();
+
+        return entities;
     }
 
 
