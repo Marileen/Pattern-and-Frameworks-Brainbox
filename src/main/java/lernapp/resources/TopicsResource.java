@@ -21,9 +21,9 @@ public class TopicsResource {
         return questionService.queryAll(Topic.class);
     }
 
-    @Path("/{coursename}/{topicname}")
-    public List<Topic> getCourseTopics() {
-        return questionService.queryAll(Topic.class);
-    }
+//    @Path("/{coursename}/{topicname}")
+//    public List<Topic> getCourseTopics(coursename) {
+//        return questionService.queryByCourse(coursename,Topic.class);
+//    }
 
 }

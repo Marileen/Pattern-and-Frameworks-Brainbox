@@ -73,8 +73,9 @@ public class QuestionService<T> {
      *
      */
     public List<T> queryAll (Class<T> entityType) {
-        String queryString = "SELECT t FROM " + entityType.getName() + " t";
-        TypedQuery<T> query = EMF.createEntityManager().createQuery(queryString, entityType);
+        EntityManager em = EMF.createEntityManager(); //SELECT t FROM Topic as t
+        String queryString = "SELECT t FROM" + entityType.getName() + " t";
+        TypedQuery<T> query = em.createQuery(queryString, entityType);
         return query.getResultList();
     }
 

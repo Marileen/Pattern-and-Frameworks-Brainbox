@@ -29,7 +29,7 @@ public class Question {
     //various questions belong to one topic
     @ManyToOne
     // Fremdschlüsselspalte = Bezug zu Topic
-    @JoinColumn(name = "fkTopic", nullable = false)
+    @JoinColumn(nullable = false)
     private Topic topic;
 
     /* Relationships

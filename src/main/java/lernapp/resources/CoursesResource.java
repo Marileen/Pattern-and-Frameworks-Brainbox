@@ -19,7 +19,7 @@ public class CoursesResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Course> getProducts() {
+    public List<Course> getCourses() {
         return questionService.queryAll(Course.class);
     }
 
