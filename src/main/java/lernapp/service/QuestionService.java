@@ -2,10 +2,7 @@ package lernapp.service;
 
 import lernapp.model.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 public class QuestionService<T> {
@@ -72,10 +69,18 @@ public class QuestionService<T> {
      * @return List<T>
      *
      */
-    public List<T> queryAll (Class<T> entityType) {
-        String queryString = "SELECT t FROM " + entityType.getName() + " t";
-        TypedQuery<T> query = EMF.createEntityManager().createQuery(queryString, entityType);
-        return query.getResultList();
+    public List<Topic> queryAll (Class<T> entityType) { // select t from tabellenname t
+
+        EntityManager em = EMF.createEntityManager();
+        String queryString = "select topicID from topic";
+
+        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
+        // Query query = em.createQuery(queryString);
+        List<Topic> ts = query.getResultList();
+
+                // TypedQuery<T> query = EMF.createEntityManager().createQuery(queryString, entityType);
+        em.close();
+        return ts;
     }
 
     // Query an entity by id
