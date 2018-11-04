@@ -69,16 +69,14 @@ public class QuestionService<T> {
      * @return List<T>
      *
      */
-    public List<Topic> queryAll (Class<T> entityType) { // select t from tabellenname t
+    public List<T> queryAll (Class<T> entityType) { // select t from tabellenname t
 
         EntityManager em = EMF.createEntityManager();
-        String queryString = "select topicID from topic";
+        String queryString = "select topicName from topic";
+        Query query = em.createQuery(queryString);
+        List<T> ts = query.getResultList();
 
-        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
-        // Query query = em.createQuery(queryString);
-        List<Topic> ts = query.getResultList();
-
-                // TypedQuery<T> query = EMF.createEntityManager().createQuery(queryString, entityType);
+        // TypedQuery<T> query = EMF.createEntityManager().createQuery(queryString, entityType);
         em.close();
         return ts;
     }
