@@ -13,16 +13,35 @@ public class TopicsResource {
 
     QuestionService questionService = new QuestionService();
 
+    public TopicsResource() {
+
+    }
+
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Topic> getTopics() {
         return questionService.queryAll(Topic.class);
     }
 
-    /* @Path("/{coursename}/{topicname}")
-    public List<Topic> getCourseTopics() {
-        return questionService.queryAll(Topic.class);
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("/{coursename}/{topicname}")
+    public List<Topic> getCourseTopics(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {
+        List list = questionService.queryCourseTopics(coursename, topicname);
+        return list;
+
+        //return new TopicsResource();
     }
-    */
+
+
+    /*
+
+    @Path("{orderId}")
+	public OrderResource getOrder(@PathParam("orderId") Long orderId) {
+		return new OrderResource(customerId, orderId);
+	}
+
+*/
 
 }

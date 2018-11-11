@@ -10,6 +10,7 @@ import java.util.List;
 
 public class QuestionService<T> {
 
+    //Hier benutzen wir das SINGLETON PATTTERN
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
 
@@ -73,10 +74,57 @@ public class QuestionService<T> {
      *
      */
     public List<T> queryAll (Class<T> entityType) {
-        EntityManager em = EMF.createEntityManager(); //SELECT t FROM Topic as t
-        String queryString = "SELECT t FROM" + entityType.getName() + " t";
+
+        EntityManager em = EMF.createEntityManager(); //SELECT t FROM [tablename] as t
+        String queryString = "FROM " + entityType.getName();
         TypedQuery<T> query = em.createQuery(queryString, entityType);
+
         return query.getResultList();
+    }
+
+
+    /**
+     * Query Topics that belongs to a specific Course
+     *
+     * @return List<Topic>
+     *
+     */
+    public List<Topic> queryCourseTopics(String courseName, String topicName) {
+
+        Course course = this.queryCourseByName(courseName);
+
+        EntityManager em = EMF.createEntityManager();
+        String queryString = "FROM "+ Topic.class.getName() + " WHERE course = :courseId AND topicName = :topicName";
+        //String queryString = "FROM " + Topic.class.getName() + " WHERE topicName = :tName";
+
+        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
+        query.setParameter("courseId", course ).setParameter("topicName", topicName );
+
+//        String queryString = "SELECT o FROM Order o WHERE o.customer.id = :id";
+//        TypedQuery<Order> q = super.EMF.createEntityManager().createQuery(queryString, Order.class);
+//        q.setParameter("id", customerId);
+
+        return query.getResultList();
+
+    }
+
+    /**
+     * Query a Course by name
+     *
+     * @return Course
+     *
+     */
+    public Course queryCourseByName(String courseName) {
+
+        EntityManager em = EMF.createEntityManager();
+
+        String queryString = "FROM " +  Course.class.getName() + " WHERE courseName =:cName";
+
+        // an dieser Stelle kann es eine Exception geben todo: abfangen
+        TypedQuery<Course> query = em.createQuery(queryString, Course.class);
+        query.setParameter( "cName", courseName );
+
+        return query.getSingleResult();
     }
 
     // Query an entity by id

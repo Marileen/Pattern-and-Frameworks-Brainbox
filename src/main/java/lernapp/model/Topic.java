@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "topic")
+@Access(value = AccessType.FIELD)           //Field access or Property Access (via getters & setters) z.B. wenn man noch valitaion oder andere business logik machen will
 public class Topic {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -20,14 +21,15 @@ public class Topic {
     private String topicDescription;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "topic" )
     private Set<Question> question;
 
     //various topics belong to one course
+
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    // Fremdschlüsselspalte
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false)       // Fremdschlüssel
     private Course course;
 
     public Topic() {
