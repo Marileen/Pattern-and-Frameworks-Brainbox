@@ -82,14 +82,33 @@ public class QuestionService<T> {
         return query.getResultList();
     }
 
-
     /**
      * Query Topics that belongs to a specific Course
      *
      * @return List<Topic>
      *
      */
-    public List<Topic> queryCourseTopics(String courseName, String topicName) {
+    public List<Topic> queryCourseTopics(String courseName) {
+
+        Course course = this.queryCourseByName(courseName);
+
+        EntityManager em = EMF.createEntityManager();
+        String queryString = "FROM "+ Topic.class.getName() + " WHERE course = :courseId";
+
+        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
+        query.setParameter("courseId", course );
+
+        return query.getResultList();
+    }
+
+
+        /**
+         * Query specific Topic
+         *
+         * @return List<Topic>
+         *
+         */
+    public List<Topic> queryCourseTopic(String courseName, String topicName) {
 
         Course course = this.queryCourseByName(courseName);
 
