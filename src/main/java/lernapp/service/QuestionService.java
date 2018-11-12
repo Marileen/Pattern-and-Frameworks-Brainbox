@@ -102,12 +102,12 @@ public class QuestionService<T> {
     }
 
 
-        /**
-         * Query specific Topic
-         *
-         * @return List<Topic>
-         *
-         */
+    /**
+     * Query specific Topic
+     *
+     * @return List<Topic>
+     *
+     */
     public List<Topic> queryCourseTopic(String courseName, String topicName) {
 
         Course course = this.queryCourseByName(courseName);
@@ -128,6 +128,46 @@ public class QuestionService<T> {
     }
 
     /**
+     * Query Questions by a given topic
+     *
+     * @return List<Topic>
+     *
+     */
+    public List<Question> queryTopicQuestions(String topicname) {
+
+        Topic topic = this.queryTopicByName(topicname);
+
+        EntityManager em = EMF.createEntityManager();
+        String queryString = "FROM "+ Question.class.getName() + " WHERE topic = :topic";
+
+        TypedQuery<Question> query = em.createQuery(queryString, Question.class);
+        query.setParameter("topic", topic );
+
+        return query.getResultList();
+
+    }
+
+    /**
+     * Query Questions by a given Course
+     *
+     * @return List<Topic>
+     *
+     */
+    public List<Question> queryCourseQuestions(String coursename) {
+
+        Course course = queryCourseByName(coursename);
+
+        EntityManager em = EMF.createEntityManager();
+        String queryString = "FROM "+ Question.class.getName() + " JOIN "+ Course.class.getName() +" WHERE courseID = :course";
+
+        TypedQuery<Question> query = em.createQuery(queryString, Question.class);
+        query.setParameter("course", course );
+
+        return query.getResultList();
+
+    }
+
+    /**
      * Query a Course by name
      *
      * @return Course
@@ -142,6 +182,25 @@ public class QuestionService<T> {
         // an dieser Stelle kann es eine Exception geben todo: abfangen
         TypedQuery<Course> query = em.createQuery(queryString, Course.class);
         query.setParameter( "cName", courseName );
+
+        return query.getSingleResult();
+    }
+
+    /**
+     * Query a Topic by name
+     *
+     * @return Topic
+     *
+     */
+    public Topic queryTopicByName(String topicname) {
+
+        EntityManager em = EMF.createEntityManager();
+
+        String queryString = "FROM " +  Topic.class.getName() + " WHERE topicName =:name";
+
+        // an dieser Stelle kann es eine Exception geben todo: abfangen
+        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
+        query.setParameter( "name", topicname );
 
         return query.getSingleResult();
     }
