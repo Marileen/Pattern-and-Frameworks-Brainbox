@@ -35,10 +35,34 @@ Man kann dann auch SequelPro nehmen
 
 Hier sind meine ersten chaotischen Versuche drin was mit Vue zu versuchen - hat nix mit dem Backend zu tun und kann ignoriert werden, ich wollte es nur für mich mit eingecheckt haben.
 
-Wenn du magst, kannst du dir auch einen Ordner anlegen, wo dein Frontend-Gedöns drin ist.
 
 ## Maven Central
 
 Wenn man Gradle (Maven) Module sucht, dann findet man sie hier:
 
 https://mvnrepository.com/
+
+## Routen
+
+http://127.0.0.1:8050/topics
+http://127.0.0.1:8050/topics/DB/Wissenfragen
+http://127.0.0.1:8050/topics/DB
+http://127.0.0.1:8050/questions
+http://127.0.0.1:8050/questions/course/BWL
+
+### Bessere Überlegung zu Routen:
+
+/courses
+/{coursename}
+/{coursename}/{topicname}
+/{userId}/{questionsId}
+
+* Fragen anlegen (q, a, t_id, c_id)
+* Fragen ändern
+* Fragen löschen
+
+* topic anlegen
+* topic ändern
+    
+* course anlegen
+* course ändern

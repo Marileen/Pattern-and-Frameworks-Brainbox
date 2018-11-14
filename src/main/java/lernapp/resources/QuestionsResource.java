@@ -22,8 +22,7 @@ public class QuestionsResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Question> getQuestions() {
-        return questionService.queryAll(Question.class
-        );
+        return questionService.queryAll(Question.class);
     }
 
     @GET

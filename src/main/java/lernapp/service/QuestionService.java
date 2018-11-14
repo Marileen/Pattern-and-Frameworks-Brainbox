@@ -158,7 +158,7 @@ public class QuestionService<T> {
         Course course = queryCourseByName(coursename);
 
         EntityManager em = EMF.createEntityManager();
-        String queryString = "FROM "+ Question.class.getName() + " JOIN "+ Course.class.getName() +" WHERE courseID = :course";
+        String queryString = "SELECT q FROM question q JOIN topic t ON t.course = :course";
 
         TypedQuery<Question> query = em.createQuery(queryString, Question.class);
         query.setParameter("course", course );

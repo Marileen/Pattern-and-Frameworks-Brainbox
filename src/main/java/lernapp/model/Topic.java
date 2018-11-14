@@ -25,8 +25,6 @@ public class Topic {
     private Set<Question> question;
 
     //various topics belong to one course
-
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)       // Fremdschlüssel

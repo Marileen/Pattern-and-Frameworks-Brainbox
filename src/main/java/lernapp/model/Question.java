@@ -1,5 +1,6 @@
 package lernapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lernapp.model.Topic;
 import javax.persistence.*;
 
@@ -27,7 +28,8 @@ public class Question {
     //public int topicID;
 
     //various questions belong to one topic
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     // Fremdschlüsselspalte = Bezug zu Topic
     @JoinColumn(nullable = false)
     private Topic topic;
