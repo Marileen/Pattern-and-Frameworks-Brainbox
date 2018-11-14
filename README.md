@@ -44,15 +44,13 @@ https://mvnrepository.com/
 
 ## Routen, die schon funktionieren
 
-
-http://127.0.0.1:8050/topics
-http://127.0.0.1:8050/topics/DB/Wissenfragen
-http://127.0.0.1:8050/topics/DB
-
 **Jeweils alle Entitäten:**  
 http://127.0.0.1:8050/courses
 http://127.0.0.1:8050/topics
 http://127.0.0.1:8050/questions
+
+**Topics zu einen bestimmten Kurs**
+http://127.0.0.1:8050/topics/DB
 
 **Fragen zu einem Kurs:**
 http://127.0.0.1:8050/questions/BWL

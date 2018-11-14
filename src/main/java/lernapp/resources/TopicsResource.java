@@ -28,13 +28,5 @@ public class TopicsResource {
         return list;
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("/{coursename}/{topicname}")
-    public List<Topic> getCourseTopic(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {
-        List list = questionService.queryCourseTopic(coursename, topicname);
-        return list;
-    }
-
 
 }

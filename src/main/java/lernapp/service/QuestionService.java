@@ -103,51 +103,6 @@ public class QuestionService<T> {
 
 
     /**
-     * Query specific Topic
-     *
-     * @return List<Topic>
-     *
-     */
-    public List<Topic> queryCourseTopic(String courseName, String topicName) {
-
-        Course course = this.queryCourseByName(courseName);
-
-        EntityManager em = EMF.createEntityManager();
-        String queryString = "FROM "+ Topic.class.getName() + " WHERE course = :courseId AND topicName = :topicName";
-        //String queryString = "FROM " + Topic.class.getName() + " WHERE topicName = :tName";
-
-        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
-        query.setParameter("courseId", course ).setParameter("topicName", topicName );
-
-//        String queryString = "SELECT o FROM Order o WHERE o.customer.id = :id";
-//        TypedQuery<Order> q = super.EMF.createEntityManager().createQuery(queryString, Order.class);
-//        q.setParameter("id", customerId);
-
-        return query.getResultList();
-
-    }
-
-    /**
-     * Query Questions by a given topic
-     *
-     * @return List<Topic>
-     *
-     */
-    public List<Question> queryTopicQuestions(String topicname) {
-
-        Topic topic = this.queryTopicByName(topicname);
-
-        EntityManager em = EMF.createEntityManager();
-        String queryString = "FROM "+ Question.class.getName() + " WHERE topic = :topic";
-
-        TypedQuery<Question> query = em.createQuery(queryString, Question.class);
-        query.setParameter("topic", topic );
-
-        return query.getResultList();
-
-    }
-
-    /**
      * Query Questions by a given Course
      *
      * @return List<Question>
@@ -162,6 +117,27 @@ public class QuestionService<T> {
 
         TypedQuery<Question> query = em.createQuery(queryString, Question.class);
         query.setParameter("course", course );
+
+        return query.getResultList();
+
+    }
+
+    /**
+     * Query Questions by a given course and topic
+     *
+     * @return List<Topic>
+     *
+     */
+    public List<Question> queryTopicQuestions(String coursename, String topicname) {
+
+        Course course = queryCourseByName(coursename);
+        Topic topic = this.queryTopicByName(topicname);
+
+        EntityManager em = EMF.createEntityManager();
+        String queryString = "SELECT q FROM question q JOIN topic t ON t.course = :course WHERE q.topic = t AND q.topic = :topic";
+
+        TypedQuery<Question> query = em.createQuery(queryString, Question.class);
+        query.setParameter("course", course ).setParameter("topic", topic);
 
         return query.getResultList();
 

@@ -27,19 +27,18 @@ public class QuestionsResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("/topics/{topicname}")
-    public List<Question> getTopicQuestions(@PathParam("topicname") String topicname) {
-        List list = questionService.queryTopicQuestions(topicname);
-        return list;
-    }
-
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/{coursename}")
     public List<Question> getCourseQuestions(@PathParam("coursename") String coursename) {
         List list = questionService.queryCourseQuestions(coursename);
         return list;
     }
 
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("/{coursename}/{topicname}")
+    public List<Question> getTopicQuestions(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {
+        List list = questionService.queryTopicQuestions(coursename, topicname);
+        return list;
+    }
 
 }
