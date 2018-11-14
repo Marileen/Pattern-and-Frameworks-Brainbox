@@ -27,16 +27,16 @@ public class QuestionsResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("/{topicname}")
-    public List<Topic> getTopicQuestions(@PathParam("topicname") String topicname) {
+    @Path("/topics/{topicname}")
+    public List<Question> getTopicQuestions(@PathParam("topicname") String topicname) {
         List list = questionService.queryTopicQuestions(topicname);
         return list;
     }
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("/course/{coursename}")
-    public List<Topic> getCourseQuestions(@PathParam("coursename") String coursename) {
+    @Path("/{coursename}")
+    public List<Question> getCourseQuestions(@PathParam("coursename") String coursename) {
         List list = questionService.queryCourseQuestions(coursename);
         return list;
     }

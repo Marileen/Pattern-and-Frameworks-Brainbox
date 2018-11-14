@@ -28,8 +28,8 @@ public class Question {
     //public int topicID;
 
     //various questions belong to one topic
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToOne //(fetch = FetchType.LAZY)
     // Fremdschlüsselspalte = Bezug zu Topic
     @JoinColumn(nullable = false)
     private Topic topic;

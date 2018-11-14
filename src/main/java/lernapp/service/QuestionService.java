@@ -150,7 +150,7 @@ public class QuestionService<T> {
     /**
      * Query Questions by a given Course
      *
-     * @return List<Topic>
+     * @return List<Question>
      *
      */
     public List<Question> queryCourseQuestions(String coursename) {
@@ -158,7 +158,7 @@ public class QuestionService<T> {
         Course course = queryCourseByName(coursename);
 
         EntityManager em = EMF.createEntityManager();
-        String queryString = "SELECT q FROM question q JOIN topic t ON t.course = :course";
+        String queryString = "SELECT q FROM question q JOIN topic t ON t.course = :course WHERE q.topic = t";
 
         TypedQuery<Question> query = em.createQuery(queryString, Question.class);
         query.setParameter("course", course );

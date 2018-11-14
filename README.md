@@ -42,18 +42,29 @@ Wenn man Gradle (Maven) Module sucht, dann findet man sie hier:
 
 https://mvnrepository.com/
 
-## Routen
+## Routen, die schon funktionieren
+
 
 http://127.0.0.1:8050/topics
 http://127.0.0.1:8050/topics/DB/Wissenfragen
 http://127.0.0.1:8050/topics/DB
-http://127.0.0.1:8050/questions
-http://127.0.0.1:8050/questions/course/BWL
 
-### Bessere Überlegung zu Routen:
+**Jeweils alle Entitäten:**  
+http://127.0.0.1:8050/courses
+http://127.0.0.1:8050/topics
+http://127.0.0.1:8050/questions
+
+**Fragen zu einem Kurs:**
+http://127.0.0.1:8050/questions/BWL
+
+**Fragen zu einem Kurs und einem Topic:**
+
+**Zu einem Benutzer die ID einer Frage mit dem Status für den User**
+
+### Überlegung zu Routen:
 
 /courses
-/{coursename}
+/questions/{coursename}
 /{coursename}/{topicname}
 /{userId}/{questionsId}
 
