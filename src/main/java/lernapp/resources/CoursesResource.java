@@ -10,8 +10,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.*;
 
-// ist dann unter der url im Browser aufzurufen
-
+// ist dann unter der url im Browser aufzurufen localhost:8050/courses
 @Path("/courses")
 public class CoursesResource {
 

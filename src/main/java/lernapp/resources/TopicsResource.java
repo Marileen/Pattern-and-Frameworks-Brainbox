@@ -20,6 +20,7 @@ public class TopicsResource {
         return questionService.queryAll(Topic.class);
     }
 
+    // Beispiel URL: http://localhost:8050/topics/Computergrafik
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/{coursename}")
@@ -27,6 +28,5 @@ public class TopicsResource {
         List list = questionService.queryCourseTopics(coursename);
         return list;
     }
-
 
 }

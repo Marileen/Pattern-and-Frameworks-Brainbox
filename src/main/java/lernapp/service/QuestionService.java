@@ -181,9 +181,10 @@ public class QuestionService<T> {
         return query.getSingleResult();
     }
 
+
     // Query an entity by id
-    public Question queryById(Long id) {
-        return EMF.createEntityManager().find(Question.class, id);
+    public T queryById(Long id, Class<T> entityType) {
+        return EMF.createEntityManager().find(entityType, id);
     }
 
     // Delete entity by id
