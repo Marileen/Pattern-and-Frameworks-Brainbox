@@ -8,7 +8,7 @@ public class User {
 
     @Id
     @Column(nullable = false)
-    public String email;
+    public String email; // serves as user name
 
     @Column(nullable = false)
     public String firstname;
@@ -17,6 +17,9 @@ public class User {
 
     @Column(nullable = false)
     public String password;
+
+    @Transient
+    public String jsonWebToken;
 
 
 //    @ManyToMany(mappedBy = "user")

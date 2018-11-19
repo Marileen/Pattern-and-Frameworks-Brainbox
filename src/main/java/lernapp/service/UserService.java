@@ -2,10 +2,7 @@ package lernapp.service;
 
 import lernapp.model.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 public class UserService {
@@ -43,6 +40,22 @@ public class UserService {
         if (result != null) em.remove(result);
         em.getTransaction().commit();
         em.close();
+    }
+
+    public User queryByCredentials (String email, String password) {
+
+        try {
+            EntityManager em = EMF.createEntityManager();
+            String queryString = "FROM user WHERE email = :mail AND password = :p";
+            TypedQuery<User> q = em.createQuery(queryString, User.class);
+            q.setParameter("mail", email);
+            q.setParameter("p", password);
+            User user = q.getSingleResult();
+            em.close();
+            return user;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     /* zeigt alle Questions mit bestimmtem LS, z. B. "kann ich"
