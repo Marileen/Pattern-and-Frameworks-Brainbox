@@ -7,6 +7,7 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
+import lernapp.filter.JwtFilter;
 import lernapp.model.User;
 import lernapp.service.UserService;
 
@@ -32,6 +33,7 @@ public class UsersResource {
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public User login(User user) {
+        // mit queryBy... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
         User loggedInUser = userService.queryByCredentials(user.email, user.password);
 
         if (loggedInUser != null) {
@@ -44,17 +46,12 @@ public class UsersResource {
                 // Create an HMAC-protected JWS object with user data as payload
                 JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256), new Payload(json));
 
-                /* Use a secret key for HS256
-                byte[] secret = AuthenticationFilter.SECRET.getBytes();
-                */
-
-                // 256-bit key for HS256 which must be pre-shared
-                byte[] sharedKey = new byte[32];
-                new SecureRandom().nextBytes(sharedKey);
+                // Use a secret key for HS256
+                byte[] secret = JwtFilter.SECRET.getBytes();
 
                 // MAC - Message Authentication Code = Signatur
                 // Apply the HMAC to the JWS object and send the token to the client
-                jwsObject.sign(new MACSigner(sharedKey));
+                jwsObject.sign(new MACSigner(secret));
                 loggedInUser.jsonWebToken = jwsObject.serialize();
 
             } catch (Exception e) {
