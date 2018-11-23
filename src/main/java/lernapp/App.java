@@ -1,6 +1,7 @@
 package lernapp;
 
 import lernapp.model.*;
+import lernapp.service.LearningStateService;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -23,6 +24,7 @@ public class App {
         // Inject services
         UserService userService = new UserService();
         QuestionService questionService = new QuestionService();
+        LearningStateService learningStateService = new LearningStateService();
 
         // Create users
         User marileen = new User("marileen.stamer@stud.fh-luebeck.de","Marileen","Stamer", "123");
@@ -167,14 +169,27 @@ public class App {
         questionService.save( asList(Frage1, Frage2, Frage3, Frage4, Frage5, Frage6, Frage7, Frage8, Frage9, Frage10, Frage11) );
 
         // create LearningState
-        // Hier nur einen Beispielhaft anlegen, der wird ja eigentlich eher erst bei Benutzung der App angelegt
-//        LearningState ersterLS = new LearningState(
-//                8,
-//                "DB",
-//                "URL des Bilds",
-//                "Beschreibung des LearningStates"
-//        );
-//        ersterLS = questionService.save(ersterLS);
+        LearningState lsGut = new LearningState(
+                "Gut",
+                "URL des Bilds",
+                "Ich kann die Frage gut beantworten. Der Inhalt ist also erfolgreich erlernt."
+        );
+
+        learningStateService.save(lsGut);
+
+        LearningState lsMittel = new LearningState(
+                "Mittel",
+                "URL des Bilds",
+                "Ich kann die Frage halbwegs oder teilweise beantworten. Der Inhalt muss noch gefestigt werden."
+        );
+        learningStateService.save(lsMittel);
+
+        LearningState lsNicht = new LearningState(
+                "Noch nicht",
+                "URL des Bilds",
+                "Ich kann mit der Frage noch nicht viel anfangen. Damit muss ich mich auf jeden Fall noch mehr beschäftigen"
+        );
+        learningStateService.save(lsNicht);
 
 
         // create User_Question_LS

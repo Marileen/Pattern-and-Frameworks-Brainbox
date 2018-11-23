@@ -1,35 +1,46 @@
-# Pattern-and-Frameworks
+# Patterns and Frameworks
 
-Den ganzen Projektordner müsste man eigentlich nach dem Clonen/Auschecken in IntelliJ öffenen können
+Semesterprojektaufgabe WS 2018/19 von Katrhin Köhler und Marileen Stamer
 
 ## gemeinsame Backend-Anwendung
 
 ich habe nach diversen Tets nun schonmal im src/main/java/ Verzeichnis ein lernapp package angelegt mit der ersten Klasse: User
 Vorlage dafür ist die Struktur aus dem Beispiel von Jens Ehlers, welches ich runtergeladen habe
 
+## Start
+
+##### 1) Maria DB sollte installiert sein, [siehe auch hier](#mariaDB)
+##### 2) Datenbank importieren (mitgeliefert)
+##### 3) Projekt via gradle Datei in IDE öffnen
+
+## Komponenten
+
 ### Gradle
-läuft bei mir, ist wir Maven bloß anders
+
+Als Build-System haben wir **gradle** verwendet
 
 ### Hibernate
 
-benutzt unter resources/ eine persistence.xml, die voller Magie ist und man muss hier unbedingt die Entity Klassen eintragen, sonst funktioniert es nicht.
-Ich habe versucht, dass Autodetection geht, aber es funktioniert nicht, also einfach die Klassen eintragen, was solls
+Als ORM-Framework haben wir **Hibernate** eingesetzt.   
+Hierfür wird unter resources/ eine persistence.xml verwendet.   
+Bei Marileen auf dem Mac müssen hier unbedingt die Entity Klassen eintragen sein, sonst funktioniert es nicht.
+Mit Autodetection geht es nicht.
 
+### MariaDB
+<a name="mariaDB" id="mariaDB"></a>
 
-## MariaDB
+Sollte lokal installiert sein
 
-Muss man lokal installiert haben
-
-brew install mariadb
-
-mysql.server start
+Mini-Anleitung dazu:   
+1) brew install mariadb
+2) mysql.server start
 
 To connect:
     mysql -uroot
 
+Quelle: 
 https://mariadb.com/kb/en/library/mariadb-basics/
 
-Man kann dann auch SequelPro nehmen 
 
 ## frontend-marileen
 

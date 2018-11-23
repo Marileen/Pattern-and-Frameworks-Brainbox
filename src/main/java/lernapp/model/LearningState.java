@@ -5,11 +5,11 @@ import javax.persistence.*;
 @Entity(name = "learningState")
 public class LearningState {
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
     public int learningStateID;
 
-    // z. B. gut, mittel, gar nicht
+    // z. B. gut, mittel, noch nicht
     @Column(nullable = false)
     public String stateName;
 
@@ -17,7 +17,7 @@ public class LearningState {
     @Column(nullable = false)
     public String pictureUrl;
 
-    // was wollten wir hiermit?
+    // Beschreibung
     @Column(nullable = false)
     public String LearningStateDescr;
 
@@ -27,8 +27,7 @@ public class LearningState {
 
     }
 
-    public LearningState(int learningStateID, String stateName, String pictureUrl, String LearningStateDescr){
-        this.learningStateID = learningStateID;
+    public LearningState(String stateName, String pictureUrl, String LearningStateDescr){
         this.stateName = stateName;
         this.pictureUrl = pictureUrl;
         this.LearningStateDescr = LearningStateDescr;

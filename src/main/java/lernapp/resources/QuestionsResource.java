@@ -54,6 +54,9 @@ public class QuestionsResource {
         URI uri = uriInfo.getAbsolutePathBuilder().path(question.toString()).build();
         return Response.created(uri).entity(question).build(); // 201
 
+
+        //todo: was passiert, wenn das json falsch ist?
+
     }
 
 }
