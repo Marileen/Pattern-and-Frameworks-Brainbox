@@ -1,6 +1,7 @@
 package lernapp.service;
 
 import lernapp.model.LearningState;
+import lernapp.model.UserQuestionLS;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,6 +28,16 @@ public class LearningStateService {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
         LearningState result = em.merge(entity);
+        em.getTransaction().commit();
+        em.close();
+        return result;
+    }
+
+    // Create or update an entity
+    public UserQuestionLS save(UserQuestionLS entity) {
+        EntityManager em = EMF.createEntityManager();
+        em.getTransaction().begin();
+        UserQuestionLS result = em.merge(entity);
         em.getTransaction().commit();
         em.close();
         return result;

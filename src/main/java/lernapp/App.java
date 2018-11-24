@@ -192,12 +192,12 @@ public class App {
 
 
         // create UserQuestionLS
-//        UserQuestionLS ersterUQLS = new UserQuestionLS(
-//                marileen,
-//                Frage11,
-//                lsNicht
-//        );
-//        ersterUQLS = learningStateService.save(ersterUQLS);
+        UserQuestionLS ersterUQLS = new UserQuestionLS(
+                marileen,
+                Frage11,
+                lsNicht
+        );
+        ersterUQLS = learningStateService.save(ersterUQLS);
 
 
         // Close database connection
