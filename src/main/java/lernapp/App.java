@@ -9,7 +9,6 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.net.URI;
-import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -192,13 +191,13 @@ public class App {
         learningStateService.save(lsNicht);
 
 
-        // create User_Question_LS
-//        User_Question_LS ersterUQLS = new User_Question_LS(
-//                8,
-//                9,
-//                3
+        // create UserQuestionLS
+//        UserQuestionLS ersterUQLS = new UserQuestionLS(
+//                marileen,
+//                Frage11,
+//                lsNicht
 //        );
-//        ersterUQLS = questionService.save(ersterUQLS);
+//        ersterUQLS = learningStateService.save(ersterUQLS);
 
 
         // Close database connection

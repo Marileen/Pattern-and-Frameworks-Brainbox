@@ -1,6 +1,7 @@
 package lernapp.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 // unser User
 @Entity(name = "user")
@@ -21,10 +22,8 @@ public class User {
     @Transient
     public String jsonWebToken;
 
-
-//    @ManyToMany(mappedBy = "user")
-//    public List<Learningstate> orders;
-
+//    @OneToMany(mappedBy = "linkPk.user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    public List<UserQuestionLS> user_question_ls;
 
     public User() {
     }

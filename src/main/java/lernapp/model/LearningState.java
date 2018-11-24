@@ -1,6 +1,7 @@
 package lernapp.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "learningState")
 public class LearningState {
@@ -21,7 +22,8 @@ public class LearningState {
     @Column(nullable = false)
     public String LearningStateDescr;
 
-
+//    @OneToMany(mappedBy = "linkPk.learningState", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    public List<UserQuestionLS> user_question_ls;
 
     public LearningState(){
 

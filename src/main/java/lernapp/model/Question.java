@@ -1,8 +1,7 @@
 package lernapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lernapp.model.Topic;
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity(name = "question")
@@ -41,6 +40,9 @@ public class Question {
           für die automatische Vergabe von topicID in Topic dann @GeneratedValue?
        3) QuestionService
     */
+
+//    @OneToMany(mappedBy = "linkPk.question", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    public List<UserQuestionLS> user_question_ls;
 
     public Question() {
     }
