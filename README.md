@@ -66,16 +66,13 @@ http://127.0.0.1:8050/topics/DB
 **Fragen zu einem Kurs:**
 http://127.0.0.1:8050/questions/BWL
 
-**Fragen zu einem Kurs und einem Topic:**
+**Fragen zu einem Kurs und einem Topic:**   
+todo:  /{coursename}/{topicname}
 
-**Zu einem Benutzer die ID einer Frage mit dem Status für den User**
+**Zu einem Benutzer die ID einer Frage mit dem Status für den User**    
+todo: /{userId}/{questionsId}
 
-### Überlegung zu Routen:
-
-/courses
-/questions/{coursename}
-/{coursename}/{topicname}
-/{userId}/{questionsId}
+### Überlegung zu weiteren Routen:
 
 * Fragen anlegen (q, a, t_id, c_id)
 * Fragen ändern
