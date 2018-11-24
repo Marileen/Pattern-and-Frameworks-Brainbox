@@ -8,25 +8,8 @@ import java.util.List;
 
 public class QuestionService extends BasicService<Question> {
 
-    /**
-     * Query Topics that belongs to a specific Course
-     *
-     * @return List<Topic>
-     *
-     */
-    public List<Topic> queryCourseTopics(String courseName) {
-
-        Course course = this.queryCourseByName(courseName);
-
-        EntityManager em = EMF.createEntityManager();
-        String queryString = "FROM "+ Topic.class.getName() + " WHERE course = :courseId";
-
-        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
-        query.setParameter("courseId", course );
-
-        return query.getResultList();
-    }
-
+    CourseService courseService = new CourseService();
+    TopicService topicService = new TopicService();
 
     /**
      * Query Questions by a given Course
@@ -36,7 +19,7 @@ public class QuestionService extends BasicService<Question> {
      */
     public List<Question> queryCourseQuestions(String coursename) {
 
-        Course course = queryCourseByName(coursename);
+        Course course = courseService.queryCourseByName(coursename);
 
         EntityManager em = EMF.createEntityManager();
         String queryString = "SELECT q FROM question q JOIN topic t ON t.course = :course WHERE q.topic = t";
@@ -56,8 +39,8 @@ public class QuestionService extends BasicService<Question> {
      */
     public List<Question> queryTopicQuestions(String coursename, String topicname) {
 
-        Course course = queryCourseByName(coursename);
-        Topic topic = this.queryTopicByName(topicname);
+        Course course = courseService.queryCourseByName(coursename);
+        Topic topic = topicService.queryTopicByName(topicname);
 
         EntityManager em = EMF.createEntityManager();
         String queryString = "SELECT q FROM question q JOIN topic t ON t.course = :course WHERE q.topic = t AND q.topic = :topic";
@@ -69,43 +52,6 @@ public class QuestionService extends BasicService<Question> {
 
     }
 
-    /**
-     * Query a Course by name
-     *
-     * @return Course
-     *
-     */
-    public Course queryCourseByName(String courseName) {
-
-        EntityManager em = EMF.createEntityManager();
-
-        String queryString = "FROM " +  Course.class.getName() + " WHERE courseName =:cName";
-
-        // an dieser Stelle kann es eine Exception geben todo: abfangen
-        TypedQuery<Course> query = em.createQuery(queryString, Course.class);
-        query.setParameter( "cName", courseName );
-
-        return query.getSingleResult();
-    }
-
-    /**
-     * Query a Topic by name
-     *
-     * @return Topic
-     *
-     */
-    public Topic queryTopicByName(String topicname) {
-
-        EntityManager em = EMF.createEntityManager();
-
-        String queryString = "FROM " +  Topic.class.getName() + " WHERE topicName =:name";
-
-        // an dieser Stelle kann es eine Exception geben todo: abfangen
-        TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
-        query.setParameter( "name", topicname );
-
-        return query.getSingleResult();
-    }
 
 }
 
