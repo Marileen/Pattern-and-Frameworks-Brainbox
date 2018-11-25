@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 @Priority(Priorities.AUTHENTICATION)
 public class JwtFilter implements ContainerRequestFilter {
 
-        public static final String SECRET = "lernen7ma8cht77s5pass";
+        public static final String SECRET = "lernen7ma8chtuns5richtig77s5pass";
 
         @NameBinding  // ToDo: recherchieren
         @Retention(RetentionPolicy.RUNTIME) // ToDo: recherchieren

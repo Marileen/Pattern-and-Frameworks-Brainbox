@@ -1,6 +1,6 @@
 # Patterns and Frameworks
 
-Semesterprojektaufgabe WS 2018/19 von Katrhin Köhler und Marileen Stamer
+Semesterprojektaufgabe WS 2018/19 von Kathrin Köhler und Marileen Stamer
 
 ## gemeinsame Backend-Anwendung
 
