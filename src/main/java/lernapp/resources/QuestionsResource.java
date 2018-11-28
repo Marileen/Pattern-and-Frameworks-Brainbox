@@ -1,5 +1,6 @@
 package lernapp.resources;
 
+import lernapp.filter.JwtFilter;
 import lernapp.model.Question;
 import lernapp.model.Topic;
 import lernapp.service.QuestionService;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
+
 @Path("/questions")    // ist dann unter der url im Browser aufrufbar
 public class QuestionsResource {
 
@@ -21,12 +23,14 @@ public class QuestionsResource {
     }
 
     @GET
+    @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Question> getQuestions() {
         return questionService.queryAll(Question.class);
     }
 
     @GET
+    // @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/{coursename}")
     public List<Question> getCourseQuestions(@PathParam("coursename") String coursename) {
@@ -35,6 +39,7 @@ public class QuestionsResource {
     }
 
     @GET
+    // @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/{coursename}/{topicname}")
     public List<Question> getTopicQuestions(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {

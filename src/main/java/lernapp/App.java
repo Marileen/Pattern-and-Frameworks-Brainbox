@@ -59,7 +59,7 @@ public class App {
                 dbCourse
         );
         Topic knowledge = new Topic(
-                "Wissenfragen",
+                "Wissensfragen",
                 "Alle Fragen dieser Topic drehen sich um Datenbanken",
                 dbCourse
         );
