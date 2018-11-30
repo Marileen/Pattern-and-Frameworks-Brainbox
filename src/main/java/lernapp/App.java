@@ -1,6 +1,7 @@
 package lernapp;
 
 import lernapp.model.*;
+import lernapp.service.BasicService;
 import lernapp.service.LearningStateService;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
@@ -197,7 +198,7 @@ public class App {
                 Frage11,
                 lsNicht
         );
-        ersterUQLS = learningStateService.save(ersterUQLS);
+        learningStateService.save(ersterUQLS);
 
 
         // Close database connection

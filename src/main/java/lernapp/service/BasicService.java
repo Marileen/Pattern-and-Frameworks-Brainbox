@@ -52,14 +52,14 @@ public class BasicService<T> {
         return entity;
     }
 
-    /**
-     * Generic Method for saving A LIST OF ENTITIES of any types of Entities
-     * The Entity will be persisted to the database (not merged)
-     *
-     * @param  entities the Entity-List
-     * @return entity
-     *
-     */
+        /**
+         * Generic Method for saving A LIST OF ENTITIES of any types of Entities
+         * The Entity will be persisted to the database (not merged)
+         *
+         * @param  entities the Entity-List
+         * @return entity
+         *
+         */
     public <T> List<T> save (List<T> entities) {
 
         EntityManager em = EMF.createEntityManager();
@@ -97,12 +97,12 @@ public class BasicService<T> {
 
 
     // Query an entity by id
-    public T queryById(Long id, Class<T> entityType) {
+    public T queryById(int id, Class<T> entityType) {
         return EMF.createEntityManager().find(entityType, id);
     }
 
     // Delete entity by id
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
         Question result = em.find(Question.class, id);
