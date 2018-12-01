@@ -24,7 +24,7 @@ import java.util.List;
 
 public class BasicService<T> {
 
-    //Hier benutzen wir das SINGLETON PATTTERN
+    //Hier benutzen wir das SINGLETON PATTERN - wirklich? ist das nicht Factory?
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
     /**

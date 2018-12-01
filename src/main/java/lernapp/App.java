@@ -32,6 +32,10 @@ public class App {
 
 
         // create Courses
+        lernapp.model.Course pafCourse = new lernapp.model.Course(
+                "Patterns and Frameworks"
+        );
+
         lernapp.model.Course dbCourse = new lernapp.model.Course(
                 "DB"
         );
@@ -46,7 +50,20 @@ public class App {
         );
 
         // save the Courses to the database
-        questionService.save( asList(dbCourse, bwlCourse, itRechtCourse, cgCourse) );
+        questionService.save( asList(pafCourse, dbCourse, bwlCourse, itRechtCourse, cgCourse) );
+
+        // create Topics for pafCourse
+        Topic jpa = new Topic(
+                "JPA",
+                "Beschreibung der JPA und der wichtigsten Annotations",
+                pafCourse
+        );
+
+        Topic jwt = new Topic(
+                "JWT",
+                "Komponenten und Einsatz von JWT",
+                pafCourse
+        );
 
         // create Topics for dbCourse
         Topic dbQueries = new Topic(
@@ -92,7 +109,7 @@ public class App {
         );
 
         //save the Topics to the Database
-        questionService.save(asList(dbQueries , erDiagrams, knowledge, corporateStrategy, mediaLaws , rasterGraphics, transformations2D));
+        questionService.save(asList(jpa, jwt, dbQueries , erDiagrams, knowledge, corporateStrategy, mediaLaws , rasterGraphics, transformations2D));
 
         // Create Questions
         Question  Frage1 = new Question(
@@ -132,13 +149,11 @@ public class App {
                 mediaLaws
         );
 
-
         Question  Frage7 = new Question(
                 "Telemediengesetz  -  Was bedeutet  Providerhaftung? ",
                 "Bis vor wenigen Jahren war die Haftung der Provider für rechtswidrige Inhalte auf Internetseiten, die von ihnen betrieben oder technisch betreut werden, juristisch umstritten. Die Frage der Verantwortlichkeit ist mittlerweile in Deutschland durch das Telemediengesetz – TMG (§§ 7 ff. TMG) geklärt, welches das Teledienstegesetz – TDG (§ 8 TDG) und den Mediendienstestaatsvertrag – MDStV (§ 6 MDStV) im Jahr 2007 abgelöst hat. Die näheren Voraussetzungen der Providerhaftung regeln die §§ 7-10 TMG. Die Regelung gilt für Zivilrecht, Strafrecht und Öffentliches Recht gleichermaßen.",
                 mediaLaws
         );
-
 
         Question  Frage8 = new Question(
                 "Was bedeutet Aliasing und wo taucht es auf?",
@@ -152,21 +167,40 @@ public class App {
                 rasterGraphics
         );
 
-
         Question  Frage10 = new Question(
                 "Beschreibe kurz den Bresenham Geraden Algorithmus",
-                "Ihm liegt als Entscheidungskriterium die minimale Entfernung der idealen Gerade zum Pixelmittelpunkt zu Grunde",
+                "Ihm liegt als Entscheidungskriterium die minimale Entfernung der idealen Gerade zum Pixelmittelpunkt zu Grunde.",
                 rasterGraphics
         );
+
         Question  Frage11 = new Question(
                 "Geben Sie eine Matrix an, die eine 2D-Spiegelung an der Winkelhalbierenden im 2. Quadranten in homogenen Koordinaten beschreibt",
                 "Hier würde man wohl eher eine Grafik einfügen",
                 transformations2D
         );
 
+        Question Frage12 = new Question(
+                "Was ist die JPA?",
+                "JPA ist die Java Persistence API, also eine Schnittstelle, die die Übertragung von Objekten in eine Datenbank vereinfacht.",
+                jpa
+        );
+
+        Question Frage13 = new Question(
+                "Was ist Hibernate?",
+                "Hibernate ist ein ORMapper, der die semantische Lücke zwischen objektorientiertem Code und dem relationalen " +
+                       "Model in der Datenbank schliesst.",
+                jpa
+        );
+
+        Question Frage14 = new Question(
+                "Was ist JWT, woraus besteht es und für was kann es eingesetzt werden?",
+                "Das Java Web Token (JWT) kann für die Authentifizierung zwischen Client und Server genutzt werden und " +
+                        "besteht aus Header, Payload und Signature.",
+                jpa
+        );
 
         //save Questions
-        questionService.save( asList(Frage1, Frage2, Frage3, Frage4, Frage5, Frage6, Frage7, Frage8, Frage9, Frage10, Frage11) );
+        questionService.save( asList(Frage1, Frage2, Frage3, Frage4, Frage5, Frage6, Frage7, Frage8, Frage9, Frage10, Frage11, Frage12, Frage13, Frage14) );
 
         // create LearningState
         LearningState lsGut = new LearningState(

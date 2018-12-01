@@ -11,7 +11,7 @@ import lernapp.resources.QuestionsResource;
 @IdClass(UserQuestionLinkId.class)
 public class UserQuestionLS {
 
-    // belong to one user
+    //belongs to one user
     @Id
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(nullable = false)

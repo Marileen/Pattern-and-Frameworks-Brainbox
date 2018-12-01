@@ -11,7 +11,7 @@ import java.util.Set;
 public class Topic {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "topicID", nullable = false)
+    @Column(nullable = false)
     private int topicID;
 
     @Column(nullable = false)
