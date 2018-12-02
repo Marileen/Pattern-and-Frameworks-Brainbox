@@ -15,16 +15,11 @@ import lernapp.model.User;
 import lernapp.service.LearningStateService;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
-import net.minidev.json.JSONObject;
+import org.hibernate.exception.ConstraintViolationException;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import java.net.URI;
-import java.security.SecureRandom;
-import java.util.List;
 
 @Path("/user")    // ist dann unter der url im Browser aufrufbar
 public class UsersResource {
@@ -110,13 +105,42 @@ public class UsersResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public User register(User user) {
+    public Response register(User user) {
 
-        //todo: was passiert, wenn das json falsch ist? try - catch einfügen?
-        // z. B. prüfen, ob email-Adresse korrekt?
-        // aus JSON email-Adr. extrahieren & vergleichen
-        User registeredUser = userService.save(user);
-        return login(registeredUser);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        if ( isNullOrEmpty(user.email) ) {
+            //zurückgeben dass email nicht leer sein darf
+            return Response.status(400, "Email field should be provided").build();
+        }
+
+        if ( isNullOrEmpty(user.password) ) {
+            //zurückgeben dass pw nicht leer sein darf
+            return Response.status(400, "Password field should be provided").build();
+        }
+
+        if ( isNullOrEmpty(user.firstname) ) {
+            //zurückgeben dass firstname nicht leer sein darf
+            return Response.status(400, "Firstname field should be provided").build();
+        }
+
+        try {
+            // USER SPEICHERN UND EINLOGGEN
+            User registeredUser = userService.save(user);
+            return Response.ok().entity(login(registeredUser)).build();
+
+        } catch (Exception e) {
+            //kann man instanceof rufen, wenn getCause null ist? JA
+            if (e.getCause() != null && e.getCause().getCause() instanceof ConstraintViolationException) {
+                return Response.status(409, "User with email already exists").build();
+            }
+            return Response.status(500, e.getMessage()).build();
+        }
+
+    }
+
+    public static boolean isNullOrEmpty (String test) {
+        return test == null || test.isEmpty();
     }
 
 }

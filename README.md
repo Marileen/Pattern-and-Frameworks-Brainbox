@@ -72,6 +72,19 @@ todo:  /{coursename}/{topicname}
 **Zu einem Benutzer die ID einer Frage mit dem Status für den User**    
 todo: /{userId}/{questionsId}
 
+** Learningstate zu einem User und einer Question abrufen **
+http://127.0.0.1:8050/user/state
+
+Beipsiel json:
+
+{"q" : { "questionID" : 11
+},
+ "user" : {
+	 "email" : "marileen.stamer@stud.fh-luebeck.de",
+	 "password" : "123"
+ }
+}
+
 ### Überlegung zu weiteren Routen:
 
 * Fragen anlegen (q, a, t_id, c_id)
