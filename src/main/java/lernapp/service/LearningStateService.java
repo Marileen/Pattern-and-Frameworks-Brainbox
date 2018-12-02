@@ -18,6 +18,7 @@ public class LearningStateService extends BasicService<LearningState> {
     public List<LearningState> queryAll() {
         String queryString = "SELECT t FROM " + LearningState.class.getName() + " t";
         TypedQuery<LearningState> query = EMF.createEntityManager().createQuery(queryString, LearningState.class);
+        // müssen wir hier noch die DB-Verbindung schliessen, vgl. em.close();
         return query.getResultList();
     }
 

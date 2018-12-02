@@ -51,6 +51,7 @@ public class UsersResource {
 
         //read JSON like DOM Parser
         try {
+            // fuer JSON-Obj mit mehr als einem Objekt braucht man reedTree
             JsonNode rootNode = objectMapper.readTree(questionAndUser);
 
             JsonNode questionNode = rootNode.path("q");
@@ -103,6 +104,19 @@ public class UsersResource {
             }
         }
         return loggedInUser;
+    }
+
+    @Path("register")
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public User register(User user) {
+
+        //todo: was passiert, wenn das json falsch ist? try - catch einfügen?
+        // z. B. prüfen, ob email-Adresse korrekt?
+        // aus JSON email-Adr. extrahieren & vergleichen
+        User registeredUser = userService.save(user);
+        return login(registeredUser);
     }
 
 }

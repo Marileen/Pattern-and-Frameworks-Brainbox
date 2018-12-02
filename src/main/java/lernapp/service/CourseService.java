@@ -23,7 +23,9 @@ public class CourseService extends BasicService<Course> {
         TypedQuery<Course> query = em.createQuery(queryString, Course.class);
         query.setParameter( "cName", courseName );
 
-        return query.getSingleResult();
+        Course singleResult = query.getSingleResult();
+        em.close();
+        return singleResult;
     }
 
 }
