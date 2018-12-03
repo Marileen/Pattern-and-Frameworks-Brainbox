@@ -20,6 +20,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.concurrent.ExecutionException;
 
 @Path("/user")    // ist dann unter der url im Browser aufrufbar
 public class UsersResource {
@@ -37,12 +38,13 @@ public class UsersResource {
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     //public LearningState getLS (User user, Question question) {
-    public LearningState getLS (String questionAndUser) {
+    public Response getLS (String questionAndUser) {
 
         //parse JSON with Jackson
         ObjectMapper objectMapper = new ObjectMapper();
 
-        LearningState emptyLearningState = new LearningState();
+        //Object that we want to return when found
+        LearningState learningState;
 
         //read JSON like DOM Parser
         try {
@@ -59,12 +61,17 @@ public class UsersResource {
             User userFromJson = objectMapper.treeToValue(userNode, User.class);
             User loggedInUser = userService.queryByCredentials(userFromJson.email, userFromJson.password);
 
-
-            // Question über post daten
-            return lsService.queryLearningState(loggedInUser, questionRef);
+            //schauen, ob es einen state zu der Frage und dem user gibt
+            try {
+                learningState = lsService.queryLearningState(loggedInUser, questionRef);
+                return Response.ok().entity(learningState).build();
+            } catch (Exception e) {
+                //no content
+                return Response.status(204, "No State found for User and Question").build();
+            }
 
         } catch (Exception e) {
-            return emptyLearningState;
+            return Response.status(400, "json must provide an object with name 'q' which matches a Question and an object with name 'user' which matches an User").build();
         }
     }
 

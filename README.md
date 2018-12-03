@@ -69,11 +69,9 @@ http://127.0.0.1:8050/questions/BWL
 **Fragen zu einem Kurs und einem Topic:**   
 todo:  /{coursename}/{topicname}
 
-**Zu einem Benutzer die ID einer Frage mit dem Status für den User**    
-todo: /{userId}/{questionsId}
-
-** Learningstate zu einem User und einer Question abrufen **
+**Learningstate zu einem User und einer Question abrufen**
 http://127.0.0.1:8050/user/state
+
 
 Beipsiel json:
 
@@ -84,6 +82,19 @@ Beipsiel json:
 	 "password" : "123"
  }
 }
+
+
+**User registrieren**
+http://127.0.0.1:8050/user/register
+
+Beispiel:   
+{
+  "email": "test@test.de",
+  "firstname": "Uschi",
+  "lastname": "",
+  "password": "467"
+}
+
 
 ### Überlegung zu weiteren Routen:
 

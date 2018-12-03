@@ -19,6 +19,9 @@ public class User {
     @Column(nullable = false)
     public String password;
 
+    @Column
+    private boolean isAdmin;
+
     @Transient
     public String jsonWebToken;
 
@@ -33,6 +36,15 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
+    }
+
+    //Construktor mit Admin Flag
+    public User(String email, String firstname, String lastname,  String password, boolean isAdmin) {
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     public String getFirstname() {
@@ -67,5 +79,12 @@ public class User {
         this.email = email;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 }
 
