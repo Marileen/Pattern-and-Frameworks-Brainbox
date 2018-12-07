@@ -205,7 +205,7 @@ public class App {
         // create LearningState
         LearningState lsGut = new LearningState(
                 "Gut",
-                "URL des Bilds",
+                "URL des Bilds".getBytes(),
                 "Ich kann die Frage gut beantworten. Der Inhalt ist also erfolgreich erlernt."
         );
 
@@ -213,14 +213,14 @@ public class App {
 
         LearningState lsMittel = new LearningState(
                 "Mittel",
-                "URL des Bilds",
+                "URL des Bilds".getBytes(),
                 "Ich kann die Frage halbwegs oder teilweise beantworten. Der Inhalt muss noch gefestigt werden."
         );
         learningStateService.save(lsMittel);
 
         LearningState lsNicht = new LearningState(
                 "Noch nicht",
-                "URL des Bilds",
+                "URL des Bilds".getBytes(),
                 "Ich kann mit der Frage noch nicht viel anfangen. Damit muss ich mich auf jeden Fall noch mehr beschäftigen"
         );
         learningStateService.save(lsNicht);
