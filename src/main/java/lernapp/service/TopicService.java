@@ -12,6 +12,10 @@ public class TopicService extends BasicService<Topic> {
 
     CourseService courseService = new CourseService();
 
+    public TopicService() {
+        super(Topic.class);
+    }
+
     /**
      * Query Topics that belongs to a specific Course
      *

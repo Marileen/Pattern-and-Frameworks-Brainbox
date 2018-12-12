@@ -8,6 +8,10 @@ import java.util.List;
 
 public class QuestionService extends BasicService<Question> {
 
+    public QuestionService( ) {
+        super(Question.class);
+    }
+
     CourseService courseService = new CourseService();
     TopicService topicService = new TopicService();
 
@@ -34,7 +38,7 @@ public class QuestionService extends BasicService<Question> {
     /**
      * Query Questions by a given course and topic
      *
-     * @return List<Topic>
+     * @return List<Question>
      *
      */
     public List<Question> queryTopicQuestions(String coursename, String topicname) {
@@ -53,5 +57,24 @@ public class QuestionService extends BasicService<Question> {
     }
 
 
+    /**
+     * Query Questions for user State
+     *
+     * @return List<Question>
+     *
+     */
+    public List<Question> queryMarkedQuestions(LearningState state, User user) {
+
+        EntityManager em = EMF.createEntityManager();
+        String queryString = "SELECT q FROM question q JOIN userQuestionLs uqls ON uqls.question = q WHERE uqls.user = :user AND uqls = :state";
+
+        TypedQuery<Question> query = em.createQuery(queryString, Question.class);
+        query.setParameter("user", user ).setParameter("state", state);
+
+        return query.getResultList();
+
     }
+
+
+}
 

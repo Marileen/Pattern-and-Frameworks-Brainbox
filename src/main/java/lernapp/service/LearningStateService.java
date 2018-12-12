@@ -9,9 +9,8 @@ public class LearningStateService extends BasicService<LearningState> {
 
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
-    // Query an entity by id
-    public LearningState queryById(Long id) {
-        return EMF.createEntityManager().find(LearningState.class, id);
+    public LearningStateService() {
+        super(LearningState.class);
     }
 
     // Query all entities
@@ -66,6 +65,28 @@ public class LearningStateService extends BasicService<LearningState> {
         query.setParameter("user", user ).setParameter("question", question);
 
         return query.getSingleResult();
+    }
+
+    public List<Question> queryQuestionsForLearningStateAndUser(Long userId, Long lsId) {
+
+        UserService userService = new UserService();
+        LearningState ls = this.queryById(lsId);
+        User user = userService.queryById(userId);
+
+        EntityManager em = EMF.createEntityManager();
+
+        String queryString = "SELECT q FROM question q JOIN userQuestionLs uqls ON uqls.learningState = :ls WHERE uqls.user = :user";
+
+        TypedQuery<Question> query = em.createQuery(queryString, Question.class);
+
+        query.setParameter("ls", ls ).setParameter("user", user);
+
+        List<Question> questions = query.getResultList();
+
+        em.close();
+
+        return questions;
+
     }
 
 }

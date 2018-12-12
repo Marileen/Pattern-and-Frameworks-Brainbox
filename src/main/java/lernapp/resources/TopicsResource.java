@@ -17,7 +17,7 @@ public class TopicsResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Topic> getTopics() {
-        return topicService.queryAll(Topic.class);
+        return topicService.queryAll();
     }
 
     // Beispiel URL: http://localhost:8050/topics/Computergrafik

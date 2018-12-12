@@ -8,7 +8,7 @@ public class LearningState {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
-    public int learningStateID;
+    public long learningStateID;
 
     // z. B. gut, mittel, noch nicht
     @Column(nullable = false)

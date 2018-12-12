@@ -10,7 +10,7 @@ public class Question {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
-    private int questionID;
+    private long questionID;
 
 //    @Lob annotation is used to map fields/properties of large value to a corresponding database-supported large object type.
 //    A Lob may be either a binary or character type.
@@ -53,11 +53,11 @@ public class Question {
         this.topic = topic;
     }
 
-    public int getQuestionID() {
+    public long getQuestionID() {
         return questionID;
     }
 
-    public void setQuestionID(int questionID) {
+    public void setQuestionID(Long questionID) {
         this.questionID = questionID;
     }
 

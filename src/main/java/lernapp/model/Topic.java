@@ -12,7 +12,7 @@ public class Topic {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable = false)
-    private int topicID;
+    private long topicID;
 
     @Column(nullable = false)
     private String topicName;
@@ -42,11 +42,7 @@ public class Topic {
 
     // Getter und Setter
 
-    public int getTopicID() {
-        return topicID;
-    }
-
-    public void setTopicID(int topicID) {
+    public void setTopicID(Long topicID) {
         this.topicID = topicID;
     }
 

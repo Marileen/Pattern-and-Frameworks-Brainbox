@@ -6,6 +6,10 @@ import javax.persistence.*;
 
 public class UserService extends BasicService<User> {
 
+    public UserService( ) {
+        super(User.class);
+    }
+
     public User queryByCredentials (String email, String password) {
 
         try {

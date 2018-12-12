@@ -7,9 +7,13 @@ import java.util.List;
 @Entity(name = "user")
 public class User {
 
-    @Id
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     public String email; // serves as user name
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private long userID;
 
     @Column(nullable = false)
     public String firstname;

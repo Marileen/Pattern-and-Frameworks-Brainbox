@@ -26,7 +26,7 @@ public class QuestionsResource {
     @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Question> getQuestions() {
-        return questionService.queryAll(Question.class);
+        return questionService.queryAll();
     }
 
     @GET

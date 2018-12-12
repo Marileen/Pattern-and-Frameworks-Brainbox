@@ -20,6 +20,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Path("/user")    // ist dann unter der url im Browser aufrufbar
@@ -32,38 +33,42 @@ public class UsersResource {
     public UsersResource() {
     }
 
+
+    /*
+     *
+     * Fragen zu einem bestimmten LearningState eines Users
+     */
+    //@JwtFilter.JwtNeeded
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Path("state/{userId}/{stateId}")
+    public List<Question> getMarkedQuestions (@PathParam("userId") Long userId, @PathParam("stateId") Long stateId ) {
+
+        //todo: gucken ob der eingeloggte user auch der ist, für den die Fragen geholt werden
+
+        return lsService.queryQuestionsForLearningStateAndUser(userId, stateId);
+
+    }
+
     @JwtFilter.JwtNeeded
-    @Path("state")
-    @POST
+    @Path("state/{userId}/{questionId}")
+    @GET
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     //public LearningState getLS (User user, Question question) {
-    public Response getLS (String questionAndUser) {
-
-        //parse JSON with Jackson
-        ObjectMapper objectMapper = new ObjectMapper();
+    public Response getLS (@PathParam("userId") Long userId, @PathParam("questionId") Long qId) {
 
         //Object that we want to return when found
         LearningState learningState;
 
-        //read JSON like DOM Parser
         try {
-            // fuer JSON-Obj mit mehr als einem Objekt braucht man reedTree
-            JsonNode rootNode = objectMapper.readTree(questionAndUser);
 
-            JsonNode questionNode = rootNode.path("q");
-            // exeption hier wenn q erwartet, aber gibt es nicht
-            Question questionFromJson = objectMapper.treeToValue(questionNode, Question.class);
-            Question questionRef =questionService.queryById(questionFromJson.getQuestionID(), Question.class);
-
-            JsonNode userNode = rootNode.path("user");
-            // exeption hier wenn kein "user" im json
-            User userFromJson = objectMapper.treeToValue(userNode, User.class);
-            User loggedInUser = userService.queryByCredentials(userFromJson.email, userFromJson.password);
+            Question question = questionService.queryById(qId);
+            User user = userService.queryById(userId);
 
             //schauen, ob es einen state zu der Frage und dem user gibt
             try {
-                learningState = lsService.queryLearningState(loggedInUser, questionRef);
+                learningState = lsService.queryLearningState(user, question);
                 return Response.ok().entity(learningState).build();
             } catch (Exception e) {
                 //no content
@@ -71,7 +76,7 @@ public class UsersResource {
             }
 
         } catch (Exception e) {
-            return Response.status(400, "json must provide an object with name 'q' which matches a Question and an object with name 'user' which matches an User").build();
+            return Response.status(400, "Requested User or Question not found").build();
         }
     }
 

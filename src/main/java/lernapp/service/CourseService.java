@@ -7,6 +7,10 @@ import javax.persistence.TypedQuery;
 
 public class CourseService extends BasicService<Course> {
 
+    public CourseService() {
+        super(Course.class);
+    }
+
     /**
      * Query a Course by name
      *

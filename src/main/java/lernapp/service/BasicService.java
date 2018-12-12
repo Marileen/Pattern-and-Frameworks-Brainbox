@@ -27,6 +27,12 @@ public class BasicService<T> {
     //Hier benutzen wir das SINGLETON PATTERN - wirklich? ist das nicht Factory?
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
+    private Class<T> entityClass;
+
+    public BasicService(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
+
     /**
      * Generic Method for saving ONE ENTITY of any types of Entities
      * The Entity will be persisted to the database (not merged)
@@ -86,23 +92,23 @@ public class BasicService<T> {
      * @return List<T>
      *
      */
-    public List<T> queryAll (Class<T> entityType) {
+    public List<T> queryAll () {
 
         EntityManager em = EMF.createEntityManager(); //SELECT t FROM [tablename] as t
-        String queryString = "FROM " + entityType.getName();
-        TypedQuery<T> query = em.createQuery(queryString, entityType);
+        String queryString = "FROM " + entityClass.getName();
+        TypedQuery<T> query = em.createQuery(queryString, entityClass);
 
         return query.getResultList();
     }
 
 
     // Query an entity by id
-    public T queryById(int id, Class<T> entityType) {
-        return EMF.createEntityManager().find(entityType, id);
+    public T queryById(Long id) {
+        return EMF.createEntityManager().find(entityClass, id);
     }
 
     // Delete entity by id
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
         Question result = em.find(Question.class, id);
