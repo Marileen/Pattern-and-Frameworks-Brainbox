@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lernapp Medieninformatik</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="css/lernappstyle.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery-3.2.1.js" defer></script>
+    <!-- neuere Version: jQuery Core 3.3.1 uncompressed <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script> -->
+    <script type="text/javascript" src="js/jquery.binarytransport.js" defer></script>
+    <script type="text/javascript" src="js/sha256.js" defer></script>
+    <script type="text/javascript" src="js/frontend-kathrin.js" defer></script>
+
+</head>
+    <body>
+
+        <div class="login container">
+            <h2>Lernapp Medieninformatik</h2>
+            <input type="text" id="username" class="form-control" placeholder="Username" value="benutzername">
+            <input type="password" id="password" class="form-control" placeholder="Passwort" value="secret">
+            <button id="login-button" class="btn btn-lg btn-primary" type="submit">Login</button>
+            <div class="failureMessage"></div>
+        </div>
+
+        <div class="main container">
+            <h1>Verfügbare Kurse</h1>
+
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#catalogue">Patterns and Frameworks</a></li>
+                <li class="nav-item"><a class="nav-link" href="#basket">Datenbanken</a></li>
+                <li class="nav-item"><a class="nav-link" href="#basket">Betriebswirtschaftslehre</a></li>
+                <li class="nav-item"><a class="nav-link" href="#orders">IT-Recht</a></li>
+                <li class="nav-item"><a class="nav-link" href="#orders">Computergrafik</a></li>
+            </ul>
+
+            <!-- Product catalogue container -->
+            <div id="catalogue" class="pane"></div>
+
+            <!-- Shopping basket container -->
+            <div id="basket" class="pane"></div>
+
+            <!-- Orders container -->
+            <table id="orders" class="pane"><tbody></tbody></table>
+
+        </div>
+
+    </body>
+</html>

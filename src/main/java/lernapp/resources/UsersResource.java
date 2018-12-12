@@ -85,7 +85,7 @@ public class UsersResource {
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public User login(User user) {
-        // mit queryBy... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
+        // mit queryByCr... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
         User loggedInUser = userService.queryByCredentials(user.email, user.password);
 
         if (loggedInUser != null) {
@@ -119,8 +119,6 @@ public class UsersResource {
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response register(User user) {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
         if ( isNullOrEmpty(user.email) ) {
             //zurückgeben dass email nicht leer sein darf
             return Response.status(400, "Email field should be provided").build();
@@ -148,8 +146,7 @@ public class UsersResource {
             }
             return Response.status(500, e.getMessage()).build();
         }
-
-    }
+ }
 
     public static boolean isNullOrEmpty (String test) {
         return test == null || test.isEmpty();

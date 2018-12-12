@@ -15,8 +15,10 @@ public class LearningState {
     public String stateName;
 
     // zugehöriges Bildchen
-    @Column(nullable = false)
-    public String pictureUrl;
+
+    @Lob
+    @Column
+    public byte[] picture;
 
     // Beschreibung
     @Column(nullable = false)
@@ -29,9 +31,9 @@ public class LearningState {
 
     }
 
-    public LearningState(String stateName, String pictureUrl, String LearningStateDescr){
+    public LearningState(String stateName, byte[] picture, String LearningStateDescr){
         this.stateName = stateName;
-        this.pictureUrl = pictureUrl;
+        this.picture = picture;
         this.LearningStateDescr = LearningStateDescr;
     }
 }
