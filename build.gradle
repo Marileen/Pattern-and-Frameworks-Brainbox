@@ -30,6 +30,4 @@ dependencies {
     // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '6.3'
 
-
-
 }

@@ -81,18 +81,12 @@ http://127.0.0.1:8050/questions/BWL
 todo:  /{coursename}/{topicname}
 
 **Learningstate zu einem User und einer Question abrufen**
-http://127.0.0.1:8050/user/state
+http://127.0.0.1:8050/user/state/1/11
+state/{userId}/{questionId}
 
-
-Beipsiel json:
-
-{"q" : { "questionID" : 11
-},
- "user" : {
-	 "email" : "marileen.stamer@stud.fh-luebeck.de",
-	 "password" : "123"
- }
-}
+**get marked Questions for User and Learning State**
+http://127.0.0.1:8050/user/state/0/3
+state/{userId}/{stateId}
 
 
 **User registrieren**
