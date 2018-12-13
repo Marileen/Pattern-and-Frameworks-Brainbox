@@ -4,8 +4,9 @@ Semesterprojektaufgabe WS 2018/19 von Kathrin Köhler und Marileen Stamer
 
 ## gemeinsame Backend-Anwendung
 
-ich habe nach diversen Tets nun schonmal im src/main/java/ Verzeichnis ein lernapp package angelegt mit der ersten Klasse: User
-Vorlage dafür ist die Struktur aus dem Beispiel von Jens Ehlers, welches ich runtergeladen habe
+stellt Enddpoints für User Registrierung, Daten zu Kursen, Topics, Fragen und Antworten sowie die Infos zu einem User 
+und seiner Markierung für verschiedene Fragen. Liefert Bilder.
+
 
 ## Start
 
@@ -64,30 +65,33 @@ Wenn man Gradle (Maven) Module sucht, dann findet man sie hier:
 
 https://mvnrepository.com/
 
-## Routen, die schon funktionieren
+## Endpoints
+
+### GET
 
 **Jeweils alle Entitäten:**  
-http://127.0.0.1:8050/courses
-http://127.0.0.1:8050/topics
+http://127.0.0.1:8050/courses   
+http://127.0.0.1:8050/topics    
 http://127.0.0.1:8050/questions
 
-**Topics zu einen bestimmten Kurs**
+**Topics zu einen bestimmten Kurs**     
 http://127.0.0.1:8050/topics/DB
 
-**Fragen zu einem Kurs:**
+**Fragen zu einem Kurs:**   
 http://127.0.0.1:8050/questions/BWL
 
-**Fragen zu einem Kurs und einem Topic:**   
-todo:  /{coursename}/{topicname}
+**Fragen zu einem Kurs und einem Topic:**       
+http://127.0.0.1:8050/questions/DB/Wissensfragen
 
 **Learningstate zu einem User und einer Question abrufen**
-http://127.0.0.1:8050/user/state/1/11
+http://127.0.0.1:8050/state/1/11   
 state/{userId}/{questionId}
 
 **get marked Questions for User and Learning State**
-http://127.0.0.1:8050/user/state/0/3
+http://127.0.0.1:8050/state/0/3    
 state/{userId}/{stateId}
 
+### POST
 
 **User registrieren**
 http://127.0.0.1:8050/user/register
@@ -99,6 +103,9 @@ Beispiel:
   "lastname": "",
   "password": "467"
 }
+
+**Setzen eines Status für User, Question und Status**
+http://127.0.0.1:8050/state/set
 
 
 ### Überlegung zu weiteren Routen:
