@@ -55,7 +55,6 @@ public class LearningstateResource {
     @GET
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    //public LearningState getLS (User user, Question question) {
     public Response getLS (@PathParam("userId") Long userId, @PathParam("questionId") Long qId) {
 
         //Object that we want to return when found

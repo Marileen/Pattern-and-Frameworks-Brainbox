@@ -107,10 +107,23 @@ Beispiel:
 **Setzen eines Status für User, Question und Status**
 http://127.0.0.1:8050/state/set
 
+**Fragen anlegen**  
+http://127.0.0.1:8050/questions
+
+<pre>
+{ "question" : "Testfrage 1?",
+  "answer": Testantwort1,
+  "topic" : {
+     "topicID": 3,
+     "topicName": "Wissenfragen",
+     "topicDescription": "Alle Fragen dieser Topic drehen sich um Datenbanken"
+  }
+}
+</pre>
+
 
 ### Überlegung zu weiteren Routen:
 
-* Fragen anlegen (q, a, t_id, c_id)
 * Fragen ändern
 * Fragen löschen
 
