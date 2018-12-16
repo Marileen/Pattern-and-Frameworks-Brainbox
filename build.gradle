@@ -29,5 +29,6 @@ dependencies {
     compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.9.7'
     // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '6.3'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.1.2'
 
 }

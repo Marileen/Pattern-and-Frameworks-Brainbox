@@ -65,6 +65,7 @@ public class UsersResource {
                 loggedInUser.jsonWebToken = jwsObject.serialize();
 
             } catch (Exception e) {
+                //todo bessere Rückmeldung liefern
                 e.printStackTrace();
             }
         }

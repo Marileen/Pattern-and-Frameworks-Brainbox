@@ -21,7 +21,7 @@ public class Question {
 
     @Lob
     @Column(nullable = false )
-    public String answer;
+    private String answer;
 
     //@Column(nullable = false) // evtl. brauchen wir hier: insertable = false, updatable = false
     //public int topicID;

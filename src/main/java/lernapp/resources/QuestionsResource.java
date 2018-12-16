@@ -1,5 +1,6 @@
 package lernapp.resources;
 
+import lernapp.filter.AdminOnlyFilter;
 import lernapp.filter.JwtFilter;
 import lernapp.model.Question;
 import lernapp.model.Topic;
@@ -48,6 +49,8 @@ public class QuestionsResource {
     }
 
     @POST
+    @JwtFilter.JwtNeeded
+    @AdminOnlyFilter.AdminOnly
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response postQuestion(Question question, @Context UriInfo uriInfo) {
@@ -55,13 +58,26 @@ public class QuestionsResource {
         // Question is persisted with a new generated id,
         // The Question entity is returned in the response location URI
 
+        //todo: try catch hinzufügen
         questionService.save(question);
         URI uri = uriInfo.getAbsolutePathBuilder().path(question.toString()).build();
         return Response.created(uri).entity(question).build(); // 201
 
+    }
 
-        //todo: was passiert, wenn das json falsch ist?
+    @DELETE
+    @JwtFilter.JwtNeeded
+    @AdminOnlyFilter.AdminOnly
+    @Path("/{id}")
+    public boolean deleteQuestion(@PathParam("id") Long id) {
 
+        // Question will be deleted
+        try {
+            questionService.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
