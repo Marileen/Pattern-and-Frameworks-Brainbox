@@ -1,14 +1,19 @@
 package lernapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 // unser User
 @Entity(name = "user")
 public class User {
 
+
     @Column(nullable = false, unique=true)
-    public String email; // serves as user name
+    //@JsonIgnore
+    private String email;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -16,18 +21,18 @@ public class User {
     private long userID;
 
     @Column(nullable = false)
-    public String firstname;
+    private String firstname;
 
-    public String lastname;
+    private String lastname;
 
     @Column(nullable = false)
-    public String password;
+    private String password;
 
     @Column
     private boolean isAdmin;
 
     @Transient
-    public String jsonWebToken;
+    private String jsonWebToken;
 
 //    @OneToMany(mappedBy = "linkPk.user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    public List<UserQuestionLS> user_question_ls;
@@ -97,6 +102,14 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public String getJsonWebToken() {
+        return jsonWebToken;
+    }
+
+    public void setJsonWebToken(String jsonWebToken) {
+        this.jsonWebToken = jsonWebToken;
     }
 }
 
