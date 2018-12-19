@@ -12,7 +12,6 @@
     "use strict";
 
     // use this transport for "binary" data type
-    // http://www.henryalgus.com/reading-binary-files-using-jquery-ajax/
     $.ajaxTransport("+binary", function(options, originalOptions, jqXHR) {
         // check for conditions and support for blob / arraybuffer response type
         if (window.FormData && ((options.dataType && (options.dataType == 'binary')) || (options.data && ((window.ArrayBuffer && options.data instanceof ArrayBuffer) || (window.Blob && options.data instanceof Blob))))) {
