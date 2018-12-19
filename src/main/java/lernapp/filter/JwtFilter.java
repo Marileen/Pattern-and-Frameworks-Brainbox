@@ -62,7 +62,7 @@ public class JwtFilter implements ContainerRequestFilter {
                     if (jwsObject.verify(verifier)) {
                         String payload = jwsObject.getPayload().toString();
                         User user = new ObjectMapper().readValue(payload, User.class);
-                        System.out.println("User verified: " + user.firstname);
+                        System.out.println("User verified: " + user.getFirstname());
                         return;
                     }
                 } catch (Exception e) {

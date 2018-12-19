@@ -42,9 +42,9 @@ public class UsersResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public User login(User user) {
+    public Response login(User user) {
         // mit queryByCr... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
-        User loggedInUser = userService.queryByCredentials(user.email, user.password);
+        User loggedInUser = userService.queryByCredentials(user.getEmail(), user.getPassword());
 
         if (loggedInUser != null) {
             try {
@@ -62,14 +62,20 @@ public class UsersResource {
                 // MAC - Message Authentication Code = Signatur
                 // Apply the HMAC to the JWS object and send the token to the client
                 jwsObject.sign(new MACSigner(secret));
-                loggedInUser.jsonWebToken = jwsObject.serialize();
+                loggedInUser.setJsonWebToken(jwsObject.serialize());
+
+                return Response.ok().entity(login(loggedInUser)).build();
 
             } catch (Exception e) {
                 //todo bessere Rückmeldung liefern
                 e.printStackTrace();
+                return Response.status(500, e.getMessage()).build();
             }
         }
-        return loggedInUser;
+
+        //user is null, weil er über seine credentials nicht gefunden wurde
+        return Response.status(400, "Credentials incorrect").build();
+
     }
 
     @Path("register")
@@ -78,17 +84,17 @@ public class UsersResource {
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response register(User user) {
 
-        if ( isNullOrEmpty(user.email) ) {
+        if ( isNullOrEmpty(user.getEmail()) ) {
             //zurückgeben dass email nicht leer sein darf
             return Response.status(400, "Email field should be provided").build();
         }
 
-        if ( isNullOrEmpty(user.password) ) {
+        if ( isNullOrEmpty(user.getPassword()) ) {
             //zurückgeben dass pw nicht leer sein darf
             return Response.status(400, "Password field should be provided").build();
         }
 
-        if ( isNullOrEmpty(user.firstname) ) {
+        if ( isNullOrEmpty(user.getFirstname()) ) {
             //zurückgeben dass firstname nicht leer sein darf
             return Response.status(400, "Firstname field should be provided").build();
         }
