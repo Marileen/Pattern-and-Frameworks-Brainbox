@@ -1,51 +1,198 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Lernapp Medieninformatik</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link href="css/lernappstyle.css" rel="stylesheet">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <script type="text/javascript" src="js/jquery-3.2.1.js" defer></script>
-    <!-- neuere Version: jQuery Core 3.3.1 uncompressed <script src="https://code.jquery.com/jquery-3.3.1.js"
+
+    <title>Lernapp</title>
+
+
+
+    <script type="text/javascript" src="js/jquery-3.3.1.js" defer></script>
+    <!-- CDN jQuery Core 3.3.1 uncompressed
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script> -->
     <script type="text/javascript" src="js/jquery.binarytransport.js" defer></script>
     <script type="text/javascript" src="js/sha256.js" defer></script>
-    <script type="text/javascript" src="js/frontend-kathrin.js" defer></script>
+    <script type="text/javascript" src="js/main.js" defer></script>
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="styles.css"/>
+
+    <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    -->
 
 </head>
-    <body>
+<body>
+<header>
+    <nav class="navbar navbar-dark bg-dark">
+        <div id="navbar-header">
+            <h1>Medieninformatik Lernapp</h1>
+        </div>
+        <!-- Navbar content -->
+    </nav>
 
-        <div class="login container">
-            <h2>Lernapp Medieninformatik</h2>
-            <input type="text" id="username" class="form-control" placeholder="Username" value="benutzername">
-            <input type="password" id="password" class="form-control" placeholder="Passwort" value="secret">
-            <button id="login-button" class="btn btn-lg btn-primary" type="submit">Login</button>
-            <div class="failureMessage"></div>
+</header>
+
+<div class="login page"> <!-- vgl. login container -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                leer
+            </div>
+            <div class="col">
+
+                <h2>Lernapp Medieninformatik</h2>
+
+                <input type="text" id="username" class="form-control" placeholder="Username" value="benutzername">
+                <input type="password" id="password" class="form-control" placeholder="Passwort" value="secret">
+                <button id="login-button" class="btn btn-secondary" type="submit">Login</button>
+
+                <div class="failureMessage"></div>
+
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-info float-right">Registrieren</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="main">
+    <p>Das ist der eingeloggte Bereich</p>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Home</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Alle Kurse<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Alle Themen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Alle Fragen</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0"> <!-- Logout button verschwindet wenn toggled -->
+            <div >
+                <button id="logout-b" class="btn btn-secondary float-right" type="submit">Logout</button>
+            </div>
+
+        </form>
+    </div>
+</nav>
+
+
+<div class="row">
+
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="img/card_paf.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title paf">Paf</h5>
+                <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
+                <a href="#"  class="btn btn-primary">Themen anzeigen</a>
+            </div>
+            <p id=topics-paf></p>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="img/card_db.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title db">Datenbanken</h5>
+                <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
+                <a href="#" class="btn btn-primary">Themen anzeigen</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="img/card_bwl.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Betriebswirtschaftslehre</h5>
+                <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
+                <a href="#" class="btn btn-primary">Themen anzeigen</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="img/card_itr.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">IT-Recht</h5>
+                <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
+                <a href="#" class="btn btn-primary">Themen anzeigen</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="img/card_cog.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Computergrafik</h5>
+                <p class="card-text">Hier überprüfst Du Dein Wissen zu Computergrafik.</p>
+                <p>
+                    <!-- Collapse button with data-target -->
+                    <button id="cog-t-button" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Themen anzeigen
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div id="cog-t1" class="card card-body">Topic 1: alsdföjaslk fjsöadlfj</div>
+                    <div class="card card-body">Topic 2: alsdföjaslk fjsöadlfj</div>
+                    <div class="card card-body">Topic 3: alsdföjaslk fjsöadlfj</div>
+                    <div class="card card-body">Topic 4: alsdföjaslk fjsöadlfj</div>
+                    <div class="card card-body">Topic 5: alsdföjaslk fjsöadlfj</div>
+                </div>
+            </div>
         </div>
 
-        <div class="main container">
-            <h1>Verfügbare Kurse</h1>
+    </div>
 
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a class="nav-link active" href="#catalogue">Patterns and Frameworks</a></li>
-                <li class="nav-item"><a class="nav-link" href="#basket">Datenbanken</a></li>
-                <li class="nav-item"><a class="nav-link" href="#basket">Betriebswirtschaftslehre</a></li>
-                <li class="nav-item"><a class="nav-link" href="#orders">IT-Recht</a></li>
-                <li class="nav-item"><a class="nav-link" href="#orders">Computergrafik</a></li>
-            </ul>
+    <div class="restfeedback">
+        <p>Kursname</p>
+    </div>
 
-            <!-- Product catalogue container -->
-            <div id="catalogue" class="pane"></div>
+</div> <!-- end of class row -->
 
-            <!-- Shopping basket container -->
-            <div id="basket" class="pane"></div>
 
-            <!-- Orders container -->
-            <table id="orders" class="pane"><tbody></tbody></table>
 
-        </div>
 
-    </body>
+
+
+<div class="main">
+
+</div>
+
+<div class="footer">
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+
 </html>
