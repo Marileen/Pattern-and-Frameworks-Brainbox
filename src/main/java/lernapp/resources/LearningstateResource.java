@@ -135,7 +135,7 @@ public class LearningstateResource {
             JsonNode lsNode = rootNode.path("learningState");
             // exeption hier wenn kein "learningState" im json
             LearningState lsFromJson = objectMapper.treeToValue(lsNode, LearningState.class);
-            LearningState lsRef = lsService.queryById(lsFromJson.learningStateID);
+            LearningState lsRef = lsService.queryById(lsFromJson.getLearningStateID());
 
 
             //save or update
@@ -152,6 +152,25 @@ public class LearningstateResource {
             return Response.status(400, "json must provide an object with key 'learningState' which matches a Learningstate").build();
         }
 
+    }
+
+    /*
+     *
+     * Bild zu einem LearningState
+     */
+    @GET
+    @Path("image")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getLSImage() {
+//        Product product = productService.queryById(id);
+//        if (product == null) {
+//            return Response.status(404).build(); // 404
+//        }
+//
+//        InputStream is = new ByteArrayInputStream(product.image);
+//        return Response.ok(is, MediaType.APPLICATION_OCTET_STREAM).header("Content-Disposition", "attachment; filename=\"" + product.title + "\"").build();
+//
+        return Response.ok().build();
     }
 
 }

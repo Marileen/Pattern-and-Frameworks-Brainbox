@@ -64,7 +64,7 @@ public class UsersResource {
                 jwsObject.sign(new MACSigner(secret));
                 loggedInUser.setJsonWebToken(jwsObject.serialize());
 
-                return Response.ok().entity(login(loggedInUser)).build();
+                return Response.ok().entity(loggedInUser).build();
 
             } catch (Exception e) {
                 //todo bessere Rückmeldung liefern
