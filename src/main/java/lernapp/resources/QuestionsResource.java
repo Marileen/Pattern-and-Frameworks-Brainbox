@@ -3,7 +3,6 @@ package lernapp.resources;
 import lernapp.filter.AdminOnlyFilter;
 import lernapp.filter.JwtFilter;
 import lernapp.model.Question;
-import lernapp.model.Topic;
 import lernapp.service.QuestionService;
 
 import javax.ws.rs.*;
@@ -33,6 +32,7 @@ public class QuestionsResource {
     @GET
     // @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    //@Path("course/{coursename}")
     @Path("/{coursename}")
     public List<Question> getCourseQuestions(@PathParam("coursename") String coursename) {
         List list = questionService.queryCourseQuestions(coursename);
@@ -42,6 +42,7 @@ public class QuestionsResource {
     @GET
     // @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    //@Path("course/{coursename}/topic/{topicname}")
     @Path("/{coursename}/{topicname}")
     public List<Question> getTopicQuestions(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {
         List list = questionService.queryTopicQuestions(coursename, topicname);
