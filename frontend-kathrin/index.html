@@ -98,6 +98,9 @@
     </div>
 </nav>
 
+<div id="courses" class="row">
+</div>
+
 
 <div class="row">
 
@@ -105,21 +108,21 @@
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="img/card_paf.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title paf">Paf</h5>
+                <h5 id="courseID0" class="card-title show-courses">Paf</h5>
                 <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
-                <a href="#"  class="btn btn-primary">Themen anzeigen</a>
+                <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
             </div>
-            <p id=topics-paf></p>
         </div>
+        <p class="topics-list">bla bla</p>
     </div>
 
     <div class="col">
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="img/card_db.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title db">Datenbanken</h5>
+                <h5 id="courseID1"  class="card-title show-courses">Db</h5>
                 <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
-                <a href="#" class="btn btn-primary">Themen anzeigen</a>
+                <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
             </div>
         </div>
     </div>
@@ -128,9 +131,9 @@
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="img/card_bwl.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">Betriebswirtschaftslehre</h5>
+                <h5 id="courseID2" class="card-title show-courses">Bwl</h5>
                 <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
-                <a href="#" class="btn btn-primary">Themen anzeigen</a>
+                <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
             </div>
         </div>
     </div>
@@ -139,9 +142,9 @@
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="img/card_itr.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">IT-Recht</h5>
+                <h5 id="courseID3" class="card-title show-courses">Itr</h5>
                 <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
-                <a href="#" class="btn btn-primary">Themen anzeigen</a>
+                <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
             </div>
         </div>
     </div>
@@ -150,20 +153,20 @@
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="img/card_cog.jpg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">Computergrafik</h5>
+                <h5 id="courseID5" class="card-title show-courses">Cg</h5>
                 <p class="card-text">Hier überprüfst Du Dein Wissen zu Computergrafik.</p>
                 <p>
                     <!-- Collapse button with data-target -->
-                    <button id="cog-t-button" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button id="cog-t-button" class="show-topics btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         Themen anzeigen
                     </button>
                 </p>
                 <div class="collapse" id="collapseExample">
                     <div id="cog-t1" class="card card-body">Topic 1: alsdföjaslk fjsöadlfj</div>
-                    <div class="card card-body">Topic 2: alsdföjaslk fjsöadlfj</div>
-                    <div class="card card-body">Topic 3: alsdföjaslk fjsöadlfj</div>
-                    <div class="card card-body">Topic 4: alsdföjaslk fjsöadlfj</div>
-                    <div class="card card-body">Topic 5: alsdföjaslk fjsöadlfj</div>
+                    <div id="cog-t2" class="card card-body">Topic 2: alsdföjaslk fjsöadlfj</div>
+                    <div id="cog-t3" class="card card-body">Topic 3: alsdföjaslk fjsöadlfj</div>
+                    <div id="cog-t4" class="card card-body">Topic 4: alsdföjaslk fjsöadlfj</div>
+                    <div id="cog-t5" class="card card-body">Topic 5: alsdföjaslk fjsöadlfj</div>
                 </div>
             </div>
         </div>
