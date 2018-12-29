@@ -41,17 +41,25 @@ $(function() {
                     // window.alert(element.courseName);
                     console.log(element, $("#courseID" + element.courseID));
 
+                    // den ganzen Spass mit .html statt mit append machen?
                     coursesElement.append(
                         $('<div class="col"/>').append(
                             $('<div class="card"/>').append(
-                                $('<h5/>').text(element.courseName)
+                            //<img class="card-img-top" src="img/card_paf.jpg" alt="Card image cap">
+                                //$('<img class="card-img-top" src="img/card_paf.jpg" alt="Card image cap"/>').append()
+                                    $('<div class="card-body"/>').append(
+                                        $('<h5 id="courseID0" class="card-title show-courses"/>').text(element.courseName).append(
+                                            $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
+                                        )
+                                    )
+                                )
                             )
-                        ));
+                        );
                 });
 
                 $.each(data, function (index, element) {
                         // window.alert(element.courseName);
-                        console.log(element, $("#courseID" + element.courseID));
+                       // console.log(element, $("#courseID" + element.courseID));
                         $("#courseID" + element.courseID).text(element.courseName);
 
                     });
