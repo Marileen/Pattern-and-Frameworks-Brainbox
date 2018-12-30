@@ -1,7 +1,6 @@
 package lernapp;
 
 import lernapp.model.*;
-import lernapp.service.BasicService;
 import lernapp.service.LearningStateService;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
@@ -205,7 +204,7 @@ public class App {
         // create LearningState
         LearningState lsGut = new LearningState(
                 "Gut",
-                "URL des Bilds".getBytes(),
+                "Icon_Dartscheibe.jpg",
                 "Ich kann die Frage gut beantworten. Der Inhalt ist also erfolgreich erlernt."
         );
 
@@ -213,14 +212,14 @@ public class App {
 
         LearningState lsMittel = new LearningState(
                 "Mittel",
-                "URL des Bilds".getBytes(),
+                "Icon_Kopf_nochnicht.jpg",
                 "Ich kann die Frage halbwegs oder teilweise beantworten. Der Inhalt muss noch gefestigt werden."
         );
         learningStateService.save(lsMittel);
 
         LearningState lsNicht = new LearningState(
                 "Noch nicht",
-                "URL des Bilds".getBytes(),
+                "Icon_Fragezeichen.jpg",
                 "Ich kann mit der Frage noch nicht viel anfangen. Damit muss ich mich auf jeden Fall noch mehr beschäftigen"
         );
         learningStateService.save(lsNicht);

@@ -1,7 +1,6 @@
 package lernapp.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "learningState")
 public class LearningState {
@@ -17,11 +16,7 @@ public class LearningState {
     // zugehöriges Bildchen
     // wird aus einem media verzeichnis ausgeliefert (weil man Bilder nicht in der DB speichert)
     @Column
-    private String imageURL;
-
-    @Lob
-    @Column
-    private byte[] picture;
+    private String imageUrl;
 
     // Beschreibung
     @Column(nullable = false)
@@ -34,9 +29,9 @@ public class LearningState {
 
     }
 
-    public LearningState(String stateName, byte[] picture, String LearningStateDescr){
+    public LearningState(String stateName, String imageFileName, String LearningStateDescr){
         this.stateName = stateName;
-        this.picture = picture;
+        this.imageUrl = imageUrl;
         this.LearningStateDescr = LearningStateDescr;
     }
 
@@ -63,5 +58,13 @@ public class LearningState {
 
     public void setLearningStateDescr(String learningStateDescr) {
         LearningStateDescr = learningStateDescr;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
