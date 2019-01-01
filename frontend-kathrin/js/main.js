@@ -28,9 +28,6 @@ $(function() {
     });
     */
 
-    // nimmt Kursnamen aus Array
-// hier weiter machen: loopt durch und schreibt 3. Kurs = Computergrafik rein
-
         $.ajax({
             type: 'GET',
             url: host + "/courses",
@@ -41,9 +38,6 @@ $(function() {
                     // window.alert(element.courseName);
                     console.log(element, $("#courseID" + element.courseID));
 
-
-                    // den ganzen Spass mit .html statt mit append machen?
-
                     coursesElement.append(
                         $('<div class="col"/>').append(
                             $('<div class="card" style="width: 18rem;"/>')
@@ -51,6 +45,7 @@ $(function() {
                                     class: "card-img-top",
                                     alt: "Card image cap",
                                     src: "img/card_" + element.courseID + ".jpg",
+
                                 }))
                                 .append($('<div class="card-body"/>')
                                         .append(
@@ -58,22 +53,41 @@ $(function() {
                                                 .text(element.courseName))
                                         .append(
                                             $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>').append(
-                                                $('<a id="c5-t8" class="show-topics btn btn-primary">Themen anzeigen</a>')
+                                                $('<button class="show-topics btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Themen anzeigen</button>')
+                                            )
+                                        .append(
+                                            $('<div class="collapse" id="collapseExample"/>').append(
+                                                $('<div class="card card-body"/>').text(
+
+                                                    // hier wird noch das Objekt ausgegeben, statt des topicName
+                                                    $.each(getTopics(element.courseName), function (index, element) {
+                                                        console.log(element, $("Topic-Name" + element.topicName));
+
+                                                            $(".card-body").append(element.topicName)
+
+
+
+                                                    })
+
+                                                )
+                                            )
+
+                                                    /*
+                                                    // text mit getTopics ersetzen
+                                                    var topics = getTopics(element.courseName);
+
+                                                    $.each(topics, function (index, element) {
+                                                            $("card-body").text(element.topicName);
+                                                    });
+                                                    */
                                             )
                                         )
-                                    )
-                              //  )
-                            )
-                        ); // ende der appends
-                    $(".collapse").click(function () {
+                                ) // ende card-body
+                        ) // ende col
+                    ); // ende der appends
 
-                        $(this).text("wurde geklickt");
-                        // von diesem geklickten Element brauche ich aus dem h5 die courseID
-                        var id = element.courseID;
-                        console.log("Id des Elements:"+id);
-                        }
 
-                    )
+
                 });
 
                 $.each(data, function (index, element) {
@@ -84,28 +98,44 @@ $(function() {
                     });
                     //  window.alert(data);
             }
-        });
-                // id="#courseID3"
+        }); // Ende ajax
 
-               /*
-                $(".card-title").html(
-                    $.each(data, function (index, element) {
-                        $("#courseID"+element.courseID).html(element.courseName);
-                    }))                 */
 
-/*
-    $("#cog-t-button").click(function () {
-        $.ajax({
-            type: 'GET',
-            url: host + "/topics/computergrafik",
-            success: function (data) {
-                $("#cog-t1").html(data[0].topicName);
-            }
-        });
-    });
-*/
+    // holt topics
+    function getTopics (courseName) {
 
-// gerade nicht genutzt
+        var courseTopics =
+            $.ajax({
+                type: 'GET',
+                url: host + "/topics/" +courseName,
+                success: function (data) {
+
+                        $.each(data, function (index, element) {
+                            console.log("elemente: " + element.topicName);
+                            window.alert(element.topicName);
+                        });
+
+
+                }
+            });
+        console.log("courseName = " + courseName + "; diese Topics "+ courseTopics)
+        return courseTopics;
+    }
+
+
+
+    $(".collapse").click(function () {
+
+            $(this).text("wurde geklickt");
+            // von diesem geklickten Element brauche ich aus dem h5 die courseID
+            var id = element.courseID;
+            console.log("Id des Elements:"+id);
+        }
+
+    )
+
+
+    // gerade nicht genutzt
     $(".show-topics").click(function () { // wenn ich auf knopf themen anzeigen klicke, dann
         $(this).text("dieses Element wurde geklickt");
         // von diesem geklickten Element brauche ich aus dem h5 die courseID
@@ -128,27 +158,6 @@ $(function() {
     });
 
 
-
-/*
-    $(".show-topics").click(function () { // wenn man auf den Themen anzeigen-Knopf klickt, dann...
-        $.ajax({
-            type: 'GET',
-            url: host + "/topics/DB",
-            success: function (data) {
-                // window.alert(data);
-               // $(".topics-list").html(data[1].topicName);
-                var cardRow = 1;
-                $.each(data, function (index, element) {
-                        $("#cog-t"+cardRow).html(element.topicName);
-                        cardRow++;
-                    }
-
-                )
-            }
-        });
-    });
-    */
-
     // vorläufiger Login
     $('#login-button').on('click tap', function() {
         $(".main").toggle();
@@ -164,6 +173,7 @@ $(function() {
             "email": "marileen.stamer@stud.fh-luebeck.de",
             "password":"123"
         };
+
         $.ajax({
             url: host + "/user/login", //localhost:8050/user/login
             method: "POST",
@@ -183,4 +193,5 @@ $(function() {
         });
     });
 
-});
+
+}); // Ende jQuery
