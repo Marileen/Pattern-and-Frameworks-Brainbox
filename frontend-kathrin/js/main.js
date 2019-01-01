@@ -38,55 +38,52 @@ $(function() {
                     // window.alert(element.courseName);
                     console.log(element, $("#courseID" + element.courseID));
 
-                    coursesElement.append(
-                        $('<div class="col"/>').append(
-                            $('<div class="card" style="width: 18rem;"/>')
-                                .append($('<img>', {
-                                    class: "card-img-top",
-                                    alt: "Card image cap",
-                                    src: "img/card_" + element.courseID + ".jpg",
 
-                                }))
-                                .append($('<div class="card-body"/>')
+                    var courseCard = $('<div class="col"/>').append(
+                        $('<div class="card" style="width: 18rem;"/>')
+                            .append($('<img>', {
+                                class: "card-img-top",
+                                alt: "Card image cap",
+                                src: "img/card_" + element.courseID + ".jpg",
+
+                            }))
+                            .append($('<div class="card-body"/>')
+                                .append(
+                                    $('<h5 class="card-title show-courses"/>')
+                                        .text(element.courseName))
+                                .append(
+                                    $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
+                                 .append(
+                                     $('<button/>',
+                                            {
+                                                class: "show-topics btn btn-primary",
+                                                type: "button",
+                                                'data-toggle':"collapse",
+                                                'data-target': '#topicsForCourse'+element.courseID,
+                                                'aria-expanded':"false",
+                                                'aria-controls':"collapseExample"})
+                                            .text("Themen anzeigen"))
                                         .append(
-                                            $('<h5 class="card-title show-courses"/>')
-                                                .text(element.courseName))
-                                        .append(
-                                            $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>').append(
-                                                $('<button class="show-topics btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Themen anzeigen</button>')
-                                            )
-                                        .append(
-                                            $('<div class="collapse" id="collapseExample"/>').append(
-                                                $('<div class="card card-body"/>').text(
+                                            $('<div/>',
+                                                {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
+                                                $('<div class="card card-body"/>'
+                                            ))
 
-                                                    // hier wird noch das Objekt ausgegeben, statt des topicName
-                                                    $.each(getTopics(element.courseName), function (index, element) {
-                                                        console.log(element, $("Topic-Name" + element.topicName));
+                                            /*
+                                            // text mit getTopics ersetzen
+                                            var topics = getTopics(element.courseName);
 
-                                                            $(".card-body").append(element.topicName)
-
-
-
-                                                    })
-
-                                                )
-                                            )
-
-                                                    /*
-                                                    // text mit getTopics ersetzen
-                                                    var topics = getTopics(element.courseName);
-
-                                                    $.each(topics, function (index, element) {
-                                                            $("card-body").text(element.topicName);
-                                                    });
-                                                    */
-                                            )
+                                            $.each(topics, function (index, element) {
+                                                    $("card-body").text(element.topicName);
+                                            });
+                                            */
                                         )
-                                ) // ende card-body
-                        ) // ende col
-                    ); // ende der appends
+                                )
+                            ) // ende card-body
+                    ); // ende col
 
-
+                    getTopics(courseCard, element.courseName);
+                    coursesElement.append(courseCard); // ende der appends
 
                 });
 
@@ -102,24 +99,21 @@ $(function() {
 
 
     // holt topics
-    function getTopics (courseName) {
-
-        var courseTopics =
-            $.ajax({
+    function getTopics (courseCard, courseName) {
+         $.ajax({
                 type: 'GET',
                 url: host + "/topics/" +courseName,
                 success: function (data) {
 
                         $.each(data, function (index, element) {
                             console.log("elemente: " + element.topicName);
-                            window.alert(element.topicName);
+                            courseCard.find('.topic-list > .card-body').append($('<p/>').text(element.topicName));
+                            // window.alert(element.topicName);
                         });
 
 
                 }
             });
-        console.log("courseName = " + courseName + "; diese Topics "+ courseTopics)
-        return courseTopics;
     }
 
 
