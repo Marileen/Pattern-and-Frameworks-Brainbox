@@ -38,7 +38,7 @@ $(function() {
                     // window.alert(element.courseName);
                     console.log(element, $("#courseID" + element.courseID));
 
-
+                    // in Funktion auslagern
                     var courseCard = $('<div class="col"/>').append(
                         $('<div class="card" style="width: 18rem;"/>')
                             .append($('<img>', {
@@ -53,7 +53,7 @@ $(function() {
                                         .text(element.courseName))
                                 .append(
                                     $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
-                                 .append(
+                                .append(
                                      $('<button/>',
                                             {
                                                 class: "show-topics btn btn-primary",
@@ -63,11 +63,11 @@ $(function() {
                                                 'aria-expanded':"false",
                                                 'aria-controls':"collapseExample"})
                                             .text("Themen anzeigen"))
-                                        .append(
-                                            $('<div/>',
-                                                {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
-                                                $('<div class="card card-body"/>'
-                                            ))
+                                .append(
+                                    $('<div/>',
+                                        {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
+                                        $('<div class="card card-body"/>'
+                                    ))
 
                                             /*
                                             // text mit getTopics ersetzen
@@ -82,18 +82,11 @@ $(function() {
                             ) // ende card-body
                     ); // ende col
 
-                    getTopics(courseCard, element.courseName);
                     coursesElement.append(courseCard); // ende der appends
 
+                    getTopics(courseCard, element.courseName);
+
                 });
-
-                $.each(data, function (index, element) {
-                        // window.alert(element.courseName);
-                       // console.log(element, $("#courseID" + element.courseID));
-                        $("#courseID" + element.courseID).text(element.courseName);
-
-                    });
-                    //  window.alert(data);
             }
         }); // Ende ajax
 
