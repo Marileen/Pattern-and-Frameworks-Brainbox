@@ -41,20 +41,39 @@ $(function() {
                     // window.alert(element.courseName);
                     console.log(element, $("#courseID" + element.courseID));
 
+
                     // den ganzen Spass mit .html statt mit append machen?
+
                     coursesElement.append(
                         $('<div class="col"/>').append(
-                            $('<div class="card"/>').append(
-                            //<img class="card-img-top" src="img/card_paf.jpg" alt="Card image cap">
-                                //$('<img class="card-img-top" src="img/card_paf.jpg" alt="Card image cap"/>').append()
-                                    $('<div class="card-body"/>').append(
-                                        $('<h5 id="courseID0" class="card-title show-courses"/>').text(element.courseName).append(
-                                            $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
+                            $('<div class="card" style="width: 18rem;"/>')
+                                .append($('<img>', {
+                                    class: "card-img-top",
+                                    alt: "Card image cap",
+                                    src: "img/card_" + element.courseID + ".jpg",
+                                }))
+                                .append($('<div class="card-body"/>')
+                                        .append(
+                                            $('<h5 class="card-title show-courses"/>')
+                                                .text(element.courseName))
+                                        .append(
+                                            $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>').append(
+                                                $('<a id="c5-t8" class="show-topics btn btn-primary">Themen anzeigen</a>')
+                                            )
                                         )
                                     )
-                                )
+                              //  )
                             )
-                        );
+                        ); // ende der appends
+                    $(".collapse").click(function () {
+
+                        $(this).text("wurde geklickt");
+                        // von diesem geklickten Element brauche ich aus dem h5 die courseID
+                        var id = element.courseID;
+                        console.log("Id des Elements:"+id);
+                        }
+
+                    )
                 });
 
                 $.each(data, function (index, element) {
@@ -64,8 +83,6 @@ $(function() {
 
                     });
                     //  window.alert(data);
-
-
             }
         });
                 // id="#courseID3"
@@ -74,11 +91,9 @@ $(function() {
                 $(".card-title").html(
                     $.each(data, function (index, element) {
                         $("#courseID"+element.courseID).html(element.courseName);
-                    }))
-                */
+                    }))                 */
 
-
-
+/*
     $("#cog-t-button").click(function () {
         $.ajax({
             type: 'GET',
@@ -88,10 +103,15 @@ $(function() {
             }
         });
     });
+*/
 
+// gerade nicht genutzt
+    $(".show-topics").click(function () { // wenn ich auf knopf themen anzeigen klicke, dann
+        $(this).text("dieses Element wurde geklickt");
+        // von diesem geklickten Element brauche ich aus dem h5 die courseID
+        var id = $(this).attr('id');
+        console.log("Id des Elements:"+id);
 
-// gerade nicht genutzt?
-    $(".paf").click(function () { // wenn ich auf paf klicke, dann
         $.ajax({
             type: 'GET',
             url: host + "/topics/Patterns and Frameworks",
@@ -99,7 +119,7 @@ $(function() {
                 // window.alert(data);
                // $("#topics-paf").html(data[0].topicName);
                 $.each(data, function (index, element) {
-                    $("#paf-topics").append(element.topicName);
+                    $("courseID5-topic1").text(element.topicName);
                     }
                     
                 )
@@ -109,7 +129,7 @@ $(function() {
 
 
 
-
+/*
     $(".show-topics").click(function () { // wenn man auf den Themen anzeigen-Knopf klickt, dann...
         $.ajax({
             type: 'GET',
@@ -126,6 +146,14 @@ $(function() {
                 )
             }
         });
+    });
+    */
+
+    // vorläufiger Login
+    $('#login-button').on('click tap', function() {
+        $(".main").toggle();
+        $(".login").hide();
+        $(".logout").show();
     });
 
 
