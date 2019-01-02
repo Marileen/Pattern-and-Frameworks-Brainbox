@@ -1,4 +1,5 @@
 $(function() {
+    console.log("INIT");
 
     var host = "http://localhost:8050";
     var user = {};
@@ -28,6 +29,10 @@ $(function() {
 
     $(".login").show();
     $(".registration").hide();
+    $("form").submit(function(e) {
+        console.log("form submit default behavior prevented by submit callback.");
+        e.preventDefault(e);
+    });
 
         $.ajax({
             type: 'GET',
@@ -185,6 +190,9 @@ $(function() {
                 //$('.login page').hide();
                 //$('.main').show();
                 //alert("login geklappt");
+            },
+            error: function() {
+              console.log("login error", arguments);
             }
         });
     });
