@@ -2,8 +2,6 @@ $(function() {
 
     var host = "http://localhost:8050";
     var user = {};
-    var products = new Map();
-    var basket = [];
 
     /*$("#login-button").click(function () {
         $(".container").hide();
@@ -160,9 +158,11 @@ $(function() {
     });
 
     // Login
-  //  $('#login-button').on('click tap', function() {
+
+
     $('#login-button').click( function() {
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
+       // TODO: aus Form holen
         var json = {
             email : "marileen.stamer@stud.fh-luebeck.de",
             password :"123"
@@ -177,7 +177,7 @@ $(function() {
             success: function(data) {
                 console.log("login erfolgreich");
                 if (typeof data == 'undefined') {
-                    $('.failureMessage').html("Login fehlgeschlagen!");
+                    $('.login .failureMessage').html("Login fehlgeschlagen!");
                     return;
                 }
                 user = data;

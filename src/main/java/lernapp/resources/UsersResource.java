@@ -83,6 +83,7 @@ public class UsersResource {
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response register(User user) {
+        // TODO: nutzer versucht sich nochmal zu registrieren -> Exception abfangen
 
         if ( isNullOrEmpty(user.getEmail()) ) {
             //zurückgeben dass email nicht leer sein darf
