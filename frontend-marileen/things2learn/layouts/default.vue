@@ -7,18 +7,18 @@
 
           <a href="/" class="menu-item">Start</a>
 
-          <form v-if="!userIsLoggedIn" v-on:submit.prevent="login()">
+          <form v-if="!user.isLoggedIn" v-on:submit.prevent="login()">
           <input type="text" placeholder="email" v-model="email"/>
           <input type="text" placeholder="passwort" v-model="password"/>
           <button>login</button>
 
-          <span v-if="loginFailed" class="alert alert-danger" role="alert">
+          <span v-if="user.loginFailed" class="alert alert-danger" role="alert">
               Username oder Passwort nicht korrekt.
             </span>
         </form>
 
           <form v-else v-on:submit.prevent="logout()">
-            <p>Hallo {{ username }}</p>
+            <p>Hallo {{ user.firstname }}</p>
             <button>logout</button>
           </form>
         </div>
@@ -30,61 +30,31 @@
 
 <script type="application/javascript">
 
+  import { mapState } from 'vuex';
+
   export default {
     data() {
       return {
         password: '',
         email: '',
-        username: window.sessionStorage.getItem("user") != null ? JSON.parse( window.sessionStorage.getItem("user") ).firstname : '',
-        userIsLoggedIn: window.sessionStorage.getItem("user") != null ? true : false,
-        loginFailed: false
       }
     },
+
+    computed: {
+      ...mapState(['user']),
+    },
+
     methods: {
-      async login() {
-        try {
-          const response = await fetch('http://127.0.0.1:8050/user/login', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-              // 'Authorization': `bearer ${token}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              "email": this.email,
-              "password": this.password
-            })
-          });
+      login () {
+          this.$store.dispatch('login', {email : this.email, password : this.password});
 
-          if (response.ok) {
-
-            this.userIsLoggedIn = true;
-
-            var userData = await response.json();
-
-            window.sessionStorage.setItem("user", JSON.stringify(userData) );
-            this.username = userData.firstname;
-
-            // response.json().then(function(data) {
-            //   console.log(data.firstname);
-            //   default.username = data.firstname;
-            // });
-
-          } else {
-            this.loginFailed = true;
-          }
-
-        } catch (e) {
-          console.log(e)
-        }
-      },
-      logout() {
-        window.sessionStorage.removeItem("user");
-        this.userIsLoggedIn = false;
       }
     },
     mounted() {
-      //console.log( JSON.parse( window.sessionStorage.getItem("user") ).firstname );
+      //user state aus session holen, falls user eingeloggt ist
+      if (window.sessionStorage.getItem("user") != null) {
+        this.$store.commit( 'setUser', JSON.parse(window.sessionStorage.getItem("user")) );
+      }
     }
   }
 </script>

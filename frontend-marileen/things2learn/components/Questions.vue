@@ -5,6 +5,8 @@
           <swiper-slide v-for="question in questions" :key="question.questionID">
           <div class="question-box" v-html="question.question"> </div>
           <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
+
+            <!-- div class="learningState">{{ question.learningState.stateName ? question.learningState.stateName : ''  }}</div>  -->
           </swiper-slide>
 
           <!-- Optional controls -->
@@ -65,14 +67,16 @@
       slideChange(e) {
         console.log(this.swiper.activeIndex);
         console.log(this.questions[this.swiper.activeIndex].topic.topicName);
+
+        //dispatch/emit event active-topic (handled in parent component _course)
         this.$emit('active-topic', {
           activeTopic : this.questions[this.swiper.activeIndex].topic.topicName
-        })
+        });
+
+        //todo: dynamische werte einsetzen
+        this.$store.dispatch('getLearningState', {userId : 1, questionId : 11, token : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJmaXJzdG5hbWUiOiJNYXJpbGVlbiIsImxhc3RuYW1lIjoiU3RhbWVyIiwicGFzc3dvcmQiOiIxMjMifQ.mH9Vv8SqP-ieSycG35juItROw7kFMBjSlxKrHQGHzBE'});
       }
 
-    },
-    beforeMount(){
-      this.$store.dispatch('getQuestions');
     }
   }
 
