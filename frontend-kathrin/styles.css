@@ -4,6 +4,17 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
+.margin {
+    margin: 10px 2.5px 10px 2.5px;
+}
+
+.margin-left {
+    margin: 5px 2.5px 10px 10px;
+}
+
+.margin-right {
+    margin: 5px 5px 10px 2.5px;
+}
 
 /* Header */
 .header {

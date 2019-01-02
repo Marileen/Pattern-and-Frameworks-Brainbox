@@ -28,6 +28,9 @@ $(function() {
     });
     */
 
+    $(".login").show();
+    $(".registration").hide();
+
         $.ajax({
             type: 'GET',
             url: host + "/courses",
@@ -111,15 +114,7 @@ $(function() {
 
 
 
-    $(".collapse").click(function () {
 
-            $(this).text("wurde geklickt");
-            // von diesem geklickten Element brauche ich aus dem h5 die courseID
-            var id = element.courseID;
-            console.log("Id des Elements:"+id);
-        }
-
-    )
 
 
     // gerade nicht genutzt
@@ -144,17 +139,29 @@ $(function() {
         });
     });
 
-
-    // vorläufiger Login
-    $('#login-button').on('click tap', function() {
-        $(".main").toggle();
+    // Registrierung
+    $('#register-button').click( function () {
         $(".login").hide();
-        $(".logout").show();
+        $(".registration").fadeTo(400, 1);
     });
 
+    /*$( "#clickme" ).click(function() {
+      $( "#book" ).fadeOut( "slow", function() {
+        // Animation complete.
+      });
+    }); */
+
+    // shows Login form
+    $('#login-b').click( function() {
+      $(".login").show();
+      // $(".main").hide();
+      // window.alert("funktioniert");
+      // $(".footer").hide();
+    });
 
     // Login
-    $('#login-button').on('click tap', function() {
+  //  $('#login-button').on('click tap', function() {
+    $('#login-button').click( function() {
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
         var json = {
             "email": "marileen.stamer@stud.fh-luebeck.de",
@@ -167,6 +174,7 @@ $(function() {
             data: JSON.stringify(json),
             contentType: "application/json",
             success: function(data) {
+                console.log("login erfolgreich");
                 if (typeof data == 'undefined') {
                     $('.failureMessage').html("Login fehlgeschlagen!");
                     return;
