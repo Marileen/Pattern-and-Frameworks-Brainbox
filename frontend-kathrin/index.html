@@ -29,172 +29,165 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     -->
-
 </head>
+
 <body>
-<header>
-    <nav class="navbar navbar-dark bg-dark">
-        <div id="navbar-header">
-            <h1>Medieninformatik Lernapp</h1>
-        </div>
-        <!-- Navbar content -->
-    </nav>
-
-</header>
-
-<div class="login page"> <!-- vgl. login container -->
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                leer
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <div id="navbar-header">
+                <h1>Medieninformatik Lernapp</h1>
             </div>
-            <div class="col">
+            <!-- Navbar content -->
+        </nav>
 
-                <h2>Lernapp Medieninformatik</h2>
+    </header>
 
-                <input type="text" id="username" class="form-control" placeholder="Username" value="benutzername">
-                <input type="password" id="password" class="form-control" placeholder="Passwort" value="secret">
-                <button id="login-button" class="btn btn-secondary" type="submit">Login</button>
+    <div class="login page"> <!-- vgl. login container -->
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    leer
+                </div>
+                <div class="col">
 
-                <div class="failureMessage"></div>
+                    <h2>Lernapp Medieninformatik</h2>
 
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-info float-right">Registrieren</button>
-            </div>
-        </div>
-    </div>
+                    <input type="text" id="username" class="form-control" placeholder="Username" value="benutzername">
+                    <input type="password" id="password" class="form-control" placeholder="Passwort" value="secret">
+                    <button id="login-button" class="btn btn-secondary" type="submit">Login</button>
 
-</div>
+                    <div class="failureMessage"></div>
 
-<div class="main">
-    <p>Das ist der eingeloggte Bereich</p>
-</div>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">Home</a>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Alle Kurse<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Alle Themen</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Alle Fragen</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0"> <!-- Logout button verschwindet wenn toggled -->
-            <div >
-                <button id="logout-b" class="btn btn-secondary float-right" type="submit">Logout</button>
-            </div>
-
-        </form>
-    </div>
-</nav>
-
-<div id="courses" class="row">
-</div>
-
-
-<div class="row">
-
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="img/card_paf.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 id="courseID0" class="card-title show-courses">Paf</h5>
-                <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
-                <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
-            </div>
-        </div>
-        <p class="topics-list">bla bla</p>
-    </div>
-
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="img/card_db.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 id="courseID1"  class="card-title show-courses">Db</h5>
-                <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
-                <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="img/card_bwl.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 id="courseID2" class="card-title show-courses">Bwl</h5>
-                <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
-                <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="img/card_itr.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 id="courseID3" class="card-title show-courses">Itr</h5>
-                <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
-                <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="img/card_cog.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h5 id="courseID5" class="card-title show-courses">Cg</h5>
-                <p class="card-text">Hier überprüfst Du Dein Wissen zu Computergrafik.</p>
-                <p>
-                    <!-- Collapse button with data-target -->
-                    <button id="cog-t-button" class="show-topics btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Themen anzeigen
-                    </button>
-                </p>
-                <div class="collapse" id="collapseExample">
-                    <div id="cog-t1" class="card card-body">Topic 1: alsdföjaslk fjsöadlfj</div>
-                    <div id="cog-t2" class="card card-body">Topic 2: alsdföjaslk fjsöadlfj</div>
-                    <div id="cog-t3" class="card card-body">Topic 3: alsdföjaslk fjsöadlfj</div>
-                    <div id="cog-t4" class="card card-body">Topic 4: alsdföjaslk fjsöadlfj</div>
-                    <div id="cog-t5" class="card card-body">Topic 5: alsdföjaslk fjsöadlfj</div>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-info float-right">Registrieren</button>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <div class="restfeedback">
-        <p>Kursname</p>
+    <div class="main">
+        <p>Das ist der eingeloggte Bereich</p>
+
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Home</a>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Alle Kurse<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Alle Themen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Alle Fragen</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0"> <!-- Logout button verschwindet wenn toggled -->
+                    <div>
+                        <button id="login-b" class="btn btn-secondary float-right" type="submit">Logout</button>
+                        <button id="logout-b" class="btn btn-secondary float-right" type="submit">Logout</button>
+                    </div>
+
+                </form>
+            </div>
+        </nav>
+
+        <div id="courses" class="row">
+        </div>
+
+
+        <div class="row">
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="img/card_1.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="courseID0" class="card-title show-courses">Paf</h5>
+                        <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
+                        <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
+                    </div>
+                </div>
+                <p class="topics-list">bla bla</p>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="img/card_2.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="courseID1"  class="card-title show-courses">Db</h5>
+                        <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
+                        <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="img/card_3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="courseID2" class="card-title show-courses">Bwl</h5>
+                        <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
+                        <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="img/card_4.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="courseID3" class="card-title show-courses">Itr</h5>
+                        <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
+                        <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="img/card_5.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 id="courseID5" class="card-title show-courses">Cg</h5>
+                        <p class="card-text">Hier überprüfst Du Dein Wissen zu Computergrafik.</p>
+                        <p>
+                            <!-- Collapse button with data-target -->
+                            <button id="cog-t-button" class="show-topics btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Themen anzeigen
+                            </button>
+                        </p>
+                        <div id="collapse" class="collapse" id="collapseExample">
+                            <div id="cog-t1" class="card card-body">Topic 1: alsdföjaslk fjsöadlfj</div>
+                            <div id="cog-t2" class="card card-body">Topic 2: alsdföjaslk fjsöadlfj</div>
+                            <div id="cog-t3" class="card card-body">Topic 3: alsdföjaslk fjsöadlfj</div>
+                            <div id="cog-t4" class="card card-body">Topic 4: alsdföjaslk fjsöadlfj</div>
+                            <div id="cog-t5" class="card card-body">Topic 5: alsdföjaslk fjsöadlfj</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="restfeedback">
+                <p>Kursname</p>
+            </div>
+
+        </div> <!-- end of class row -->
+    </div> <!-- end of div class main -->
+
+
+    <div class="footer">
+        footer footer footer footer footer footer footer footer footer
     </div>
 
-</div> <!-- end of class row -->
-
-
-
-
-
-
-<div class="main">
-
-</div>
-
-<div class="footer">
-
-</div>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 </body>
 
