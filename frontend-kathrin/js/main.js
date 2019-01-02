@@ -4,6 +4,8 @@ $(function() {
     var host = "http://localhost:8050";
     var user = {};
 
+
+
     /*$("#login-button").click(function () {
         $(".container").hide();
     }) */
@@ -35,7 +37,7 @@ $(function() {
     });
 
         $.ajax({
-            type: 'GET',
+            method: 'GET',
             url: host + "/courses",
             success: function (data) {
                 var coursesElement = $("#courses");
@@ -97,7 +99,7 @@ $(function() {
         }); // Ende ajax
 
 
-    // holt topics
+    // fetches topics
     function getTopics (courseCard, courseName) {
          $.ajax({
                 type: 'GET',
@@ -109,15 +111,33 @@ $(function() {
                             courseCard.find('.topic-list > .card-body').append($('<p/>').text(element.topicName));
                             // window.alert(element.topicName);
                         });
-
-
                 }
             });
     }
 
 
+    // fetches jwt protected questions
+    function fetchQuestions (courseName) {
+        $.ajax({
+                method: 'GET',
+                url: host + "/questions/" + courseName, // Bsp. questions/BWL
+                success: function (data) {
+
+                    var questionsElement = $("#questions");
+
+                    $.each(data, function (index, element) {
+                        // window.alert(element.courseName);
+                        console.log(element, $("#questionID: " + element.questionID));
+                    });
+                }
+        })
+    }
 
 
+    $("#nav-questions").click(function() {
+        //$("#questions").text("neu");
+        fetchQuestions(BWL);
+    })
 
 
     // gerade nicht genutzt
@@ -162,6 +182,13 @@ $(function() {
       // $(".footer").hide();
     });
 
+    // TODO
+    // retrieving user credentials from form
+
+
+
+
+
     // Login
 
 
@@ -186,6 +213,8 @@ $(function() {
                     return;
                 }
                 user = data;
+                var jwt = user.jsonWebToken;
+                console.log("Das JWT dieses Users lautet: "+jwt);
 
                 //$('.login page').hide();
                 //$('.main').show();
