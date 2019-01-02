@@ -164,13 +164,14 @@ $(function() {
     $('#login-button').click( function() {
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
         var json = {
-            "email": "marileen.stamer@stud.fh-luebeck.de",
-            "password":"123"
+            email : "marileen.stamer@stud.fh-luebeck.de",
+            password :"123"
         };
 
         $.ajax({
             url: host + "/user/login", //localhost:8050/user/login
             method: "POST",
+            crossDomain: true,
             data: JSON.stringify(json),
             contentType: "application/json",
             success: function(data) {
@@ -190,3 +191,5 @@ $(function() {
 
 
 }); // Ende jQuery
+
+

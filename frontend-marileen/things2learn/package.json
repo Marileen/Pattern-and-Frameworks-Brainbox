@@ -1,0 +1,25 @@
+{
+  "name": "things2learn",
+  "version": "1.0.0",
+  "description": "Lernapp",
+  "author": "Marileen Stamer",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.0.0",
+    "vue-awesome-swiper": "^3.1.3"
+  },
+  "devDependencies": {
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^7.1.0"
+  }
+}
