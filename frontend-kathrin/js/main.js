@@ -1,9 +1,10 @@
 $(function() {
+    console.log("INIT");
 
     var host = "http://localhost:8050";
     var user = {};
-    var products = new Map();
-    var basket = [];
+
+
 
     /*$("#login-button").click(function () {
         $(".container").hide();
@@ -28,8 +29,15 @@ $(function() {
     });
     */
 
+    $(".login").show();
+    $(".registration").hide();
+    $("form").submit(function(e) {
+        console.log("form submit default behavior prevented by submit callback.");
+        e.preventDefault(e);
+    });
+
         $.ajax({
-            type: 'GET',
+            method: 'GET',
             url: host + "/courses",
             success: function (data) {
                 var coursesElement = $("#courses");
@@ -91,7 +99,7 @@ $(function() {
         }); // Ende ajax
 
 
-    // holt topics
+    // fetches topics
     function getTopics (courseCard, courseName) {
          $.ajax({
                 type: 'GET',
@@ -103,23 +111,33 @@ $(function() {
                             courseCard.find('.topic-list > .card-body').append($('<p/>').text(element.topicName));
                             // window.alert(element.topicName);
                         });
-
-
                 }
             });
     }
 
 
+    // fetches jwt protected questions
+    function fetchQuestions (courseName) {
+        $.ajax({
+                method: 'GET',
+                url: host + "/questions/" + courseName, // Bsp. questions/BWL
+                success: function (data) {
 
-    $(".collapse").click(function () {
+                    var questionsElement = $("#questions");
 
-            $(this).text("wurde geklickt");
-            // von diesem geklickten Element brauche ich aus dem h5 die courseID
-            var id = element.courseID;
-            console.log("Id des Elements:"+id);
-        }
+                    $.each(data, function (index, element) {
+                        // window.alert(element.courseName);
+                        console.log(element, $("#questionID: " + element.questionID));
+                    });
+                }
+        })
+    }
 
-    )
+
+    $("#nav-questions").click(function() {
+        //$("#questions").text("neu");
+        fetchQuestions(BWL);
+    })
 
 
     // gerade nicht genutzt
@@ -144,18 +162,39 @@ $(function() {
         });
     });
 
-
-    // vorläufiger Login
-    $('#login-button').on('click tap', function() {
-        $(".main").toggle();
+    // Registrierung
+    $('#register-button').click( function () {
         $(".login").hide();
-        $(".logout").show();
+        $(".registration").fadeTo(400, 1);
     });
+
+    /*$( "#clickme" ).click(function() {
+      $( "#book" ).fadeOut( "slow", function() {
+        // Animation complete.
+      });
+    }); */
+
+    // shows Login form
+    $('#login-b').click( function() {
+      $(".login").show();
+      // $(".main").hide();
+      // window.alert("funktioniert");
+      // $(".footer").hide();
+    });
+
+    // TODO
+    // retrieving user credentials from form
+
+
+
 
 
     // Login
-    $('#login-button').on('click tap', function() {
+
+
+    $('#login-button').click( function() {
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
+       // TODO: aus Form holen
         var json = {
             email : "marileen.stamer@stud.fh-luebeck.de",
             password :"123"
@@ -168,15 +207,21 @@ $(function() {
             data: JSON.stringify(json),
             contentType: "application/json",
             success: function(data) {
+                console.log("login erfolgreich");
                 if (typeof data == 'undefined') {
-                    $('.failureMessage').html("Login fehlgeschlagen!");
+                    $('.login .failureMessage').html("Login fehlgeschlagen!");
                     return;
                 }
                 user = data;
+                var jwt = user.jsonWebToken;
+                console.log("Das JWT dieses Users lautet: "+jwt);
 
                 //$('.login page').hide();
                 //$('.main').show();
                 //alert("login geklappt");
+            },
+            error: function() {
+              console.log("login error", arguments);
             }
         });
     });

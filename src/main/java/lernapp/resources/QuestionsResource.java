@@ -30,7 +30,7 @@ public class QuestionsResource {
     }
 
     @GET
-    // @JwtFilter.JwtNeeded
+    @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     //@Path("course/{coursename}")
     @Path("/{coursename}")
