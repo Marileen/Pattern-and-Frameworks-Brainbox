@@ -71,14 +71,18 @@
           activeTopic : this.questions[this.swiper.activeIndex].topic.topicName
         });
 
-        //todo: dynamische werte einsetzen
-        this.$store.dispatch('getLearningState', {userId : this.$store.state.user.userID, questionId : this.questions[this.swiper.activeIndex].questionID, token : 'Bearer ' + this.$store.state.user.jsonWebToken});
+        //this.$store.dispatch('getLearningState', {userId : this.$store.state.user.userID, questionId : this.questions[this.swiper.activeIndex].questionID, token : 'Bearer ' + this.$store.state.user.jsonWebToken});
         //console.log(this.$store.state.user.userID);
         //console.log(this.questions[this.swiper.activeIndex]);
-        this.$forceUpdate();
+        // this.$forceUpdate();
       }
 
+    },
+
+    beforeMount(){
+      //
     }
+
   }
 
 </script>
