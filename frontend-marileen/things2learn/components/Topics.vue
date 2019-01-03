@@ -46,6 +46,8 @@
 
 <style lang="scss">
 
+  @import "../assets/colors.scss";
+
   div[data-component="courses"] {
     display: flex;
     flex-wrap: wrap;
@@ -60,8 +62,10 @@
     border-radius: 4px;
     text-decoration: none;
     padding: 10px 30px;
-    background-color: #bad3a0;
+    background-color: $color-topic;
     /*background-color: #ecf7dd;*/
+    color: $color-text-dark;
+
 
     width: 250px;
     height: 100px;
@@ -81,6 +85,8 @@
 
     &:hover {
       box-shadow: 0 2px 6px rgba(0,0,0,.2);
+      color: $color-text-dark;
+      text-decoration: none;
 
       transform: scale(1.04) translateZ(.2px);
       -webkit-backface-visibility: hidden;
@@ -106,7 +112,7 @@
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     display: block;
     font-weight: 300;
-    font-size: 100px;
+    font-size: 70px;
     color: #35495e;
     letter-spacing: 1px;
   }

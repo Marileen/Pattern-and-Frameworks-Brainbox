@@ -1,7 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Slabo+13px');
 
-$color-text-light: #ecf7dd;
+@import "colors.scss";
 
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

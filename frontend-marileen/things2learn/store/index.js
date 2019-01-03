@@ -1,10 +1,10 @@
-import Vuex from 'vuex'
 
 export const state = () => ({
   counter: 8,
   courses : [],
   topics : [],
   questions : [],
+  learningStates : [],
   user : []
 })
 
@@ -21,6 +21,11 @@ export const mutations = {
   setQuestions (state, questions ) {
     state.questions = questions
   },
+
+  setLearningStates (state, learningStates) {
+    state.learningStates = learningStates;
+  },
+
   setLearningstate (state, { learningState, questionId }) {
 
     var question = state.questions.find(function(el) {
@@ -30,7 +35,7 @@ export const mutations = {
     question.learningState = learningState;
 
     console.log('set ls');
-    console.log(question);
+    //console.log(question);
   },
   setUser (state, user) {
     state.user = user;
@@ -41,7 +46,6 @@ export const mutations = {
 
 export const actions = {
 
-  //todo
   async login({commit}, { email, password }) {
 
     console.log('login');
@@ -66,7 +70,6 @@ export const actions = {
         userData.isLoggedIn = true;
 
         //write to Vuex store and Browser Session Store
-        // todo: vuex store can be empty while session storage still has data
         window.sessionStorage.setItem("user", JSON.stringify(userData) );
         commit('setUser', userData);
 
@@ -90,8 +93,49 @@ export const actions = {
     commit('setUser', userData);
   },
 
+  async getLearningStates({commit}) {
+
+
+      try {
+        const response = await fetch('http://127.0.0.1:8050/state', {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        switch (response.status) {
+          case 200 : {
+            console.log('ok');
+            commit('setLearningstates', await response.json());
+            break;
+          }
+
+          case 204 : {
+            console.log('no content');
+            break;
+          }
+
+          default : {
+            console.log('learningStates failed');
+
+          }
+        }
+
+
+      } catch (e) {
+        console.log('error in getLearningState');
+        console.log(e);
+      }
+
+  },
+
+
   async getLearningState({commit}, { userId, questionId, token }) {
 
+    console.log(userId);
+    console.log(questionId);
 
     if (userId != undefined && questionId != undefined) {
 
@@ -105,15 +149,27 @@ export const actions = {
           }
         });
 
-        if (response.ok) {
+        switch (response.status) {
+          case 200 : {
+            console.log('ok');
+            commit('setLearningstate', { learningState : await response.json(), questionId });
+            break;
+          }
 
-          commit('setLearningstate', { learningState : await response.json(), questionId });
+          case 204 : {
+            console.log('no content');
+            break;
+          }
 
-        } else {
-          console.log('learningState failed');
+          default : {
+            console.log('learningState failed');
+
+          }
         }
 
+
       } catch (e) {
+        console.log('error in getLearningState');
         console.log(e);
       }
     }
