@@ -5,37 +5,18 @@ $(function() {
     var user = {};
 
 
-
-    /*$("#login-button").click(function () {
-        $(".container").hide();
-    }) */
-
-    /* Switch pane
-    $('.nav a').on('click tap', function() {
-        $('.nav a').removeClass("active");
-        $(this).addClass("active");
-        $('.pane').hide();
-        var target = $(this).attr('href');
-        $(target).show();
-    }); */
-
-    /* Kurse anzeigen
-    $.ajax({
-        type: 'GET',
-        url: host + "/courses",
-        success: function (data) {
-            $(".card-title").html(data[0].courseName);
-        }
-    });
-    */
-
     $(".login").hide();
     $(".registration").hide();
+
     $("form").submit(function(e) {
         console.log("form submit default behavior prevented by submit callback.");
         e.preventDefault(e);
     });
 
+    renderCoursesMain();
+
+    // rendering of the main container on home
+    function renderCoursesMain () {
         $.ajax({
             method: 'GET',
             url: host + "/courses",
@@ -61,21 +42,21 @@ $(function() {
                                         .text(element.courseName))
                                 .append(
                                     $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
-                                .append(
-                                     $('<button/>',
-                                            {
-                                                class: "show-topics btn btn-primary",
-                                                type: "button",
-                                                'data-toggle':"collapse",
-                                                'data-target': '#topicsForCourse'+element.courseID,
-                                                'aria-expanded':"false",
-                                                'aria-controls':"collapseExample"})
-                                            .text("Themen anzeigen"))
-                                .append(
-                                    $('<div/>',
-                                        {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
-                                        $('<div class="card card-body"/>'
-                                    ))
+                                        .append(
+                                            $('<button/>',
+                                                {
+                                                    class: "show-topics btn btn-primary",
+                                                    type: "button",
+                                                    'data-toggle':"collapse",
+                                                    'data-target': '#topicsForCourse'+element.courseID,
+                                                    'aria-expanded':"false",
+                                                    'aria-controls':"collapseExample"})
+                                                .text("Themen anzeigen"))
+                                        .append(
+                                            $('<div/>',
+                                                {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
+                                                $('<div class="card card-body"/>'
+                                                ))
 
                                             /*
                                             // text mit fetchTopics ersetzen
@@ -97,9 +78,11 @@ $(function() {
                 });
             }
         }); // Ende ajax
+    }
 
 
-    // fetches topics
+
+    // fetches topics for a certain course
     function fetchTopics (courseCard, courseName) {
          $.ajax({
                 type: 'GET',
@@ -117,8 +100,8 @@ $(function() {
 
 
     // fetches all questions of all courses - jwt protected
-    function fetchQuestions () {
-        console.log("JWT ist: "+user.jsonWebToken);
+    function fetchAllQuestions () {
+        console.log("JWT ist: "+user.jsonWebToken); // das erzeugt: undefined
         // Versuch mit vorgegebenem jwt
         var jwt = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJ1c2VySUQiOjEsImZpcnN0bmFtZSI6Ik1hcmlsZWVuIiwibGFzdG5hbWUiOiJTdGFtZXIiLCJwYXNzd29yZCI6IjEyMyIsImFkbWluIjp0cnVlfQ.6l0Zc-Dt5SL6lOg5IseJwh4r_7BNErzTa6NRMINLQd4";
         $.ajax({
@@ -135,11 +118,16 @@ $(function() {
                     console.log("Daten erfolgreich abgeholt");
                     $("#questions").html(data[0].question);
                     $("#questions").html(data[0].answer);
-                    /*
+
+
                     $.each(data, function (index, element) {
-                        // window.alert(element.courseName);
-                        console.log(element, $("#questionID: " + element.questionID));
-                    }); */
+                        // window.alert(element.questionID);
+                        console.log("das ist die ID des Elements: "+element.questionId);
+
+                        var questionCard = $('<h2 class="margin">Alle Fragen</h2>').append(
+                            $('<div class="col"/>')).append(
+                            $('<h4/>').text(element.question))
+                    });
 
                 }
         })
@@ -149,7 +137,7 @@ $(function() {
     // displays all questions
     $("#nav-questions").click(function() {
         //$("#questions").text("neu");
-        fetchQuestions();
+        fetchAllQuestions();
     });
 
 
@@ -195,19 +183,20 @@ $(function() {
       // $(".footer").hide();
     });
 
-    // TODO
-    // retrieving user credentials from form
-
-
-
 
     // Login
-
-
     $('#login-button').click( function() {
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
        // TODO: aus Form holen
         var json = {
+            "email": $('#email').val(),
+            // "password": b64_sha256($('#password').val())     // gehashed mit b64_sha256
+            // "password": hex_sha256($('#password').val())        // gehashed mit hex_sha256
+            "password": $('#password').val()
+        };
+        console.log("das ist das json mit den Benutzernamen: "+ JSON.stringify(json));
+
+        var jsonTest = {
             email : "marileen.stamer@stud.fh-luebeck.de",
             password :"123"
         };
@@ -237,6 +226,11 @@ $(function() {
             }
         });
     });
+
+    // Registration
+    // TODO
+
+
 
     $("#home").click(function () {
         $(".login").hide();
