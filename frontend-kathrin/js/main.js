@@ -29,7 +29,7 @@ $(function() {
     });
     */
 
-    $(".login").show();
+    $(".login").hide();
     $(".registration").hide();
     $("form").submit(function(e) {
         console.log("form submit default behavior prevented by submit callback.");
@@ -78,8 +78,8 @@ $(function() {
                                     ))
 
                                             /*
-                                            // text mit getTopics ersetzen
-                                            var topics = getTopics(element.courseName);
+                                            // text mit fetchTopics ersetzen
+                                            var topics = fetchTopics(element.courseName);
 
                                             $.each(topics, function (index, element) {
                                                     $("card-body").text(element.topicName);
@@ -92,7 +92,7 @@ $(function() {
 
                     coursesElement.append(courseCard); // ende der appends
 
-                    getTopics(courseCard, element.courseName);
+                    fetchTopics(courseCard, element.courseName);
 
                 });
             }
@@ -100,7 +100,7 @@ $(function() {
 
 
     // fetches topics
-    function getTopics (courseCard, courseName) {
+    function fetchTopics (courseCard, courseName) {
          $.ajax({
                 type: 'GET',
                 url: host + "/topics/" +courseName,
@@ -116,28 +116,41 @@ $(function() {
     }
 
 
-    // fetches jwt protected questions
-    function fetchQuestions (courseName) {
+    // fetches all questions of all courses - jwt protected
+    function fetchQuestions () {
+        console.log("JWT ist: "+user.jsonWebToken);
+        // Versuch mit vorgegebenem jwt
+        var jwt = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJ1c2VySUQiOjEsImZpcnN0bmFtZSI6Ik1hcmlsZWVuIiwibGFzdG5hbWUiOiJTdGFtZXIiLCJwYXNzd29yZCI6IjEyMyIsImFkbWluIjp0cnVlfQ.6l0Zc-Dt5SL6lOg5IseJwh4r_7BNErzTa6NRMINLQd4";
         $.ajax({
                 method: 'GET',
-                url: host + "/questions/" + courseName, // Bsp. questions/BWL
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.setRequestHeader("Authorization", "Bearer "+jwt);
+                },
+                url: host + "/questions/", // Bsp. questions/BWL
                 success: function (data) {
 
                     var questionsElement = $("#questions");
-
+                    console.log("Daten erfolgreich abgeholt");
+                    $("#questions").html(data[0].question);
+                    $("#questions").html(data[0].answer);
+                    /*
                     $.each(data, function (index, element) {
                         // window.alert(element.courseName);
                         console.log(element, $("#questionID: " + element.questionID));
-                    });
+                    }); */
+
                 }
         })
     }
 
 
+    // displays all questions
     $("#nav-questions").click(function() {
         //$("#questions").text("neu");
-        fetchQuestions(BWL);
-    })
+        fetchQuestions();
+    });
 
 
     // gerade nicht genutzt
@@ -188,7 +201,6 @@ $(function() {
 
 
 
-
     // Login
 
 
@@ -225,6 +237,12 @@ $(function() {
             }
         });
     });
+
+    $("#home").click(function () {
+        $(".login").hide();
+        $(".registration").hide();
+        console.log("auf Startseite geklickt");
+    })
 
 
 }); // Ende jQuery
