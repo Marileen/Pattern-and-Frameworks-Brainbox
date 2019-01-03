@@ -26,6 +26,8 @@
   import Topics from "../../components/Topics";
   import Questions from "../../components/Questions";
 
+  import { mapState } from 'vuex';
+
   export default {
 
     components: {Topics, Questions},
@@ -41,6 +43,10 @@
       }
     },
 
+    computed: {
+      ...mapState(['questions', 'user']),
+    },
+
     methods : {
       onTopicChange(data) {
         this.activeTopic = data.activeTopic;
@@ -49,7 +55,7 @@
 
     beforeMount(){
       this.$store.dispatch('getTopics', this.$route.params.course );
-      this.$store.dispatch('getQuestions', this.$route.params.course );
+      this.$store.dispatch('getQuestions', { courseName : this.$route.params.course, user : JSON.parse(window.sessionStorage.getItem("user")) } );
     }
 
   }

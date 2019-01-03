@@ -1,3 +1,4 @@
+//import Vue from 'Vue';
 
 export const state = () => ({
   counter: 8,
@@ -21,11 +22,6 @@ export const mutations = {
   setQuestions (state, questions ) {
     state.questions = questions
   },
-
-  setLearningStates (state, learningStates) {
-    state.learningStates = learningStates;
-  },
-
   setLearningstate (state, { learningState, questionId }) {
 
     var question = state.questions.find(function(el) {
@@ -34,9 +30,11 @@ export const mutations = {
 
     question.learningState = learningState;
 
+    Vue.set(question, 'learningState', learningState);
+
     console.log('set ls');
-    //console.log(question);
   },
+
   setUser (state, user) {
     state.user = user;
 
@@ -93,90 +91,7 @@ export const actions = {
     commit('setUser', userData);
   },
 
-  async getLearningStates({commit}) {
-
-
-      try {
-        const response = await fetch('http://127.0.0.1:8050/state', {
-          method: 'GET',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        switch (response.status) {
-          case 200 : {
-            console.log('ok');
-            commit('setLearningstates', await response.json());
-            break;
-          }
-
-          case 204 : {
-            console.log('no content');
-            break;
-          }
-
-          default : {
-            console.log('learningStates failed');
-
-          }
-        }
-
-
-      } catch (e) {
-        console.log('error in getLearningState');
-        console.log(e);
-      }
-
-  },
-
-
-  async getLearningState({commit}, { userId, questionId, token }) {
-
-    console.log(userId);
-    console.log(questionId);
-
-    if (userId != undefined && questionId != undefined) {
-
-      try {
-        const response = await fetch('http://127.0.0.1:8050/user/' + userId + '/state/question/' + questionId, {
-          method: 'GET',
-          mode: 'cors',
-          headers: {
-            'Authorization': token,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        switch (response.status) {
-          case 200 : {
-            console.log('ok');
-            commit('setLearningstate', { learningState : await response.json(), questionId });
-            break;
-          }
-
-          case 204 : {
-            console.log('no content');
-            break;
-          }
-
-          default : {
-            console.log('learningState failed');
-
-          }
-        }
-
-
-      } catch (e) {
-        console.log('error in getLearningState');
-        console.log(e);
-      }
-    }
-
-  },
-
-  async getQuestions ({commit}, courseName, topicName) {
+  async getQuestions ({commit}, { courseName, user }) {
 
     if (courseName != undefined ) {
 
@@ -185,14 +100,22 @@ export const actions = {
           method: 'GET',
           mode: 'cors',
           headers: {
-            // 'Authorization': `bearer ${token}`,
+            'Authorization': 'Bearer ' + user.jsonWebToken,
             'Content-Type': 'application/json'
           }
         });
 
         if (response.ok) {
 
-          commit('setQuestions', await response.json());
+          var questions = await response.json();
+
+          //get Learningstates for Questions
+          for (var question of questions) {
+            console.log(question);
+            question.learningState = await getLearningState(user.userID, question.questionID, user.jsonWebToken)
+
+          }
+          commit('setQuestions', questions);
 
         } else {
           console.log('questions failed');
@@ -260,4 +183,48 @@ export const actions = {
       console.log(e)
     }
   }
+}
+
+async function getLearningState( userId, questionId, token ) {
+
+  if (userId != undefined && questionId != undefined) {
+
+    try {
+      const response = await fetch('http://127.0.0.1:8050/user/' + userId + '/state/question/' + questionId, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      switch (response.status) {
+        case 200 : {
+          console.log('ok');
+          //commit('setLearningstate', { learningState : await response.json(), questionId : questionId });
+
+          return response.json();
+          break;
+        }
+
+        case 204 : {
+          console.log('no content');
+          return {};
+          break;
+        }
+
+        default : {
+          console.log('learningState failed');
+          return {};
+        }
+      }
+
+
+    } catch (e) {
+      console.log('error in getLearningState');
+      console.log(e);
+    }
+  }
+
 }
