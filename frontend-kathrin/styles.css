@@ -1,7 +1,18 @@
-
+#headingOne {
+    color: gray;
+    float: left;
+}
 
 body {
     font-family: 'Arial', sans-serif;
+}
+
+.ls-text {
+    float: left;
+}
+
+.ls-icon {
+    float: right;
 }
 
 .margin {

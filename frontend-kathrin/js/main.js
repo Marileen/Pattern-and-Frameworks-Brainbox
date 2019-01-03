@@ -8,7 +8,7 @@ $(function() {
     $(".login").hide();
     $(".registration").hide();
 
-    $("form").submit(function(e) {
+    $("form").submit(function(e) { // war vorher ohne das .login
         console.log("form submit default behavior prevented by submit callback.");
         e.preventDefault(e);
     });
@@ -27,7 +27,7 @@ $(function() {
                     // window.alert(element.courseName);
                     console.log(element, $("#courseID" + element.courseID));
 
-                    // in Funktion auslagern
+                    // ggf. noch in Funktion auslagern
                     var courseCard = $('<div class="col"/>').append(
                         $('<div class="card" style="width: 18rem;"/>')
                             .append($('<img>', {
@@ -129,17 +129,33 @@ $(function() {
                             $('<h4/>').text(element.question))
                     });
 
+
+                    /* Original Bootstrap
+                    <div class="media">
+                      <div class="media-body">
+                        <h5 class="mt-0 mb-1">Media object</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                      </div>
+                      <img src="..." class="ml-3" alt="...">
+                    </div>
+
+                     */
                 }
         })
     }
 
+
+
+    /* rendering of the all questions page
+    function renderAllQuestions(){
+        // aktuell einfach in der fetchAllQuestions drin
+    } */
 
     // displays all questions
     $("#nav-questions").click(function() {
         //$("#questions").text("neu");
         fetchAllQuestions();
     });
-
 
     // gerade nicht genutzt
     $(".show-topics").click(function () { // wenn ich auf knopf themen anzeigen klicke, dann
@@ -228,7 +244,40 @@ $(function() {
     });
 
     // Registration
-    // TODO
+    $('#initial-registr-button').click( function() {
+
+        // var regJson = $('.registration form').serializeArray();
+        var regJson = {
+            "email": $('#reg-email').val(),
+            "firstname" : $('#firstname').val(),
+            "lastname" : $('#lastname').val(),
+            "password" : $('#reg-pw').val()
+        };
+
+        console.log("das ist das json mit dem Benutzernamen: "+ JSON.stringify(regJson));
+
+        $.ajax({
+            url: host + "/user/register", //http://localhost:8050/user/register
+            method: "POST",
+            crossDomain: true,
+            data: JSON.stringify(regJson),
+            contentType: "application/json",
+            success: function(data) {
+                console.log("registrierung erfolgreich");
+                if (typeof data == 'undefined') {
+                    $('.registration .failureMessage').html("Registrierung fehlgeschlagen!");
+                    return;
+                }
+                user = data;
+                var jwt = user.jsonWebToken;
+                console.log("Das JWT dieses Users lautet: "+jwt);
+                window.alert(("Sie haben sich erfolgreich registriert."))
+            },
+            error: function() {
+                console.log("registration error", arguments);
+            }
+        });
+    });
 
 
 
