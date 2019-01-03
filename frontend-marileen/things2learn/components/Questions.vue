@@ -5,6 +5,8 @@
           <swiper-slide v-for="question in questions" :key="question.questionID">
           <div class="question-box" v-html="question.question"> </div>
           <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
+
+            <div class="learningState">{{ question.learningState ? question.learningState.stateName : ''  }}</div>
           </swiper-slide>
 
           <!-- Optional controls -->
@@ -40,7 +42,7 @@
       swiper() {
         return this.$refs.questionSwiper.swiper
       },
-      ...mapState(['questions']),
+      ...mapState(['questions', 'user']),
     },
 
     data()  {
@@ -63,16 +65,19 @@
     methods : {
 
       slideChange(e) {
-        console.log(this.swiper.activeIndex);
-        console.log(this.questions[this.swiper.activeIndex].topic.topicName);
+
+        //dispatch/emit event active-topic (handled in parent component _course)
         this.$emit('active-topic', {
           activeTopic : this.questions[this.swiper.activeIndex].topic.topicName
-        })
+        });
+
+        //todo: dynamische werte einsetzen
+        this.$store.dispatch('getLearningState', {userId : this.$store.state.user.userID, questionId : this.questions[this.swiper.activeIndex].questionID, token : 'Bearer ' + this.$store.state.user.jsonWebToken});
+        //console.log(this.$store.state.user.userID);
+        //console.log(this.questions[this.swiper.activeIndex]);
+        this.$forceUpdate();
       }
 
-    },
-    beforeMount(){
-      this.$store.dispatch('getQuestions');
     }
   }
 
