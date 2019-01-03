@@ -15,7 +15,7 @@
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script> -->
     <!--<script type="text/javascript" src="js/jquery.binarytransport.js" defer></script>-->
-    <!--<script type="text/javascript" src="js/sha256.js" defer></script>-->
+    <script type="text/javascript" src="js/sha256.js" defer></script>
     <script type="text/javascript" src="js/main.js" defer></script>
 
 
@@ -48,7 +48,7 @@
                 <div class="col margin">
                     <h2 class="margin" >Login</h2>
                     <input type="text" id="email" class="form-control margin" placeholder="Username" value="Emailadresse eingeben">
-                    <input type="password" name="password" class="form-control margin" placeholder="Passwort" value="secret">
+                    <input type="password" id="password" class="form-control margin" placeholder="Passwort" value="Passwort eingeben">
                     <button id="login-button" class="btn btn-secondary margin-left" type="submit">Login</button>
                     <button id="register-button" type="button" class="btn btn-info float-right margin-right">Registrieren</button>
                     <div class="failureMessage"></div>
@@ -81,7 +81,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">Home</a>
+            <a id="home" class="navbar-brand" href="#">Startseite</a>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -92,7 +92,8 @@
                         <a class="nav-link" href="#">Alle Themen</a>
                     </li>
                     <li class="nav-item">
-                        <a id="nav-questions" class="nav-link disabled" href="#">Alle Fragen</a>
+                        <!-- ggf. noch disabled einbauen: <a id="nav-questions" class="nav-link disabled" href="#">Alle Fragen</a> -->
+                        <a id="nav-questions" class="nav-link" href="#">Alle Fragen</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0"> <!-- Logout button verschwindet wenn toggled -->

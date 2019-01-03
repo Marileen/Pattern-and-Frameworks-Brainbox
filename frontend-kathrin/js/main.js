@@ -5,37 +5,18 @@ $(function() {
     var user = {};
 
 
-
-    /*$("#login-button").click(function () {
-        $(".container").hide();
-    }) */
-
-    /* Switch pane
-    $('.nav a').on('click tap', function() {
-        $('.nav a').removeClass("active");
-        $(this).addClass("active");
-        $('.pane').hide();
-        var target = $(this).attr('href');
-        $(target).show();
-    }); */
-
-    /* Kurse anzeigen
-    $.ajax({
-        type: 'GET',
-        url: host + "/courses",
-        success: function (data) {
-            $(".card-title").html(data[0].courseName);
-        }
-    });
-    */
-
-    $(".login").show();
+    $(".login").hide();
     $(".registration").hide();
+
     $("form").submit(function(e) {
         console.log("form submit default behavior prevented by submit callback.");
         e.preventDefault(e);
     });
 
+    renderCoursesMain();
+
+    // rendering of the main container on home
+    function renderCoursesMain () {
         $.ajax({
             method: 'GET',
             url: host + "/courses",
@@ -61,25 +42,25 @@ $(function() {
                                         .text(element.courseName))
                                 .append(
                                     $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
-                                .append(
-                                     $('<button/>',
-                                            {
-                                                class: "show-topics btn btn-primary",
-                                                type: "button",
-                                                'data-toggle':"collapse",
-                                                'data-target': '#topicsForCourse'+element.courseID,
-                                                'aria-expanded':"false",
-                                                'aria-controls':"collapseExample"})
-                                            .text("Themen anzeigen"))
-                                .append(
-                                    $('<div/>',
-                                        {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
-                                        $('<div class="card card-body"/>'
-                                    ))
+                                        .append(
+                                            $('<button/>',
+                                                {
+                                                    class: "show-topics btn btn-primary",
+                                                    type: "button",
+                                                    'data-toggle':"collapse",
+                                                    'data-target': '#topicsForCourse'+element.courseID,
+                                                    'aria-expanded':"false",
+                                                    'aria-controls':"collapseExample"})
+                                                .text("Themen anzeigen"))
+                                        .append(
+                                            $('<div/>',
+                                                {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
+                                                $('<div class="card card-body"/>'
+                                                ))
 
                                             /*
-                                            // text mit getTopics ersetzen
-                                            var topics = getTopics(element.courseName);
+                                            // text mit fetchTopics ersetzen
+                                            var topics = fetchTopics(element.courseName);
 
                                             $.each(topics, function (index, element) {
                                                     $("card-body").text(element.topicName);
@@ -92,15 +73,17 @@ $(function() {
 
                     coursesElement.append(courseCard); // ende der appends
 
-                    getTopics(courseCard, element.courseName);
+                    fetchTopics(courseCard, element.courseName);
 
                 });
             }
         }); // Ende ajax
+    }
 
 
-    // fetches topics
-    function getTopics (courseCard, courseName) {
+
+    // fetches topics for a certain course
+    function fetchTopics (courseCard, courseName) {
          $.ajax({
                 type: 'GET',
                 url: host + "/topics/" +courseName,
@@ -116,28 +99,46 @@ $(function() {
     }
 
 
-    // fetches jwt protected questions
-    function fetchQuestions (courseName) {
+    // fetches all questions of all courses - jwt protected
+    function fetchAllQuestions () {
+        console.log("JWT ist: "+user.jsonWebToken); // das erzeugt: undefined
+        // Versuch mit vorgegebenem jwt
+        var jwt = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJ1c2VySUQiOjEsImZpcnN0bmFtZSI6Ik1hcmlsZWVuIiwibGFzdG5hbWUiOiJTdGFtZXIiLCJwYXNzd29yZCI6IjEyMyIsImFkbWluIjp0cnVlfQ.6l0Zc-Dt5SL6lOg5IseJwh4r_7BNErzTa6NRMINLQd4";
         $.ajax({
                 method: 'GET',
-                url: host + "/questions/" + courseName, // Bsp. questions/BWL
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.setRequestHeader("Authorization", "Bearer "+jwt);
+                },
+                url: host + "/questions/", // Bsp. questions/BWL
                 success: function (data) {
 
                     var questionsElement = $("#questions");
+                    console.log("Daten erfolgreich abgeholt");
+                    $("#questions").html(data[0].question);
+                    $("#questions").html(data[0].answer);
+
 
                     $.each(data, function (index, element) {
-                        // window.alert(element.courseName);
-                        console.log(element, $("#questionID: " + element.questionID));
+                        // window.alert(element.questionID);
+                        console.log("das ist die ID des Elements: "+element.questionId);
+
+                        var questionCard = $('<h2 class="margin">Alle Fragen</h2>').append(
+                            $('<div class="col"/>')).append(
+                            $('<h4/>').text(element.question))
                     });
+
                 }
         })
     }
 
 
+    // displays all questions
     $("#nav-questions").click(function() {
         //$("#questions").text("neu");
-        fetchQuestions(BWL);
-    })
+        fetchAllQuestions();
+    });
 
 
     // gerade nicht genutzt
@@ -182,20 +183,20 @@ $(function() {
       // $(".footer").hide();
     });
 
-    // TODO
-    // retrieving user credentials from form
-
-
-
-
 
     // Login
-
-
     $('#login-button').click( function() {
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
        // TODO: aus Form holen
         var json = {
+            "email": $('#email').val(),
+            // "password": b64_sha256($('#password').val())     // gehashed mit b64_sha256
+            // "password": hex_sha256($('#password').val())        // gehashed mit hex_sha256
+            "password": $('#password').val()
+        };
+        console.log("das ist das json mit den Benutzernamen: "+ JSON.stringify(json));
+
+        var jsonTest = {
             email : "marileen.stamer@stud.fh-luebeck.de",
             password :"123"
         };
@@ -225,6 +226,17 @@ $(function() {
             }
         });
     });
+
+    // Registration
+    // TODO
+
+
+
+    $("#home").click(function () {
+        $(".login").hide();
+        $(".registration").hide();
+        console.log("auf Startseite geklickt");
+    })
 
 
 }); // Ende jQuery
