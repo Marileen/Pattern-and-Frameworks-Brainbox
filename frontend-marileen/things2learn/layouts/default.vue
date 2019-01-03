@@ -2,26 +2,26 @@
   <div>
     <div class="layout--default" data-layout="login">
 
-      <div class="row">
-        <div class="col-12 text-center">
+      <div class="col-12 text-center">
 
-          <a href="/" class="menu-item">Start</a>
+        <a href="/" class="menu-item">Start</a>
 
-          <form v-if="!user.isLoggedIn" v-on:submit.prevent="login()">
+        <form v-if="!user.isLoggedIn" v-on:submit.prevent="login()">
           <input type="text" placeholder="email" v-model="email"/>
           <input type="text" placeholder="passwort" v-model="password"/>
           <button>login</button>
+          <nuxt-link to="/about"><span>register</span></nuxt-link>
+
 
           <span v-if="user.loginFailed" class="alert alert-danger" role="alert">
               Username oder Passwort nicht korrekt.
             </span>
         </form>
 
-          <form v-else v-on:submit.prevent="logout()">
-            <p>Hallo {{ user.firstname }}</p>
-            <button>logout</button>
-          </form>
-        </div>
+        <form v-else v-on:submit.prevent="logout()">
+          <p>Hallo {{ user.firstname }}</p>
+          <button>logout</button>
+        </form>
       </div>
     </div>
     <nuxt/>
@@ -47,6 +47,14 @@
     methods: {
       login () {
           this.$store.dispatch('login', {email : this.email, password : this.password});
+          //router.replace('index')
+          // nuxt.renderRoute('index');
+          this.$nuxt.$router.replace({ path: '/' })
+      },
+      logout () {
+        this.$store.dispatch('logout');
+        //router.replace('index')
+        this.$nuxt.$router.replace({ path: '/' })
 
       }
     },

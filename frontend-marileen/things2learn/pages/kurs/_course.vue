@@ -2,6 +2,13 @@
 
   <section class="container">
 
+    <div class="col-12">
+
+      <h1 class="title row">
+        {{ this.$route.params.course }}
+      </h1>
+    </div>
+
     <div class="col-12 col-md-4">
 
         <Topics v-bind:course="this.$route.params.course" v-bind:activeTopic="activeTopic" ></Topics>
@@ -10,9 +17,6 @@
 
       <div class="col-12 col-md-8">
 
-        <h1 class="title row">
-          {{ this.$route.params.course }}
-        </h1>
 
         <Questions v-bind:course="this.$route.params.course" v-on:active-topic="onTopicChange"></Questions>
 

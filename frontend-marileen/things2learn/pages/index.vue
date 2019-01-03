@@ -50,13 +50,6 @@ export default {
 
 <style lang="scss">
 
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  text-align: center;
-}
 
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,

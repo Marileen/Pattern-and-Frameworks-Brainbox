@@ -1,28 +1,14 @@
 <template>
 
-  <section class="">
-        <swiper :options="swiperOption" ref="questionSwiper" v-on:slideChange="setTopic">
-          <swiper-slide v-for="question in questions" :key="question.questionID">
-          <div class="question-box" v-html="question.question"> </div>
-          <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
+  <section class="learningState">
 
-            <div class="learningState">
+      <div class="">
 
-              {{ question.learningState ? question.learningState.stateName : ''  }}
+        {{ question.learningState ? question.learningState.stateName : ''  }}
 
-              <div class="state-item"></div>
+        <div class="state-item"></div>
 
-            </div>
-
-          </swiper-slide>
-
-          <!-- Optional controls -->
-          <div class="swiper-pagination"  slot="pagination"></div>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
-          <div class="swiper-scrollbar"   slot="scrollbar"></div>
-
-        </swiper>
+      </div>
 
   </section>
 </template>

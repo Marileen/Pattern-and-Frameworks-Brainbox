@@ -60,59 +60,6 @@
     justify-content: center;
   }
 
-
-  [data-atom="card"] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    text-decoration: none;
-    padding: 10px 30px;
-    background-color: $color-course;
-    /*background-color: #ecf7dd;*/
-    color: $color-text-dark;
-
-    width: 250px;
-    height: 100px;
-    margin: 25px;
-
-    box-shadow: 0px 2px 3px rgba(0,0,0,.1);
-    cursor: pointer;
-
-    transition: transform .3s ease-out;
-    overflow: hidden;
-    position: relative;
-    -webkit-backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased!important;
-    font-smoothing: antialiased!important;
-    -webkit-transform: translateZ(.1px) scale(1);
-    transform: translateZ(.1px) scale(1);
-
-    &:hover {
-      box-shadow: 0 2px 6px rgba(0,0,0,.2);
-
-      color: $color-text-dark;
-      text-decoration: none;
-
-      transform: scale(1.04) translateZ(.2px);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-  }
-
-  div[data-page="couses"] {
-
-  }
-
-  .container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-  }
-
   .title {
     font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;

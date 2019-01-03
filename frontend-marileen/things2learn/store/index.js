@@ -1,7 +1,5 @@
-//import Vue from 'Vue';
 
 export const state = () => ({
-  counter: 8,
   courses : [],
   topics : [],
   questions : [],
@@ -22,19 +20,9 @@ export const mutations = {
   setQuestions (state, questions ) {
     state.questions = questions
   },
-  setLearningstate (state, { learningState, questionId }) {
-
-    var question = state.questions.find(function(el) {
-      return el.questionID == questionId
-    });
-
-    question.learningState = learningState;
-
-    Vue.set(question, 'learningState', learningState);
-
-    console.log('set ls');
+  setLearningStates (state, learningStates) {
+    state.learningStates = learningStates;
   },
-
   setUser (state, user) {
     state.user = user;
 
@@ -82,13 +70,49 @@ export const actions = {
     }
   },
 
-  //todo
-  logout() {
+  logout({commit}) {
     window.sessionStorage.removeItem("user");
     var userData = [];
     userData.isLoggedIn = false;
-
     commit('setUser', userData);
+  },
+
+  async getLearningStates({commit}) {
+
+
+    try {
+      const response = await fetch('http://127.0.0.1:8050/state', {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      switch (response.status) {
+        case 200 : {
+          console.log('ok');
+          commit('setLearningStates', await response.json());
+          break;
+        }
+
+        case 204 : {
+          console.log('no content');
+          break;
+        }
+
+        default : {
+          console.log('get all learningStates failed');
+
+        }
+      }
+
+
+    } catch (e) {
+      console.log('error in getLearningStates (all)');
+      console.log(e);
+    }
+
   },
 
   async getQuestions ({commit}, { courseName, user }) {
@@ -156,7 +180,6 @@ export const actions = {
     }
 
   },
-
 
   async getCourses ({commit}) {
     try {
