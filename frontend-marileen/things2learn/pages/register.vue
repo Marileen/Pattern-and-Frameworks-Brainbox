@@ -3,7 +3,7 @@
   <div class="container">
 
 
-  <form class="needs-validation"  v-on:submit.prevent="register()">
+  <form class="needs-validation" v-on:submit.prevent="register">
     <div class="row">
 
       <div class="col-md-6 mb-3">
@@ -63,10 +63,7 @@ export default {
         headers: {
         'Content-Type': 'application/json'
       },
-        body: JSON.stringify({
-          "email": email,
-          "password": password
-        })
+        body: e.target.serialize()
     });
 
     if (response.ok) {
