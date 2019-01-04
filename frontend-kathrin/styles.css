@@ -7,6 +7,30 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
+#ev-b {
+    margin: 0px;
+}
+
+#left-b {
+    border-radius: 0px 0px 0px 0px;
+}
+
+.evaluation-button {
+    margin: 15.5px 0px 0px 0px;
+    padding: 14.5px;
+}
+
+#evaluation-text {
+    float: right;
+    margin: 15.5px 2px 0px 0px;
+    padding: 15px;
+    /*border: #babebe; */
+    border-width: 1px 0px 1px 1px;
+    border-style: solid;
+    border-color: rgba(0,0,0,.125);
+    border-radius: 3px 0px 0px 3px;
+}
+
 .ls-text {
     float: left;
 }
@@ -14,6 +38,7 @@ body {
 .ls-icon {
     float: right;
 }
+
 
 .margin {
     margin: 10px 2.5px 10px 2.5px;
@@ -26,6 +51,13 @@ body {
 .margin-right {
     margin: 5px 5px 10px 2.5px;
 }
+
+
+a:hover {
+    text-decoration: none;
+}
+
+
 
 /* Header */
 .header {

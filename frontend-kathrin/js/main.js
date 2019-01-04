@@ -8,12 +8,22 @@ $(function() {
     $(".login").hide();
     $(".registration").hide();
 
+    $("#home").click(function () {
+        $(".login").hide();
+        $(".registration").hide();
+        console.log("auf Startseite geklickt");
+    })
+
+
+    // prevents reload of the page caused by the form elements default behaviour
     $("form").submit(function(e) { // war vorher ohne das .login
         console.log("form submit default behavior prevented by submit callback.");
         e.preventDefault(e);
     });
 
+
     renderCoursesMain();
+    testRenderQuestions();
 
     // rendering of the main container on home
     function renderCoursesMain () {
@@ -24,10 +34,11 @@ $(function() {
                 var coursesElement = $("#courses");
 
                 $.each(data, function (index, element) {
-                    // window.alert(element.courseName);
                     console.log(element, $("#courseID" + element.courseID));
 
                     // ggf. noch in Funktion auslagern
+                    // hier wird die CourseCard zs.gebaut, die danach zs. mit dem Course in der
+                    // fetchTopics verwurstet wird
                     var courseCard = $('<div class="col"/>').append(
                         $('<div class="card" style="width: 18rem;"/>')
                             .append($('<img>', {
@@ -80,8 +91,7 @@ $(function() {
         }); // Ende ajax
     }
 
-
-
+    // TOPICS
     // fetches topics for a certain course
     function fetchTopics (courseCard, courseName) {
          $.ajax({
@@ -98,12 +108,42 @@ $(function() {
             });
     }
 
+    // TEST Rendering questions
+    function testRenderQuestions() {
 
-    // fetches all questions of all courses - jwt protected
+        var testQuestionsElement = $("#testQuestions");
+
+        testQuestionsElement.append(
+            $('<div id="testQuestions"/>').append(
+                $('<div class="accordion" id="accordionExample">') // end div #accordionExample
+                    .append($('<div class="card">')
+                        .append($('<div class="card-header" id="question-box1">')
+                            .append($('<h2 class="mb-0">')
+                                .append($('<button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">')
+                                    .append($('<div class="ls-icon" style="width: 18rem;">')
+                                        .append($('<img src="img/icon_3.jpg"/>')
+                                        .append($('<p>noch nicht</p>'))
+                                    )).append($('<h3>neues Patterns and Frameworks</h3>'))
+                                    .append($('<h5>Thema: JWT</h5>'))
+                                    .append($('<p>Frage: alsdkfj öalsdfkjasöldfjlaösdjf$ aäsdojf $asdfö w fjaäs äba jlöakäsdf</p>'))
+                                )
+                            )) // end question-box1
+                        .append($('<div id="collapseOne" class="collapse" aria-labelledby="question-box1" data-parent="#accordionExample">')
+                            .append($('<div class="card-body">antwort</div>')))
+                    ) // end card
+            ) // end div #testQuestions
+        ) // end testQuestionElement.append
+    } // end testRenderQuestions
+
+
+
+    // QUESTIONS
+    // fetches and renders all questions of all courses - jwt protected
     function fetchAllQuestions () {
         console.log("JWT ist: "+user.jsonWebToken); // das erzeugt: undefined
         // Versuch mit vorgegebenem jwt
         var jwt = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJ1c2VySUQiOjEsImZpcnN0bmFtZSI6Ik1hcmlsZWVuIiwibGFzdG5hbWUiOiJTdGFtZXIiLCJwYXNzd29yZCI6IjEyMyIsImFkbWluIjp0cnVlfQ.6l0Zc-Dt5SL6lOg5IseJwh4r_7BNErzTa6NRMINLQd4";
+
         $.ajax({
                 method: 'GET',
                 beforeSend : function(xhr) {
@@ -130,16 +170,7 @@ $(function() {
                     });
 
 
-                    /* Original Bootstrap
-                    <div class="media">
-                      <div class="media-body">
-                        <h5 class="mt-0 mb-1">Media object</h5>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                      </div>
-                      <img src="..." class="ml-3" alt="...">
-                    </div>
 
-                     */
                 }
         })
     }
@@ -151,7 +182,7 @@ $(function() {
         // aktuell einfach in der fetchAllQuestions drin
     } */
 
-    // displays all questions
+    // displays all questions through click on Alle Fragen button
     $("#nav-questions").click(function() {
         //$("#questions").text("neu");
         fetchAllQuestions();
@@ -179,6 +210,7 @@ $(function() {
         });
     });
 
+    // LOGIN AND REGISTRATION
     // Registrierung
     $('#register-button').click( function () {
         $(".login").hide();
@@ -278,14 +310,6 @@ $(function() {
             }
         });
     });
-
-
-
-    $("#home").click(function () {
-        $(".login").hide();
-        $(".registration").hide();
-        console.log("auf Startseite geklickt");
-    })
 
 
 }); // Ende jQuery
