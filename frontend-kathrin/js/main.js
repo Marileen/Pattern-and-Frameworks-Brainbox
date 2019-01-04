@@ -25,6 +25,8 @@ $(function() {
     renderCoursesMain();
     testRenderQuestions();
 
+
+    // COURSES
     // rendering of the main container on home
     function renderCoursesMain () {
         $.ajax({
@@ -39,48 +41,48 @@ $(function() {
                     // ggf. noch in Funktion auslagern
                     // hier wird die CourseCard zs.gebaut, die danach zs. mit dem Course in der
                     // fetchTopics verwurstet wird
-                    var courseCard = $('<div class="col"/>').append(
-                        $('<div class="card" style="width: 18rem;"/>')
-                            .append($('<img>', {
-                                class: "card-img-top",
-                                alt: "Card image cap",
-                                src: "img/card_" + element.courseID + ".jpg",
+                    var courseCard =
+                        $('<div class="col"/>').append(
+                            $('<div class="card" style="width: 18rem;"/>')
+                                .append($('<img>', {
+                                    class: "card-img-top",
+                                    alt: "Card image cap",
+                                    src: "img/card_" + element.courseID + ".jpg",
+                                }))
+                                .append($('<div class="card-body"/>')
+                                    .append(
+                                        $('<h5 class="card-title show-courses"/>')
+                                            .text(element.courseName))
+                                    .append(
+                                        $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
+                                            .append(
+                                                $('<button/>',
+                                                    {
+                                                        class: "show-topics btn btn-primary standard-button",
+                                                        type: "button",
+                                                        'data-toggle':"collapse",
+                                                        'data-target': '#topicsForCourse'+element.courseID,
+                                                        'aria-expanded':"false",
+                                                        'aria-controls':"collapseExample"
+                                                    })
+                                                    .text("Themen anzeigen"))
+                                            .append(
+                                                $('<div/>',
+                                                    {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
+                                                    $('<div class="card card-body"/>'
+                                                    ))
 
-                            }))
-                            .append($('<div class="card-body"/>')
-                                .append(
-                                    $('<h5 class="card-title show-courses"/>')
-                                        .text(element.courseName))
-                                .append(
-                                    $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
-                                        .append(
-                                            $('<button/>',
-                                                {
-                                                    class: "show-topics btn btn-primary",
-                                                    type: "button",
-                                                    'data-toggle':"collapse",
-                                                    'data-target': '#topicsForCourse'+element.courseID,
-                                                    'aria-expanded':"false",
-                                                    'aria-controls':"collapseExample"})
-                                                .text("Themen anzeigen"))
-                                        .append(
-                                            $('<div/>',
-                                                {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
-                                                $('<div class="card card-body"/>'
-                                                ))
-
-                                            /*
-                                            // text mit fetchTopics ersetzen
-                                            var topics = fetchTopics(element.courseName);
-
-                                            $.each(topics, function (index, element) {
-                                                    $("card-body").text(element.topicName);
-                                            });
-                                            */
-                                        )
-                                )
-                            ) // ende card-body
-                    ); // ende col
+                                                /*
+                                                // text mit fetchTopics ersetzen
+                                                var topics = fetchTopics(element.courseName);
+                                                $.each(topics, function (index, element) {
+                                                        $("card-body").text(element.topicName);
+                                                });
+                                                */
+                                            )
+                                    )
+                                ) // end card-body
+                        ); // end col
 
                     coursesElement.append(courseCard); // ende der appends
 
@@ -89,52 +91,110 @@ $(function() {
                 });
             }
         }); // Ende ajax
-    }
+    } // end function renderCoursesMain
 
     // TOPICS
-    // fetches topics for a certain course
-    function fetchTopics (courseCard, courseName) {
-         $.ajax({
+        // fetches topics for a certain course
+        function fetchTopics (courseCard, courseName) {
+            $.ajax({
                 type: 'GET',
                 url: host + "/topics/" +courseName,
                 success: function (data) {
 
-                        $.each(data, function (index, element) {
-                            console.log("elemente: " + element.topicName);
-                            courseCard.find('.topic-list > .card-body').append($('<p/>').text(element.topicName));
-                            // window.alert(element.topicName);
-                        });
+                    $.each(data, function (index, element) {
+                        console.log("elemente: " + element.topicName);
+                        courseCard.find('.topic-list > .card-body').append($('<p/>').text(element.topicName));
+                        // window.alert(element.topicName);
+                    });
                 }
             });
+        }
+
+
+    // QUESTIONS
+    // fetches questions for a certain course
+    function fetchQuestions (questionBox, courseName) {
+        $.ajax({
+            type: 'GET',
+            url: host + "/questions/" +courseName,
+            success: function (data) {
+
+                $.each(data, function (index, element) {
+                    console.log("fragen: " + element.question);
+                    questionBox.find('.question-body').append($('<p/>').text(element.topicName));
+                    // window.alert(element.topicName);
+                });
+            }
+        });
     }
+
 
     // TEST Rendering questions
     function testRenderQuestions() {
+        // ajax request with JWT
+        var jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJwYXNzd29yZCI6IjEyMyJ9.coLj8ci8mvDdToBUtrWlJYO-aND7yZR4ok79Gn4-6bo";
+        console.log("neue Abfrage ueber testRenderQuestions");
 
-        var testQuestionsElement = $("#testQuestions");
+        $.ajax({
+            method: 'GET',
+            beforeSend : function(xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Authorization", "Bearer "+jwt);
+            },
 
-        testQuestionsElement.append(
-            $('<div id="testQuestions"/>').append(
-                $('<div class="accordion" id="accordionExample">') // end div #accordionExample
-                    .append($('<div class="card">')
-                        .append($('<div class="card-header" id="question-box1">')
-                            .append($('<h2 class="mb-0">')
-                                .append($('<button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">')
-                                    .append($('<div class="ls-icon" style="width: 18rem;">')
-                                        .append($('<img src="img/icon_3.jpg"/>')
-                                        .append($('<p>noch nicht</p>'))
-                                    )).append($('<h3>neues Patterns and Frameworks</h3>'))
-                                    .append($('<h5>Thema: JWT</h5>'))
-                                    .append($('<p>Frage: alsdkfj öalsdfkjasöldfjlaösdjf$ aäsdojf $asdfö w fjaäs äba jlöakäsdf</p>'))
-                                )
-                            )) // end question-box1
-                        .append($('<div id="collapseOne" class="collapse" aria-labelledby="question-box1" data-parent="#accordionExample">')
-                            .append($('<div class="card-body">antwort</div>')))
-                    ) // end card
-            ) // end div #testQuestions
-        ) // end testQuestionElement.append
-    } // end testRenderQuestions
+            url: host + "/questions", // holt erstmal alle Questions
+            success: function (data) {
+                var testQuestionsElement = $("#testQuestions"); // Aequivalent zu coursesElement
+                console.log("xhr-Request laeuft");
 
+                $.each(data, function (index, element) {
+                    console.log("each "+element.questionID);
+
+
+                    var questionBox = // Aequivalent zu courseCard
+                        $('<div id="testQuestions"/>').append($('<div class="accordion" id="accordionExample">') // end div #accordionExample
+                                .append($('<div class="card">')
+                                    .append(
+                                        $('<div/>',
+                                        {
+                                            id: "question-box"+element.questionID,
+
+                                            class: "card-header"
+                                        })
+                                        .append($('<h2 class="mb-0">')
+                                            .append($('<button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">')
+                                                .append($('<div class="ls-icon" style="width: 18rem;">')
+                                                    .append($('<img src="img/icon_3.jpg"/>')
+                                                        .append($('<p>noch nicht</p>'))
+                                                    )).append($('<h3>neues Patterns and Frameworks</h3>'))
+                                                .append($('<h5>Thema: JWT</h5>'))
+                                                .append($('<p/>',
+                                                    {
+                                                    class: "question-body"
+                                                    })
+                                                    .text(element.question)
+                                                )
+                                            ) // end button                                        ) // end append h2
+                                    ) // end div card-header
+                                    .append($('<div id="collapseOne" class="collapse" aria-labelledby="question-box1" data-parent="#accordionExample">')
+                                        .append($('<div/>',
+                                            {
+                                                class: "card-body"
+                                            })
+                                                .text(element.answer)
+                                            ))
+                                    ) // end appends #question-box
+                                ) // end appends card
+                        ) // end appends accordion
+
+                    testQuestionsElement.append(questionBox);
+                    fetchQuestions(questionBox, element.topic_topicID);
+
+                }) // end each
+            } // end success function
+        })// ende ajax
+    } // end function testRenderQuestions
 
 
     // QUESTIONS
@@ -168,9 +228,6 @@ $(function() {
                             $('<div class="col"/>')).append(
                             $('<h4/>').text(element.question))
                     });
-
-
-
                 }
         })
     }
