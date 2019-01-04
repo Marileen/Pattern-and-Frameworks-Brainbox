@@ -110,29 +110,41 @@
         </div>
 
         <!-- all questions -->
-        <div id="questions" >
-            <div class="accordion" id="accordionExample">
+        <div id="questions">
+
+        </div>
+
+        <div id="testQuestions">
+            <p>hier kommt das alte Akkordeon:</p>
+            <div class="accordion" id="accordionExample"> <!-- accordionExample bei mir questionsAccordion -->
                 <div class="card">
-                    <div class="card-header" id="headingOne">
+                    <div class="card-header" id="headingOne"> <!-- headingOne bei mir questions-box1 -->
                         <h2 class="mb-0">
-                            <button class="btn btn-link col" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 <div class="ls-icon" style="width: 18rem;">
                                     <img src="img/icon_3.jpg"/>
                                     <p>noch nicht</p>
                                 </div>
-                                <h3>Kurs: Patterns and Frameworks.</h3>
+                                <h3>Patterns and Frameworks</h3>
                                 <h5>Thema: JWT</h5>
                                 <p>Frage: alsdkfj öalsdfkjasöldfjlaösdjf$ aäsdojf $asdfö w fjaäs äba jlöakäsdf alköer jkfldsaä  </p>
                             </button>
                         </h2>
                     </div>
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
                             Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+
+                            <div id="ev-b" class="btn-group ls-icon" role="group" aria-label="Basic example">
+                                <button type="button" id="left-b" class="btn btn-secondary standard-button">kann ich</button>
+                                <button type="button" class="btn btn-secondary standard-button">geht so</button>
+                                <button type="button" class="btn btn-secondary standard-button">noch nicht</button>
+                            </div>
+                            <p id="evaluation-text">
+                                Aktueller Stand
+                            </p>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div class="card">
