@@ -153,8 +153,8 @@ $(function() {
 
 
                     var questionBox = // Aequivalent zu courseCard
-                        $('<div id="testQuestions"/>').append($('<div class="accordion" id="accordionExample">') // end div #accordionExample
-                                .append($('<div class="card">')
+                        $('<div id="testQuestions"/>').append($('<div class="accordion" id="accordionExample"/>') // end div #accordionExample
+                                .append($('<div class="card"/>')
                                     .append(
                                         $('<div/>',
                                         {
@@ -162,9 +162,9 @@ $(function() {
 
                                             class: "card-header"
                                         })
-                                        .append($('<h2 class="mb-0">')
-                                            .append($('<button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">')
-                                                .append($('<div class="ls-icon" style="width: 18rem;">')
+                                        .append($('<h2 class="mb-0"/>')
+                                            .append($('<button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"/>')
+                                                .append($('<div class="ls-icon" style="width: 18rem;"/>')
                                                     .append($('<img src="img/icon_3.jpg"/>')
                                                         .append($('<p>noch nicht</p>'))
                                                     )).append($('<h3>neues Patterns and Frameworks</h3>'))
@@ -176,15 +176,21 @@ $(function() {
                                                     .text(element.question)
                                                 )
                                             ) // end button                                        ) // end append h2
-                                    ) // end div card-header
-                                    .append($('<div id="collapseOne" class="collapse" aria-labelledby="question-box1" data-parent="#accordionExample">')
+                                    )) // end div card-header
+                                    .append($('<div id="collapseOne" class="collapse" aria-labelledby="question-box1" data-parent="#accordionExample"/>')
                                         .append($('<div/>',
                                             {
                                                 class: "card-body"
                                             })
-                                                .text(element.answer)
-                                            ))
-                                    ) // end appends #question-box
+                                                .text(element.answer))
+                                                .append($('<div id="ev-b" class="btn-group ls-icon" role="group" aria-label="Basic example"/>')
+                                                    .append($('<button type="button" id="left-b" class="btn btn-secondary standard-button">kann ich</button>'))
+                                                    .append($('<button type="button" class="btn btn-secondary standard-button">geht so</button>'))
+                                                    .append($('<button type="button" class="btn btn-secondary standard-button">noch nicht</button>'))
+                                                )
+                                                .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
+                                    ) // end append collapseOne
+                                     // end appends #question-box
                                 ) // end appends card
                         ) // end appends accordion
 
