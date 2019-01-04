@@ -12,7 +12,7 @@ $(function() {
         $(".login").hide();
         $(".registration").hide();
         console.log("auf Startseite geklickt");
-    })
+    });
 
 
     // prevents reload of the page caused by the form elements default behaviour
@@ -21,6 +21,12 @@ $(function() {
         e.preventDefault(e);
     });
 
+    // LEARNING STATE
+    // sets learning state
+    $("#ls1-button").click(function () {
+        window.alert("Learning State 'kann ich' gesetzt");
+        console.log("LS 1 gesetzt");
+    });
 
     renderCoursesMain();
     testRenderQuestions();
@@ -112,6 +118,8 @@ $(function() {
 
 
     // QUESTIONS
+
+    // FUNKTIONIERT NOCH NICHT
     // fetches questions for a certain course
     function fetchQuestions (questionBox, courseName) {
         $.ajax({
@@ -184,9 +192,9 @@ $(function() {
                                             })
                                                 .text(element.answer))
                                                 .append($('<div id="ev-b" class="btn-group ls-icon" role="group" aria-label="Basic example"/>')
-                                                    .append($('<button type="button" id="left-b" class="btn btn-secondary standard-button">kann ich</button>'))
-                                                    .append($('<button type="button" class="btn btn-secondary standard-button">geht so</button>'))
-                                                    .append($('<button type="button" class="btn btn-secondary standard-button">noch nicht</button>'))
+                                                    .append($('<button type="button" id="ls1-button" class="btn btn-secondary standard-button">kann ich</button>'))
+                                                    .append($('<button type="button" id="ls2-button" class="btn btn-secondary standard-button">geht so</button>'))
+                                                    .append($('<button type="button" id="ls3-button" class="btn btn-secondary standard-button">noch nicht</button>'))
                                                 )
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
                                     ) // end append collapseOne
@@ -195,7 +203,9 @@ $(function() {
                         ) // end appends accordion
 
                     testQuestionsElement.append(questionBox);
-                    fetchQuestions(questionBox, element.topic_topicID);
+
+                    //console.log("genau diese Anfrage funktioniert nicht:");
+                   // fetchQuestions(questionBox, element.topic_topicID);
 
                 }) // end each
             } // end success function
