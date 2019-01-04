@@ -22,11 +22,7 @@ $(function() {
     });
 
     // LEARNING STATE
-    // sets learning state
-    $("#ls1-button").click(function () {
-        window.alert("Learning State 'kann ich' gesetzt");
-        console.log("LS 1 gesetzt");
-    });
+
 
     renderCoursesMain();
     testRenderQuestions();
@@ -161,17 +157,25 @@ $(function() {
 
 
                     var questionBox = // Aequivalent zu courseCard
-                        $('<div id="testQuestions"/>').append($('<div class="accordion" id="accordionExample"/>') // end div #accordionExample
+                        $('<div id="testQuestions"/>').append($('<div class="accordion" id="questionsAccordion"/>') // end div #accordionExample
                                 .append($('<div class="card"/>')
                                     .append(
                                         $('<div/>',
                                         {
-                                            id: "question-box"+element.questionID,
+                                            id: "question-box"+element.questionID, // bootstrap: headingOne
 
                                             class: "card-header"
                                         })
                                         .append($('<h2 class="mb-0"/>')
-                                            .append($('<button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"/>')
+                                            .append($('<button/>',
+                                                {
+                                                    class: "btn btn-link col collapsed",
+                                                    type: "button",
+                                                    'data-toggle':"collapse",
+                                                    'data-target':"#collapse"+element.questionID,
+                                                    'aria-expanded': "true",
+                                                    'aria-controls':"collapse"+element.questionID
+                                                })
                                                 .append($('<div class="ls-icon" style="width: 18rem;"/>')
                                                     .append($('<img src="img/icon_3.jpg"/>')
                                                         .append($('<p>noch nicht</p>'))
@@ -185,7 +189,13 @@ $(function() {
                                                 )
                                             ) // end button                                        ) // end append h2
                                     )) // end div card-header
-                                    .append($('<div id="collapseOne" class="collapse" aria-labelledby="question-box1" data-parent="#accordionExample"/>')
+                                    .append($('<div/>',
+                                        {
+                                            id: "collapse"+element.questionID,
+                                            class: "collapse",
+                                            'aria-labelledby': "question-box"+element.questionID,
+                                            'data-parent': "#questionsAccordion"
+                                        })
                                         .append($('<div/>',
                                             {
                                                 class: "card-body"
@@ -201,6 +211,41 @@ $(function() {
                                      // end appends #question-box
                                 ) // end appends card
                         ) // end appends accordion
+
+                   /*
+                    setLearningState();
+                    // sets learning state
+                    function setLearningState () {
+                       // if (button == "#ls1-button") {
+                       // }elseif(button == "#ls2-button")
+                      //  elseif(button == "#ls3-button")
+
+                        switch(this) {
+                            case 1:
+                                // code block
+                                $((this).attr('id')).click(function () {
+                                    window.alert("Learning State 'kann ich' gesetzt");
+                                    console.log("LS 1 gesetzt");
+                                });
+                                break;
+                            case 2:
+                                $((this).attr('id')).click(function () {
+                                    window.alert("Learning State 'geht so' gesetzt");
+                                    console.log("LS 2 gesetzt");
+                                });
+                                break;
+                            case 3:
+                                $((this).attr('id')).click(function () {
+                                    window.alert("Learning State 'noch nicht' gesetzt");
+                                    console.log("LS 3 gesetzt");
+                                });
+                                break;
+                            default:
+                                window.alert("default");
+                                break;
+                        }
+                    }
+                    */
 
                     testQuestionsElement.append(questionBox);
 
