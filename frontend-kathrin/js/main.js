@@ -25,7 +25,22 @@ $(function() {
 
 
     renderCoursesMain();
-    testRenderQuestions();
+
+    // displays all questions through click on Alle Fragen button
+    $("#nav-questions").click(function () {
+       var jwt = user.jsonWebToken;
+       try {
+           renderQuestions();
+           if(jwt==null) {
+               $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+           }else{
+               $("#login-b").text("Logout");
+           }
+       }catch(e){
+            $(".failureMessage").text("Einloggen!");
+            console.error("Fehler: ", e.message);
+        }
+    });
 
 
     // COURSES
@@ -39,6 +54,18 @@ $(function() {
 
                 $.each(data, function (index, element) {
                     console.log(element, $("#courseID" + element.courseID));
+
+                    // TODO: Bild aus DB holen - siehe Bsp-Code Ehlers
+                    /* Load product image
+                    $.ajax({
+                        url: host + "/products/" + product.id,
+                        dataType: 'binary',
+                        headers: {"accept": "application/octet-stream"},
+                        success: function(data) {
+                            product.img = data;
+                            $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
+                        }
+                    }); */
 
                     // ggf. noch in Funktion auslagern
                     // hier wird die CourseCard zs.gebaut, die danach zs. mit dem Course in der
@@ -134,10 +161,19 @@ $(function() {
 
 
     // TEST Rendering questions
-    function testRenderQuestions() {
+    function renderQuestions() {
         // ajax request with JWT
-        var jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJwYXNzd29yZCI6IjEyMyJ9.coLj8ci8mvDdToBUtrWlJYO-aND7yZR4ok79Gn4-6bo";
-        console.log("neue Abfrage ueber testRenderQuestions");
+        var jwt = user.jsonWebToken;
+        //var jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJwYXNzd29yZCI6IjEyMyJ9.coLj8ci8mvDdToBUtrWlJYO-aND7yZR4ok79Gn4-6bo";
+        console.log("neue Abfrage ueber renderQuestions");
+
+        // ToDo: testen, ob das funktioniert, sobald jwt dynamisch kommt
+        /*if(jwt==null) {
+            $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+        }else{
+            $("#login-b").text("Logout");
+        } */
+
 
         $.ajax({
             method: 'GET',
@@ -201,10 +237,10 @@ $(function() {
                                                 class: "card-body"
                                             })
                                                 .text(element.answer))
-                                                .append($('<div id="ev-b" class="btn-group ls-icon" role="group" aria-label="Basic example"/>')
-                                                    .append($('<button type="button" id="ls1-button" class="btn btn-secondary standard-button">kann ich</button>'))
-                                                    .append($('<button type="button" id="ls2-button" class="btn btn-secondary standard-button">geht so</button>'))
-                                                    .append($('<button type="button" id="ls3-button" class="btn btn-secondary standard-button">noch nicht</button>'))
+                                                .append($('<div name="ev-b" class="btn-group ls-icon ev-b" role="group" aria-label="Basic example"/>')
+                                                    .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>'))
+                                                    .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>'))
+                                                    .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>'))
                                                 )
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
                                     ) // end append collapseOne
@@ -212,30 +248,57 @@ $(function() {
                                 ) // end appends card
                         ) // end appends accordion
 
-                   /*
-                    setLearningState();
-                    // sets learning state
-                    function setLearningState () {
-                       // if (button == "#ls1-button") {
-                       // }elseif(button == "#ls2-button")
-                      //  elseif(button == "#ls3-button")
+                    // fuehrt Funktion nur 1x aus
+                   if(window.name !== 'setLearningState'){
+                        window.name = 'setLearningState';
+                            setLearningState();
+                    }
+                    // setLearningState();
 
-                        switch(this) {
-                            case 1:
+                    // wie kriege ich die id des geklickten buttons?
+                    // var clickedLS = $((this).attr('id'));
+
+                    var clickedLS = $(this); // ist ein Objekt
+                    console.log("This: "+this);
+                    var clickedLSButton = "."+clickedLS.attr("id"); // ist sowas wie .ls2-button
+                    console.log("clickedLS aus find: "+ clickedLSButton);
+
+
+                    // sets learning state
+                    function setLearningState (clickedLSButton) {
+
+                       if (clickedLSButton === ".ls1-button") {
+                           console.log("erster Knopf geklickt");
+                       }else if(clickedLSButton === ".ls2-button")
+                        {
+                            console.log("zweiter Knopf geklickt");
+                        }else if(clickedLSButton === "#ls3-button")
+                        {
+                            console.log("dritter Knopf geklickt");
+                        }else{
+                            console.log("gar kein Knopf geklickt");
+                        }
+
+                        /*
+
+                        switch(clickedLSButton) {
+                            case ".ls1-button":
                                 // code block
-                                $((this).attr('id')).click(function () {
+                                //.ls1-button
+                                $(this).click(function () {
                                     window.alert("Learning State 'kann ich' gesetzt");
                                     console.log("LS 1 gesetzt");
                                 });
                                 break;
-                            case 2:
-                                $((this).attr('id')).click(function () {
+                            case ".ls2-button":
+                                $(this).click(function () {
                                     window.alert("Learning State 'geht so' gesetzt");
                                     console.log("LS 2 gesetzt");
                                 });
                                 break;
-                            case 3:
-                                $((this).attr('id')).click(function () {
+                            case ".ls3-button":
+                                //$((this).attr('id')).click(function () {
+                                $(this).click(function () {
                                     window.alert("Learning State 'noch nicht' gesetzt");
                                     console.log("LS 3 gesetzt");
                                 });
@@ -243,9 +306,10 @@ $(function() {
                             default:
                                 window.alert("default");
                                 break;
-                        }
+                        } */
+
                     }
-                    */
+
 
                     testQuestionsElement.append(questionBox);
 
@@ -255,7 +319,7 @@ $(function() {
                 }) // end each
             } // end success function
         })// ende ajax
-    } // end function testRenderQuestions
+    } // end function renderQuestions
 
 
     // QUESTIONS
@@ -263,7 +327,14 @@ $(function() {
     function fetchAllQuestions () {
         console.log("JWT ist: "+user.jsonWebToken); // das erzeugt: undefined
         // Versuch mit vorgegebenem jwt
-        var jwt = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJ1c2VySUQiOjEsImZpcnN0bmFtZSI6Ik1hcmlsZWVuIiwibGFzdG5hbWUiOiJTdGFtZXIiLCJwYXNzd29yZCI6IjEyMyIsImFkbWluIjp0cnVlfQ.6l0Zc-Dt5SL6lOg5IseJwh4r_7BNErzTa6NRMINLQd4";
+       // var jwt = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJ1c2VySUQiOjEsImZpcnN0bmFtZSI6Ik1hcmlsZWVuIiwibGFzdG5hbWUiOiJTdGFtZXIiLCJwYXNzd29yZCI6IjEyMyIsImFkbWluIjp0cnVlfQ.6l0Zc-Dt5SL6lOg5IseJwh4r_7BNErzTa6NRMINLQd4";
+
+        /*
+       var jwt = user.jsonWebToken;
+        if(jwt==null) {
+            $(".failureMessage").text("Bitte erst einloggen.");
+        } */
+
 
         $.ajax({
                 method: 'GET',
@@ -295,17 +366,6 @@ $(function() {
 
 
 
-    /* rendering of the all questions page
-    function renderAllQuestions(){
-        // aktuell einfach in der fetchAllQuestions drin
-    } */
-
-    // displays all questions through click on Alle Fragen button
-    $("#nav-questions").click(function() {
-        //$("#questions").text("neu");
-        fetchAllQuestions();
-    });
-
     // gerade nicht genutzt
     $(".show-topics").click(function () { // wenn ich auf knopf themen anzeigen klicke, dann
         $(this).text("dieses Element wurde geklickt");
@@ -333,6 +393,7 @@ $(function() {
     $('#register-button').click( function () {
         $(".login").hide();
         $(".registration").fadeTo(400, 1);
+        $(".main").hide();
     });
 
     /*$( "#clickme" ).click(function() {
@@ -344,7 +405,7 @@ $(function() {
     // shows Login form
     $('#login-b').click( function() {
       $(".login").show();
-      // $(".main").hide();
+      $(".main").hide();
       // window.alert("funktioniert");
       // $(".footer").hide();
     });
@@ -352,6 +413,7 @@ $(function() {
 
     // Login
     $('#login-button').click( function() {
+
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
        // TODO: aus Form holen
         var json = {
@@ -360,12 +422,16 @@ $(function() {
             // "password": hex_sha256($('#password').val())        // gehashed mit hex_sha256
             "password": $('#password').val()
         };
+
+        // ToDO: Fehlermeldung, wenn keine Daten eingegeben
+
         console.log("das ist das json mit den Benutzernamen: "+ JSON.stringify(json));
 
+        /*
         var jsonTest = {
             email : "marileen.stamer@stud.fh-luebeck.de",
             password :"123"
-        };
+        }; */
 
         $.ajax({
             url: host + "/user/login", //localhost:8050/user/login
@@ -383,15 +449,33 @@ $(function() {
                 var jwt = user.jsonWebToken;
                 console.log("Das JWT dieses Users lautet: "+jwt);
 
-                //$('.login page').hide();
-                //$('.main').show();
-                //alert("login geklappt");
+                loginSuccessful();
             },
             error: function() {
               console.log("login error", arguments);
+              $('.login page').hide();
+
             }
         });
     });
+
+    function loginSuccessful() {
+        var loginMessage = '<div class="alert alert-info" role="alert">'+ "Du hast Dich erfolgreich eingeloggt."+ '</div>';
+
+        $(".main .failureMessage").fadeTo(100, 1, function(){ $(this).html(loginMessage).fadeOut(4000); });
+        $("#login-b").text("Logout");
+        $(".login").hide();
+        $(".main").show();
+    }
+
+    function registrationSuccessful() {
+        var loginMessage = '<div class="alert alert-info" role="alert">'+ "Du hast Dich erfolgreich registriert."+ '</div>';
+
+        $(".main .failureMessage").fadeTo(100, 1, function(){ $(this).html(loginMessage).fadeOut(4000); });
+        $("#login-b").text("Logout");
+        $(".registration").hide();
+        $(".main").show();
+    }
 
     // Registration
     $('#initial-registr-button').click( function() {
@@ -427,6 +511,7 @@ $(function() {
                 console.log("registration error", arguments);
             }
         });
+        registrationSuccessful();
     });
 
 
