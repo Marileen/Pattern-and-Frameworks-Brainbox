@@ -2,15 +2,18 @@
 
   <section class="">
         <swiper :options="swiperOption" ref="questionSwiper" v-on:slideChange="setTopic">
-          <swiper-slide v-for="question in questions" :key="question.questionID">
+          <swiper-slide v-for="question in questions" :key="question.questionID" :id="question.questionID">
           <div class="question-box" v-html="question.question"> </div>
           <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
 
-            <div class="learningState">
+            <div class="learningState" v-if="question.learningState">
 
-              {{ question.learningState ? question.learningState.stateName : ''  }}
 
-              <div class="state-item"></div>
+              <div class="state-item">
+                <!--todo get image-->
+                <!--<img :src="question.learningState.ima">-->
+                <caption>Ich beherrsche die Frage {{ question.learningState.stateName}}</caption>
+              </div>
 
             </div>
 
@@ -112,16 +115,18 @@
 
 <style lang="scss">
 
+  @import "../assets/colors.scss";
+
   .question-box, .answer-box {
 
     padding: 20px;
-    margin: 20px 35px;
-    color: #fff;
+    margin: 20px 40px;
+    //color: #fff;
 
   }
 
   .question-box {
-    background-color: #35495e;
+    background-color: $color-primary;
 
     font-weight: bold;
     font-size: 20px;
@@ -129,7 +134,16 @@
 
   .answer-box {
 
-    background-color: #4b647f;
+    background-color: $color-secondary;
+  }
+
+  .swiper-slide {
+    position: relative;
+    .state-item {
+      position: absolute;
+      top:0;
+      right: 0;
+    }
   }
 
 
@@ -137,23 +151,28 @@
     background: #4b647f;
   }
 
-  /*.swiper-button-next, .swiper-container-rtl .swiper-button-prev {*/
-
-    /*width: 0px;*/
-    /*height: 0px;*/
-    /*-webkit-transform:rotate(360deg);*/
-    /*border-style: solid;*/
-    /*border-width: 70px 0 70px 60px;*/
-    /*border-color: transparent transparent transparent #4b647f;*/
-
-  /*}*/
 
   .swiper-button-next {
     right:0;
+
+    width: 0px;
+    height: 0px;
+    -webkit-transform:rotate(360deg);
+    border-style: solid;
+    border-width: 28px 0 28px 30px;
+    border-color: transparent transparent transparent $color-menu;
   }
 
   .swiper-button-prev {
     left:0;
+
+    background: none;
+    width: 0px;
+    height: 0px;
+    -webkit-transform:rotate(360deg);
+    border-style: solid;
+    border-width: 28px 30px 28px 0;
+    border-color: transparent $color-menu transparent transparent ;
   }
 
 

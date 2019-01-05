@@ -90,7 +90,6 @@ export const actions = {
 
   async getLearningStates({commit}) {
 
-
     try {
       const response = await fetch('http://127.0.0.1:8050/state', {
         method: 'GET',
@@ -146,8 +145,12 @@ export const actions = {
 
           //get Learningstates for Questions
           for (var question of questions) {
+            console.log('get Questions - get ls for q');
             console.log(question);
+            console.log('ls:', await getLearningState(user.userID, question.questionID, user.jsonWebToken));
             question.learningState = await getLearningState(user.userID, question.questionID, user.jsonWebToken)
+
+            //question.learningState = { test : 'loo' }
 
           }
           commit('setQuestions', questions);
@@ -233,17 +236,19 @@ async function getLearningState( userId, questionId, token ) {
         }
       });
 
-      switch (response.status) {
+      console.log('get ls');
+
+      switch (await response.status) {
         case 200 : {
-          console.log('ok');
+          console.log('ls ok');
           //commit('setLearningstate', { learningState : await response.json(), questionId : questionId });
 
-          return response.json();
+          return await response.json();
           break;
         }
 
         case 204 : {
-          console.log('no content');
+          console.log('ls no content');
           return {};
           break;
         }

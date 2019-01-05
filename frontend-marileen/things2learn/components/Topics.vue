@@ -56,6 +56,7 @@
 
   [data-atom="card"] {
     color: $color-text-dark;
+    background-color: $color-topic;
 
     &:hover {
       box-shadow: 0px 2px 3px rgba(0,0,0,.1);

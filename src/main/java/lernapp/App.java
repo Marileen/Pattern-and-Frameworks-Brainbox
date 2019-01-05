@@ -26,7 +26,7 @@ public class App {
         LearningStateService learningStateService = new LearningStateService();
 
         // Create users
-        User marileen = new User("marileen.stamer@stud.fh-luebeck.de","Marileen","Stamer", "123", true);
+        User marileen = new User("marileen.stamer@stud.fh-luebeck.de","Marileen","Stamer", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", true);
         userService.save(marileen);
 
 

@@ -9,14 +9,13 @@
       </h1>
     </div>
 
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
 
         <Topics v-bind:course="this.$route.params.course" v-bind:activeTopic="activeTopic" ></Topics>
 
       </div>
 
-      <div class="col-12 col-md-8">
-
+      <div class="col-12 col-md-9">
 
         <Questions v-bind:course="this.$route.params.course" v-on:active-topic="onTopicChange"></Questions>
 

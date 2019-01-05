@@ -31,7 +31,7 @@ public class LearningState {
 
     public LearningState(String stateName, String imageFileName, String LearningStateDescr){
         this.stateName = stateName;
-        this.imageUrl = imageUrl;
+        this.imageUrl = imageFileName;
         this.LearningStateDescr = LearningStateDescr;
     }
 
