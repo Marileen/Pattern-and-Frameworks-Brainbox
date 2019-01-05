@@ -3,17 +3,17 @@ $(function() {
 
     var host = "http://localhost:8050";
     var user = {};
+    var clickedLS;
 
 
     $(".login").hide();
     $(".registration").hide();
 
-    $("#home").click(function () {
+    $(".home").click(function () {
         $(".login").hide();
         $(".registration").hide();
-        console.log("auf Startseite geklickt");
+        $(".main").show();
     });
-
 
     // prevents reload of the page caused by the form elements default behaviour
     $("form").submit(function(e) { // war vorher ohne das .login
@@ -28,18 +28,14 @@ $(function() {
 
     // displays all questions through click on Alle Fragen button
     $("#nav-questions").click(function () {
-       var jwt = user.jsonWebToken;
-       try {
-           renderQuestions();
-           if(jwt==null) {
-               $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
-           }else{
-               $("#login-b").text("Logout");
-           }
-       }catch(e){
-            $(".failureMessage").text("Einloggen!");
-            console.error("Fehler: ", e.message);
+        if(jwt==null) {
+            $(".failureMessage").addClass('alert alert-warning').text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+        }else{
+            $("#login-b").text("Logout");
         }
+        var jwt = user.jsonWebToken;
+        renderQuestions();
+
     });
 
 
@@ -167,12 +163,12 @@ $(function() {
         //var jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJwYXNzd29yZCI6IjEyMyJ9.coLj8ci8mvDdToBUtrWlJYO-aND7yZR4ok79Gn4-6bo";
         console.log("neue Abfrage ueber renderQuestions");
 
-        // ToDo: testen, ob das funktioniert, sobald jwt dynamisch kommt
-        /*if(jwt==null) {
+        // tests if jwt is available
+        if(jwt==null) {
             $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
         }else{
             $("#login-b").text("Logout");
-        } */
+        }
 
 
         $.ajax({
@@ -238,7 +234,9 @@ $(function() {
                                             })
                                                 .text(element.answer))
                                                 .append($('<div name="ev-b" class="btn-group ls-icon ev-b" role="group" aria-label="Basic example"/>')
-                                                    .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>'))
+                                                    .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>').click(function() {
+                                                        console.log("Clicked on first button of question", element.questionID);
+                                                    }))
                                                     .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>'))
                                                     .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>'))
                                                 )
@@ -248,67 +246,6 @@ $(function() {
                                 ) // end appends card
                         ) // end appends accordion
 
-                    // fuehrt Funktion nur 1x aus
-                   if(window.name !== 'setLearningState'){
-                        window.name = 'setLearningState';
-                            setLearningState();
-                    }
-                    // setLearningState();
-
-                    // wie kriege ich die id des geklickten buttons?
-                    // var clickedLS = $((this).attr('id'));
-
-                    var clickedLS = $(this); // ist ein Objekt
-                    console.log("This: "+this);
-                    var clickedLSButton = "."+clickedLS.attr("id"); // ist sowas wie .ls2-button
-                    console.log("clickedLS aus find: "+ clickedLSButton);
-
-
-                    // sets learning state
-                    function setLearningState (clickedLSButton) {
-
-                       if (clickedLSButton === ".ls1-button") {
-                           console.log("erster Knopf geklickt");
-                       }else if(clickedLSButton === ".ls2-button")
-                        {
-                            console.log("zweiter Knopf geklickt");
-                        }else if(clickedLSButton === "#ls3-button")
-                        {
-                            console.log("dritter Knopf geklickt");
-                        }else{
-                            console.log("gar kein Knopf geklickt");
-                        }
-
-                        /*
-
-                        switch(clickedLSButton) {
-                            case ".ls1-button":
-                                // code block
-                                //.ls1-button
-                                $(this).click(function () {
-                                    window.alert("Learning State 'kann ich' gesetzt");
-                                    console.log("LS 1 gesetzt");
-                                });
-                                break;
-                            case ".ls2-button":
-                                $(this).click(function () {
-                                    window.alert("Learning State 'geht so' gesetzt");
-                                    console.log("LS 2 gesetzt");
-                                });
-                                break;
-                            case ".ls3-button":
-                                //$((this).attr('id')).click(function () {
-                                $(this).click(function () {
-                                    window.alert("Learning State 'noch nicht' gesetzt");
-                                    console.log("LS 3 gesetzt");
-                                });
-                                break;
-                            default:
-                                window.alert("default");
-                                break;
-                        } */
-
-                    }
 
 
                     testQuestionsElement.append(questionBox);
@@ -394,6 +331,8 @@ $(function() {
         $(".login").hide();
         $(".registration").fadeTo(400, 1);
         $(".main").hide();
+
+
     });
 
     /*$( "#clickme" ).click(function() {
@@ -406,8 +345,7 @@ $(function() {
     $('#login-b').click( function() {
       $(".login").show();
       $(".main").hide();
-      // window.alert("funktioniert");
-      // $(".footer").hide();
+        $(".failureMessage").hide();
     });
 
 
@@ -479,14 +417,30 @@ $(function() {
 
     // Registration
     $('#initial-registr-button').click( function() {
+        $(".failureMessage").hide();
+
+        var mail= $("#reg-email").val();
+        var fn = $('#firstname').val();
+        var ln = $('#lastname').val();
+        var pw = $('#reg-pw').val();
 
         // var regJson = $('.registration form').serializeArray();
         var regJson = {
-            "email": $('#reg-email').val(),
-            "firstname" : $('#firstname').val(),
-            "lastname" : $('#lastname').val(),
-            "password" : $('#reg-pw').val()
+            "email": mail,
+            "firstname" : fn,
+            "lastname" : ln,
+            "password" : pw
         };
+
+
+        if(mail || fn || ln || pw == null){
+            console.log("if funktioniert");
+
+            $(".fieldValidationMessage").addClass('alert alert-warning').text("Alle Felder ausfüllen.");
+            $(".registration").show();
+            $(".main").hide();
+        }
+
 
         console.log("das ist das json mit dem Benutzernamen: "+ JSON.stringify(regJson));
 
@@ -516,5 +470,6 @@ $(function() {
 
 
 }); // Ende jQuery
+
 
 

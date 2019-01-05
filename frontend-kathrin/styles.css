@@ -31,6 +31,10 @@ body {
     border-radius: 3px 0px 0px 3px;
 }
 
+.jumbotron {
+    height: 100vh;
+}
+
 .ls-text {
     float: left;
 }
