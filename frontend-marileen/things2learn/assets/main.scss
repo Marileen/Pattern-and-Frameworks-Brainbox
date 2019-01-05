@@ -57,6 +57,17 @@ body {
   flex-wrap: wrap;
 }
 
+.btn-primary {
+  color: #fff;
+  background-color: $color-menu;
+  border-color: $color-menu;
+
+  &:hover, &:active {
+    background-color:lighten($color-menu, 5%);
+    border-color: lighten($color-menu, 5%);
+  }
+}
+
 [data-atom="card"] {
   display: flex;
   align-items: center;

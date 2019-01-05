@@ -10,7 +10,7 @@
           <input type="text" placeholder="email" v-model="email"/>
           <input type="text" placeholder="passwort" v-model="password"/>
           <button>login</button>
-          <nuxt-link to="/about"><span>register</span></nuxt-link>
+          <nuxt-link to="/register" class="menu-item"><span>Registrieren</span></nuxt-link>
 
 
           <span v-if="user.loginFailed" class="alert alert-danger" role="alert">

@@ -1,7 +1,6 @@
 package lernapp.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -9,27 +8,25 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 import lernapp.filter.JwtFilter;
-import lernapp.model.LearningState;
-import lernapp.model.Question;
 import lernapp.model.User;
-import lernapp.model.UserQuestionLS;
 import lernapp.service.LearningStateService;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
 import org.hibernate.exception.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Path("/user")    // ist dann unter der url im Browser aufrufbar
 public class UsersResource {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UsersResource.class);
 
     UserService userService = new UserService();
     QuestionService questionService = new QuestionService();
@@ -46,6 +43,7 @@ public class UsersResource {
         // mit queryByCr... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
         User loggedInUser = userService.queryByCredentials(user.getEmail(), user.getPassword());
 
+        LOG.info("login");
         if (loggedInUser != null) {
             try {
                 // Map user object to JSON
@@ -103,7 +101,7 @@ public class UsersResource {
         try {
             // USER SPEICHERN UND EINLOGGEN
             User registeredUser = userService.save(user);
-            return Response.ok().entity(login(registeredUser)).build();
+            return login(registeredUser);
 
         } catch (Exception e) {
             //kann man instanceof rufen, wenn getCause null ist? JA

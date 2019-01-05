@@ -31,4 +31,10 @@ dependencies {
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '6.3'
     compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.1.2'
 
+    runtime 'org.apache.logging.log4j:log4j-api:2.11.1'
+    runtime 'org.apache.logging.log4j:log4j-core:2.11.1'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    runtime 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
+    runtime 'org.apache.logging.log4j:log4j-web:2.11.1'
+
 }

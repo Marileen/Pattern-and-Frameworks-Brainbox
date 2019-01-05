@@ -1,10 +1,6 @@
 package lernapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
-import java.util.List;
 
 // unser User
 @Entity(name = "user")
@@ -23,6 +19,7 @@ public class User {
     @Column(nullable = false)
     private String firstname;
 
+    @Column
     private String lastname;
 
     @Column(nullable = false)
