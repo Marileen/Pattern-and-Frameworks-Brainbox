@@ -57,7 +57,7 @@
 <script>
 
 import Courses from '~/components/Courses.vue'
-import Hashing from '~/mixins/hashing.js'
+import {supportsCrypto, hash, encode64} from '../utils/hashing.js'
 
 export default {
   components: {
@@ -75,18 +75,16 @@ export default {
     }
   },
 
-  mixins: [Hashing],
-
   methods : {
 
     async register (e) {
 
       var hashedPassword = null;
 
-      if ( Hashing.supportsCrypto() ) {
+      if ( supportsCrypto() ) {
         console.log('encrypt pw');
-        hashedPassword = await Hashing.hash('SHA-256', this.password);
-        hashedPassword = await Hashing.encode64(hashedPassword);
+        hashedPassword = await hash('SHA-256', this.password);
+        hashedPassword = await encode64(hashedPassword);
         console.log(hashedPassword);
       }
 

@@ -1,4 +1,6 @@
 
+import {supportsCrypto, hash, encode64} from '../utils/hashing.js'
+
 export const state = () => ({
   courses : [],
   topics : [],
@@ -36,6 +38,15 @@ export const actions = {
 
     console.log('login');
 
+    var hashedPassword = null;
+
+    if ( supportsCrypto() ) {
+      console.log('encrypt pw');
+      hashedPassword = await hash('SHA-256', password);
+      hashedPassword = await encode64(hashedPassword);
+      console.log(hashedPassword);
+    }
+
     try {
       const response = await fetch('http://127.0.0.1:8050/user/login', {
         method: 'POST',
@@ -46,7 +57,7 @@ export const actions = {
         },
         body: JSON.stringify({
           "email": email,
-          "password": password
+          "password": hashedPassword || password
         })
       });
 
