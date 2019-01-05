@@ -42,33 +42,38 @@
     </header>
 
     <!-- login container -->
-    <div class="login page jumbotron">
-        <form class="container">
-            <div class="row">
-                <div class="col margin">
-                    <h2 class="margin" >Login</h2>
-                    <input type="text" id="email" class="form-control margin" placeholder="Username" value="Emailadresse eingeben">
-                    <input type="password" id="password" class="form-control margin" placeholder="Passwort" value="Passwort eingeben">
-                    <button id="login-button" class="btn btn-secondary margin-left" type="submit">Login</button>
-                    <button id="register-button" type="button" class="btn btn-info float-right margin-right">Registrieren</button>
-                    <div class="failureMessage"></div>
+    <div class="login page jumbotron jumbotron-fluid">
+        <div class="container">
+            <form>
+                <div class="row">
+                    <div class="col margin">
+                        <h2 class="margin" >Login</h2>
+                        <input type="text" id="email" class="form-control margin" placeholder="Username" value="">
+                        <input type="password" id="password" class="form-control margin" placeholder="Passwort" value="">
+                        <button id="login-button" type="button" class="btn btn-info margin-left" type="submit">Login</button>
+                        <button id="register-button" type="button" class="btn btn-secondary float-right margin-right">Registrieren</button>
+                        <div class="failureMessage"></div>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <button class="home btn btn-secondary float-right margin-right" type="submit">Zurück</button>
+            </form>
+        </div>
     </div>
 
     <!-- registration container -->
-    <div class="registration jumbotron">
+    <div class="registration jumbotron jumbotron-fluid">
         <form class="container">
             <div class="row">
                 <div class="col margin">
                     <h2 class="margin" >Registrierung</h2>
-                    <input type="text" id="firstname" name="firstname" class="form-control margin" placeholder="Vorname" value="Vorname">
-                    <input type="text" id="lastname" class="form-control margin" placeholder="Nachname" value="Nachname">
-                    <input type="text" id="reg-email" name="email" class="form-control margin" placeholder="E-Mailadresse" value="E-Mailadresse">
-                    <input type="password" id="reg-pw" name="password" class="form-control margin" placeholder="Passwort" value="Passwort">
-                    <button id="initial-registr-button" type="button" class="btn btn-info float-right margin-right">Absenden</button>
+                    <input type="text" id="firstname" name="firstname" class="form-control margin" placeholder="Vorname" value="">
+                    <input type="text" id="lastname" class="form-control margin" placeholder="Nachname" value="">
+                    <input type="text" id="reg-email" name="email" class="form-control margin" placeholder="E-Mailadresse" value="">
+                    <input type="password" id="reg-pw" name="password" class="form-control margin" placeholder="Passwort" value="">
+                    <button id="initial-registr-button" type="button" class="btn btn-info float-left margin-left">Absenden</button>
+                    <button class="home btn btn-secondary margin-right float-right" type="submit">Zurück</button>
                     <div class="failureMessage"></div>
+                    <div class="fieldValidationMessage"></div>
                 </div>
             </div>
         </form>
@@ -76,12 +81,12 @@
 
     <!-- main container -->
     <div class="main">
-
+        <div class="failureMessage"></div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a id="home" class="navbar-brand" href="#">Startseite</a>
+            <a class="home navbar-brand" href="#">Startseite</a>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -255,7 +260,7 @@
 
 
     <div class="footer">
-        footer footer footer footer footer footer footer footer footer
+        Alle verwendeten Bilder unterliegen der Creative Commons-Lizenz.
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
