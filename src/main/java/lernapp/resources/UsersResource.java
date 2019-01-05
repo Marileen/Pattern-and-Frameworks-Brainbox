@@ -13,6 +13,8 @@ import lernapp.service.LearningStateService;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
 import org.hibernate.exception.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -23,6 +25,8 @@ import javax.ws.rs.core.Response;
 
 @Path("/user")    // ist dann unter der url im Browser aufrufbar
 public class UsersResource {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UsersResource.class);
 
     UserService userService = new UserService();
     QuestionService questionService = new QuestionService();
@@ -39,6 +43,7 @@ public class UsersResource {
         // mit queryByCr... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
         User loggedInUser = userService.queryByCredentials(user.getEmail(), user.getPassword());
 
+        LOG.info("login");
         if (loggedInUser != null) {
             try {
                 // Map user object to JSON
