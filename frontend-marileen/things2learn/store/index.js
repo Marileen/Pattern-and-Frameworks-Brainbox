@@ -249,13 +249,13 @@ async function getLearningState( userId, questionId, token ) {
 
         case 204 : {
           console.log('ls no content');
-          return {};
+          return null;
           break;
         }
 
         default : {
           console.log('learningState failed');
-          return {};
+          return null;
         }
       }
 

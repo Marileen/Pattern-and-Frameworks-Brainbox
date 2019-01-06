@@ -1,21 +1,20 @@
 <template>
 
   <section class="">
-        <swiper :options="swiperOption" ref="questionSwiper" v-on:slideChange="setTopic">
+        <swiper :options="swiperOption" ref="questionSwiper" v-on:slideChange="setTopicAndLsImage">
           <swiper-slide v-for="question in questions" :key="question.questionID" :id="question.questionID">
-          <div class="question-box" v-html="question.question"> </div>
-          <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
 
             <div class="learningState" v-if="question.learningState">
-
-
               <div class="state-item">
-                <!--todo get image-->
-                <!--<img :src="question.learningState.ima">-->
-                <caption>Ich beherrsche die Frage {{ question.learningState.stateName}}</caption>
+                <figure>
+                  <p>Du beherrscht die Frage {{ question.learningState.stateName | lower }}</p>
+                  <img :src="lsImage" />
+                </figure>
               </div>
-
             </div>
+
+          <div class="question-box" v-html="question.question"> </div>
+          <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
 
           </swiper-slide>
 
@@ -58,9 +57,16 @@
     watch : {
 
       questions (newq, old) {
-        this.setTopic();
+        this.setTopicAndLsImage();
       }
 
+    },
+
+    filters: {
+      lower: function (value) {
+        if (!value) return ''
+        return value.toLowerCase()
+      }
     },
 
     data()  {
@@ -78,12 +84,13 @@
           //init: this.setTopic,
         },
 
-        showAnswer : true
+        showAnswer : true,
+        lsImage : null
       }
     },
     methods : {
 
-      setTopic(e) {
+      setTopicAndLsImage(e) {
 
         console.log('set topic:');
         //console.log(this.questions[this.swiper.activeIndex || 0].topic.topicName);
@@ -93,10 +100,47 @@
           activeTopic : this.questions[this.swiper.activeIndex || 0].topic.topicName
         });
 
+        //console.log(this.questions[this.swiper.activeIndex || 0].learningState);
+        if (this.questions[this.swiper.activeIndex || 0].learningState) {
+          this.setLearningStateImage(this.questions[this.swiper.activeIndex || 0].learningState.learningStateID);
+        }
+
         //this.$store.dispatch('getLearningState', {userId : this.$store.state.user.userID, questionId : this.questions[this.swiper.activeIndex].questionID, token : 'Bearer ' + this.$store.state.user.jsonWebToken});
         //console.log(this.$store.state.user.userID);
         //console.log(this.questions[this.swiper.activeIndex]);
         // this.$forceUpdate();
+      },
+
+      async setLearningStateImage (lsId) {
+
+        console.log('setLearningStateImage');
+        console.log(lsId);
+        try {
+          const response = await fetch('http://127.0.0.1:8050/state/' + lsId + '/image', {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+              // 'Authorization': `bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+
+            console.log('ls image ok');
+            // todo data image einfügen
+            var imgStream = await response.blob();
+            console.log(imgStream);
+            this.lsImage = URL.createObjectURL(imgStream);
+            //this.lsImage = 'data:image/png;base64,' + imgStream
+
+          } else {
+            console.log('ls image failed');
+          }
+
+        } catch (e) {
+          console.log(e)
+        }
       }
 
     },
@@ -138,11 +182,34 @@
   }
 
   .swiper-slide {
+
     position: relative;
-    .state-item {
-      position: absolute;
-      top:0;
-      right: 0;
+
+    .state-item, figure {
+      text-align: right;
+      height: 40px;
+      margin: 3px 0;
+
+      display: flex;
+      justify-content: flex-end;
+
+      p {
+        margin: 0;
+        line-height: 40px;
+        margin-right: 15px;
+        visibility: hidden;
+      }
+
+      img {
+        height: 100%;
+      }
+
+      &:hover {
+
+        p {
+          visibility: visible;
+        }
+      }
     }
   }
 
