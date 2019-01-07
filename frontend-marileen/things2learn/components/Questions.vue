@@ -4,13 +4,15 @@
         <swiper :options="swiperOption" ref="questionSwiper" v-on:slideChange="setTopicAndLsImage">
           <swiper-slide v-for="question in questions" :key="question.questionID" :id="question.questionID">
 
-            <div class="learningState" v-if="question.learningState">
-              <div class="state-item">
-                <figure>
-                  <p>Du beherrscht die Frage {{ question.learningState.stateName | lower }}</p>
-                  <img :src="lsImage" />
-                </figure>
-              </div>
+            <div class="learningstate">
+
+              <Learningstates v-bind:question="question" v-bind:learning-states="learningStates"></Learningstates>
+
+              <figure v-if="question.learningState">
+                <p>Du beherrscht diese Frage {{ question.learningState.stateName | lower }}</p>
+                <img :src="lsImage" />
+              </figure>
+
             </div>
 
           <div class="question-box" v-html="question.question"> </div>
@@ -22,7 +24,7 @@
           <div class="swiper-pagination"  slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
-          <div class="swiper-scrollbar"   slot="scrollbar"></div>
+          <!--<div class="swiper-scrollbar"   slot="scrollbar"></div>-->
 
         </swiper>
 
@@ -35,10 +37,12 @@
   import { mapState } from 'vuex';
   import 'swiper/dist/css/swiper.css';
   import { swiper, swiperSlide } from 'vue-awesome-swiper';
+  import Learningstates from "./Learningstates";
 
   export default {
 
     components : {
+      Learningstates,
       swiper,
       swiperSlide
     },
@@ -51,7 +55,7 @@
       swiper() {
         return this.$refs.questionSwiper.swiper
       },
-      ...mapState(['questions', 'user']),
+      ...mapState(['questions', 'user', 'learningStates']),
     },
 
     watch : {
@@ -146,7 +150,9 @@
     },
 
     beforeMount(){
-      //
+      // für alle Questions werden einmal initial die LS geholt und an die Kind-Komponente LearningState dann weitergereicht
+      // da die Kind-Komponente mehrmals eingebunden wird, würde sonst das store event öfter gefeuert werden, was nicht nötig ist
+      this.$store.dispatch('getLearningStates');
     },
 
     mounted () {
@@ -185,19 +191,20 @@
 
     position: relative;
 
-    .state-item, figure {
-      text-align: right;
+    .learningstate {
       height: 40px;
-      margin: 3px 0;
+      margin: 20px 0 3px 0;
 
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
 
       p {
         margin: 0;
         line-height: 40px;
         margin-right: 15px;
         visibility: hidden;
+        display: inline-block;
+
       }
 
       img {
@@ -211,11 +218,27 @@
         }
       }
     }
+
+     figure {
+
+       text-align: right;
+       height: 40px;
+
+       display: flex;
+       justify-content: flex-end;
+
+       margin: 0;
+    }
   }
 
+  .swiper-container-horizontal > .swiper-pagination-progressbar,
+  .swiper-pagination-progressbar {
 
-  .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
-    background: #4b647f;
+    height: 6px;
+
+    .swiper-pagination-progressbar-fill {
+      background: $color-menu;
+    }
   }
 
 
