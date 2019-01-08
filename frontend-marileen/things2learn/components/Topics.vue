@@ -56,6 +56,7 @@
 
   [data-atom="card"] {
     color: $color-text-dark;
+    background-color: $color-topic;
 
     &:hover {
       box-shadow: 0px 2px 3px rgba(0,0,0,.1);
@@ -73,10 +74,10 @@
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     display: block;
     font-weight: 300;
-    font-size: 70px;
+    font-size: 50px;
     color: #35495e;
     letter-spacing: 1px;
-    padding: 30px 0;
+    padding: 20px 0;
   }
 
   .subtitle {

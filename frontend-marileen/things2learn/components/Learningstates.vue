@@ -2,13 +2,13 @@
 
   <section class="learningState">
 
-      <div class="">
+    <form>
+      <label :for="ls.learningStateID" class="state-item" v-bind:class="'color-learningstate' + ++key" v-for="(ls, key) in learningStates" :key="ls.learningStateID">
+      <input type="radio" name="stateItem" :id="ls.learningStateID" v-on:change="setNewLearningstate" :checked="question.learningState ? question.learningState.learningStateID == ls.learningStateID : false">
+        <span>{{ ls.stateName }}</span>
+      </label>
+    </form>
 
-        {{ question.learningState ? question.learningState.stateName : ''  }}
-
-        <div class="state-item"></div>
-
-      </div>
 
   </section>
 </template>
@@ -17,14 +17,15 @@
 
 
   import { mapState } from 'vuex';
-  import 'swiper/dist/css/swiper.css';
-  import { swiper, swiperSlide } from 'vue-awesome-swiper';
 
   export default {
 
     components : {
-      swiper,
-      swiperSlide
+    },
+
+    props : {
+      question : Object,
+      learningStates : Array
     },
 
     fetch({ store }) {
@@ -32,54 +33,69 @@
     },
 
     computed: {
-      swiper() {
-        return this.$refs.questionSwiper.swiper
-      },
       ...mapState(['questions', 'user']),
-    },
-
-    watch : {
-
-      questions (newq, old) {
-        this.setTopic();
-      }
-
     },
 
     data()  {
       return {
-        swiperOption: {
-          // some swiper options/callbacks
-          pagination: {
-            el: '.swiper-pagination',
-            type: 'progressbar'
-          },
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-          },
-          //init: this.setTopic,
-        },
 
-        showAnswer : true
       }
     },
     methods : {
 
-      setTopic(e) {
+      //todo
+      async setNewLearningstate (e) {
+        console.log('setNewLearningstate');
 
-        console.log('set topic:');
-        //console.log(this.questions[this.swiper.activeIndex || 0].topic.topicName);
+        try {
+          const response = await fetch('http://127.0.0.1:8050/user/' + JSON.parse(window.sessionStorage.getItem("user")).userID + '/state/set', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Authorization': 'Bearer ' + JSON.parse(window.sessionStorage.getItem("user")).jsonWebToken,
+              'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(  {
+              "user" : {
+                "userID" : JSON.parse(window.sessionStorage.getItem("user")).userID
+              },
 
-        //dispatch/emit event active-topic (handled in parent component _course)
-        this.$emit('active-topic', {
-          activeTopic : this.questions[this.swiper.activeIndex || 0].topic.topicName
-        });
+              "question" : {
+                "questionID" : this.question.questionID
+              },
+              "learningState" : {
+                "learningStateID" : e.target.id
+              }
+            })
+          });
 
-        //this.$store.dispatch('getLearningState', {userId : this.$store.state.user.userID, questionId : this.questions[this.swiper.activeIndex].questionID, token : 'Bearer ' + this.$store.state.user.jsonWebToken});
-        //console.log(this.$store.state.user.userID);
-        //console.log(this.questions[this.swiper.activeIndex]);
-        // this.$forceUpdate();
+          switch (response.status) {
+            case 201 : {
+              console.log('new ls set ok');
+
+              //todo - update anzeige der figure bei der question
+              //todo store updaten und watchen
+
+              break;
+            }
+
+            case 204 : {
+              console.log('no content');
+              break;
+            }
+
+            default : {
+              console.log('set new learningStates failed');
+
+            }
+          }
+
+
+        } catch (e) {
+          console.log('error in set new LearningState');
+          console.log(e);
+        }
+
       }
 
     },
@@ -98,49 +114,21 @@
 
 <style lang="scss">
 
-  .question-box, .answer-box {
+  form {
+    margin: 0 0 0 20px;
+    height: 40px;
+    padding: 8px 0 0 0;
 
-    padding: 20px;
-    margin: 20px 35px;
-    color: #fff;
+    label {
+      margin: 0;
+      padding: 2px 10px;
+      border-radius: 15px;
+      margin: 0 10px 0 0;
 
+
+    }
   }
 
-  .question-box {
-    background-color: #35495e;
-
-    font-weight: bold;
-    font-size: 20px;
-  }
-
-  .answer-box {
-
-    background-color: #4b647f;
-  }
-
-
-  .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
-    background: #4b647f;
-  }
-
-  /*.swiper-button-next, .swiper-container-rtl .swiper-button-prev {*/
-
-    /*width: 0px;*/
-    /*height: 0px;*/
-    /*-webkit-transform:rotate(360deg);*/
-    /*border-style: solid;*/
-    /*border-width: 70px 0 70px 60px;*/
-    /*border-color: transparent transparent transparent #4b647f;*/
-
-  /*}*/
-
-  .swiper-button-next {
-    right:0;
-  }
-
-  .swiper-button-prev {
-    left:0;
-  }
 
 
 </style>

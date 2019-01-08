@@ -6,6 +6,10 @@
     <div class="row">
 
       <div class="col-12">
+        <h3 class=" ">Registriere dich, um Zugriff auf das Kursmaterial zu erhalten.</h3>
+      </div>
+
+      <div class="col-12">
         <div class="alert-danger" v-if="loginFailMail">
           Ein User mit dieser E-Mail Adresse existiert bereits
         </div>

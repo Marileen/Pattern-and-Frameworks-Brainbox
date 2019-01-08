@@ -11,9 +11,9 @@
     <!--</button><br>-->
 
       <div class="component" data-component="courses">
-        <nuxt-link :to="`kurs/${course.courseName}`" data-atom="card" v-for="course in $store.state.courses" :key="course.courseName">
+        <a :href="isLoggedIn ? `kurs/${course.courseName}` : '/register'" data-atom="card" v-for="course in $store.state.courses" :key="course.courseName">
           <span>{{ course.courseName }}</span>
-        </nuxt-link>
+        </a>
       </div>
 
   </section>
@@ -30,21 +30,41 @@
 
     },
 
-    computed: mapState([
-      'counter',
-      'courses'
-    ]),
+    computed: {
+      ...mapState([
+        'counter',
+        'courses',
+        'user'
+      ]),
+      //isLoggedIn : this.$store.state.user.isLoggedIn
+    },
 
     data()  {
       return {
-
+        isLoggedIn : false
       }
     },
     methods : {
 
+      showCourse (e) {
+        //console.log('ddd course');
+
+        //this.$nuxt.$router.replace({ path: 'kurs/' + e.target.attr('href') })
+        //:to="`kurs/${course.courseName}`"
+      }
+
     },
     beforeMount(){
       this.$store.dispatch('getCourses');
+
+      if (window.sessionStorage.getItem("user") != null) {
+        this.isLoggedIn = JSON.parse(window.sessionStorage.getItem("user")).isLoggedIn;
+      }
+    },
+
+    mounted() {
+      console.log('courses mounted');
+      console.log(this.$store.state.user.isLoggedIn)
     }
   }
 
@@ -58,6 +78,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  [data-atom="card"] {
+     width: 250px;
+     height: 100px;
   }
 
   .title {
