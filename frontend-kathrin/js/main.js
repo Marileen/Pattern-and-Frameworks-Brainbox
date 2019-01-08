@@ -79,7 +79,8 @@ $(function() {
                                         $('<h5 class="card-title show-courses"/>')
                                             .text(element.courseName))
                                     .append(
-                                        $('<p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>')
+                                        $('<p/>',
+                                            {class: "card-text"}).text("Hier überprüfst Du Dein Wissen im Bereich "+element.courseName)
                                             .append(
                                                 $('<button/>',
                                                     {
@@ -217,7 +218,7 @@ $(function() {
                                                     {
                                                     class: "question-body"
                                                     })
-                                                    .text(element.question)
+                                                    .html(element.question)
                                                 )
                                             ) // end button                                        ) // end append h2
                                     )) // end div card-header
@@ -232,7 +233,7 @@ $(function() {
                                             {
                                                 class: "card-body"
                                             })
-                                                .text(element.answer))
+                                                .html(element.answer))
                                                 .append($('<div name="ev-b" class="btn-group ls-icon ev-b" role="group" aria-label="Basic example"/>')
                                                     .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>').click(function() {
                                                         console.log("Clicked on first button of question", element.questionID);
