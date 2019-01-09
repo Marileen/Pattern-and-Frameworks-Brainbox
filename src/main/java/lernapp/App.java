@@ -204,15 +204,15 @@ public class App {
         // create LearningState
         LearningState lsGut = new LearningState(
                 "Gut",
-                "Icon_Dartscheibe.jpg",
+                "Icon_Pokal.jpg",
                 "Ich kann die Frage gut beantworten. Der Inhalt ist also erfolgreich erlernt."
         );
 
         learningStateService.save(lsGut);
 
         LearningState lsMittel = new LearningState(
-                "Mittel",
-                "Icon_Kopf_nochnicht.jpg",
+                "Mittelmäßig",
+                "Icon_Esgehtbergauf.jpg",
                 "Ich kann die Frage halbwegs oder teilweise beantworten. Der Inhalt muss noch gefestigt werden."
         );
         learningStateService.save(lsMittel);

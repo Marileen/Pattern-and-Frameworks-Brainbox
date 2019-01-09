@@ -9,6 +9,7 @@ export const state = () => ({
   user : []
 })
 
+
 export const mutations = {
   increment (state) {
     state.counter++
@@ -18,6 +19,9 @@ export const mutations = {
   },
   setTopics (state, topics) {
     state.topics = topics;
+  },
+  setQuestion (state, {question, ls} ) {
+    question.learningState = ls;
   },
   setQuestions (state, questions ) {
     state.questions = questions

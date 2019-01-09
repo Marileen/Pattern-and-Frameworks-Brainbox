@@ -43,7 +43,6 @@
     },
     methods : {
 
-      //todo
       async setNewLearningstate (e) {
         console.log('setNewLearningstate');
 
@@ -73,8 +72,15 @@
             case 201 : {
               console.log('new ls set ok');
 
-              //todo - update anzeige der figure bei der question
-              //todo store updaten und watchen
+              // der neue ls muss hier rangepackt werden:
+              //this.question.learningState = this.learningStates[e.target.id];
+              var lsIndex = e.target.id - 1; //ID fängt bei 1 an, index bei 0
+              console.log('setNewLearningState, this.learningStates[lsIndex]', this.learningStates[lsIndex]);
+              this.$store.commit('setQuestion', { question : this.question, ls : this.learningStates[lsIndex]});
+
+              this.$emit('newLearningstate', {
+                questions:  this.$store.state.questions
+              });
 
               break;
             }

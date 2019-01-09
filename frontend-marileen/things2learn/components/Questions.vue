@@ -6,7 +6,7 @@
 
             <div class="learningstate">
 
-              <Learningstates v-bind:question="question" v-bind:learning-states="learningStates"></Learningstates>
+              <Learningstates v-bind:question="question" v-bind:learning-states="learningStates" v-on:newLearningstate="updateLearningstate"></Learningstates>
 
               <figure v-if="question.learningState">
                 <p>Du beherrscht diese Frage {{ question.learningState.stateName | lower }}</p>
@@ -55,20 +55,18 @@
       swiper() {
         return this.$refs.questionSwiper.swiper
       },
-      ...mapState(['questions', 'user', 'learningStates']),
-    },
+      ...mapState(['user', 'learningStates']),
 
-    watch : {
-
-      questions (newq, old) {
-        this.setTopicAndLsImage();
+      questions: {
+        get () { return this.$store.state.questions},
+        set (newValue) { console.log('new questions', newValue) }
       }
 
     },
 
     filters: {
       lower: function (value) {
-        if (!value) return ''
+        if (!value) return '';
         return value.toLowerCase()
       }
     },
@@ -93,6 +91,12 @@
       }
     },
     methods : {
+
+      updateLearningstate (evt, data) {
+        console.log(evt);
+        this.questions = data;
+        this.setTopicAndLsImage(evt);
+      },
 
       setTopicAndLsImage(e) {
 
