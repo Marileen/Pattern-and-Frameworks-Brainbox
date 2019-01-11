@@ -42,18 +42,20 @@
     </header>
 
     <!-- login container -->
+    <div class="fehler"></div>
     <div class="login page jumbotron jumbotron-fluid">
         <div class="container">
+            <div class="failureMessage"></div>
             <form>
                 <div class="row">
                     <div class="col margin">
                         <h2 class="margin" >Login</h2>
-                        <input type="email" id="email" class="form-control margin" placeholder="Username" autofocus value="" required>
-                        <input type="password" id="password" class="form-control margin" placeholder="Passwort" value="" required>
+                        <input type="email" id="email" class="form-control margin" placeholder="Username" autofocus required>
+                        <input type="password" id="password" class="form-control margin" placeholder="Passwort" required>
                         <button id="login-button" type="button" class="btn btn-info margin-left" type="submit">Login</button>
                         <button id="register-button" type="button" class="btn btn-secondary float-right margin-right">Registrieren</button>
-                        <div class="failureMessage"></div>
                     </div>
+
                 </div>
                 <button class="home btn btn-secondary float-right margin-right" type="submit">Zurück</button>
             </form>
@@ -63,17 +65,19 @@
     <!-- registration container -->
     <div class="registration jumbotron jumbotron-fluid">
         <form class="container">
+            <div class="failureMessage"></div>
+            <div class="fieldValidationMessage"></div>
             <div class="row">
                 <div class="col margin">
+
                     <h2 class="margin" >Registrierung</h2>
-                    <input type="text" id="firstname" name="firstname" class="form-control margin" placeholder="Vorname" autofocus value="" required>
-                    <input type="text" id="lastname" class="form-control margin" placeholder="Nachname" value="" required>
-                    <input type="email" id="reg-email" name="email" class="form-control margin" placeholder="E-Mailadresse" value="" required>
-                    <input type="password" id="reg-pw" name="password" class="form-control margin" placeholder="Passwort" value="" required>
+                    <input type="text" id="firstname" name="firstname" class="form-control margin" placeholder="Vorname" autofocus  required>
+                    <input type="text" id="lastname" class="form-control margin" placeholder="Nachname" required>
+                    <input type="email" id="reg-email" name="email" class="form-control margin" placeholder="E-Mailadresse" required>
+                    <input type="password" id="reg-pw" name="password" class="form-control margin" placeholder="Passwort"  required>
                     <button id="initial-registr-button" type="button" class="btn btn-info float-left margin-left">Absenden</button>
                     <button class="home btn btn-secondary margin-right float-right" type="submit">Zurück</button>
-                    <div class="failureMessage"></div>
-                    <div class="fieldValidationMessage"></div>
+
                 </div>
             </div>
         </form>

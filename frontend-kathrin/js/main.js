@@ -21,6 +21,7 @@ $(function() {
         e.preventDefault(e);
     });
 
+
     // LEARNING STATE
 
 
@@ -157,11 +158,10 @@ $(function() {
     }
 
 
-    // TEST Rendering questions
+    // Rendering questions
     function renderQuestions() {
         // ajax request with JWT
         var jwt = user.jsonWebToken;
-        //var jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJwYXNzd29yZCI6IjEyMyJ9.coLj8ci8mvDdToBUtrWlJYO-aND7yZR4ok79Gn4-6bo";
         console.log("neue Abfrage ueber renderQuestions");
 
         // tests if jwt is available
@@ -235,11 +235,15 @@ $(function() {
                                             })
                                                 .html(element.answer))
                                                 .append($('<div name="ev-b" class="btn-group ls-icon ev-b" role="group" aria-label="Basic example"/>')
-                                                    .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>').click(function() {
-                                                        console.log("Clicked on first button of question", element.questionID);
-                                                    }))
-                                                    .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>'))
-                                                    .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>'))
+                                                    .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>')).click(function() {
+                                                        console.log("Clicked on left button of question", element.questionID);
+                                                    })
+                                                    .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>')).click(function() {
+                                                        console.log("Clicked on middle button of question", element.questionID);
+                                                    })
+                                                    .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>')).click(function() {
+                                                        console.log("Clicked on right button of question", element.questionID);
+                                                     })
                                                 )
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
                                     ) // end append collapseOne
@@ -260,52 +264,11 @@ $(function() {
     } // end function renderQuestions
 
 
-    // QUESTIONS
-    // fetches and renders all questions of all courses - jwt protected
-    function fetchAllQuestions () {
-        console.log("JWT ist: "+user.jsonWebToken); // das erzeugt: undefined
-        // Versuch mit vorgegebenem jwt
-       // var jwt = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1hcmlsZWVuLnN0YW1lckBzdHVkLmZoLWx1ZWJlY2suZGUiLCJ1c2VySUQiOjEsImZpcnN0bmFtZSI6Ik1hcmlsZWVuIiwibGFzdG5hbWUiOiJTdGFtZXIiLCJwYXNzd29yZCI6IjEyMyIsImFkbWluIjp0cnVlfQ.6l0Zc-Dt5SL6lOg5IseJwh4r_7BNErzTa6NRMINLQd4";
-
-        /*
-       var jwt = user.jsonWebToken;
-        if(jwt==null) {
-            $(".failureMessage").text("Bitte erst einloggen.");
-        } */
-
-
-        $.ajax({
-                method: 'GET',
-                beforeSend : function(xhr) {
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.setRequestHeader("Authorization", "Bearer "+jwt);
-                },
-                url: host + "/questions/", // Bsp. questions/BWL
-                success: function (data) {
-
-                    var questionsElement = $("#questions");
-                    console.log("Daten erfolgreich abgeholt");
-                    $("#questions").html(data[0].question);
-                    $("#questions").html(data[0].answer);
-
-
-                    $.each(data, function (index, element) {
-                        // window.alert(element.questionID);
-                        console.log("das ist die ID des Elements: "+element.questionId);
-
-                        var questionCard = $('<h2 class="margin">Alle Fragen</h2>').append(
-                            $('<div class="col"/>')).append(
-                            $('<h4/>').text(element.question))
-                    });
-                }
-        })
-    }
-
-
-
-    // gerade nicht genutzt
-    $(".show-topics").click(function () { // wenn ich auf knopf themen anzeigen klicke, dann
+    // TOPICS
+        // gerade nicht genutzt
+    // für was wollte ich das nochmal?
+    // könnte man nehmen um alle, alle Themen anzeigen zu lassen
+    $(".show-topics").click(function () { // wenn ich auf knopf Alle Themen klicke, dann
         $(this).text("dieses Element wurde geklickt");
         // von diesem geklickten Element brauche ich aus dem h5 die courseID
         var id = $(this).attr('id');
@@ -313,14 +276,13 @@ $(function() {
 
         $.ajax({
             type: 'GET',
-            url: host + "/topics/Patterns and Frameworks",
+            url: host + "/topics/",
             success: function (data) {
                 // window.alert(data);
                // $("#topics-paf").html(data[0].topicName);
                 $.each(data, function (index, element) {
                     $("courseID5-topic1").text(element.topicName);
                     }
-                    
                 )
             }
         });
@@ -354,49 +316,64 @@ $(function() {
     $('#login-button').click( function() {
 
        // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
-       // TODO: aus Form holen
         var json = {
             "email": $('#email').val(),
-            // "password": b64_sha256($('#password').val())     // gehashed mit b64_sha256
-            // "password": hex_sha256($('#password').val())        // gehashed mit hex_sha256
-            "password": $('#password').val()
+            "password": b64_sha256($('#password').val())+"="   // gehashed mit b64_sha256
+            // "password": $('#password').val()
         };
+        var pwVal = $('#password').val();
 
-        // ToDO: Fehlermeldung, wenn keine Daten eingegeben
+        if (json.email.length==0 && pwVal==0) {
+            var message = '<div class="alert alert-warning" role="alert">'+ "Bitte fülle beide Felder aus."+ '</div>';
+            loginFailureMessage(message);
 
-        console.log("das ist das json mit den Benutzernamen: "+ JSON.stringify(json));
+        }else if (json.email.length==0) {
+            var message = '<div class="alert alert-warning" role="alert">'+ "Bitte trage eine gültige Mailadresse ein."+ '</div>';
+            loginFailureMessage(message);
 
-        /*
-        var jsonTest = {
-            email : "marileen.stamer@stud.fh-luebeck.de",
-            password :"123"
-        }; */
+        }else if (pwVal.length==0) {
+            var message = '<div class="alert alert-warning" role="alert">'+ "Bitte trage ein Passwort ein."+ '</div>';
+            loginFailureMessage(message);
 
-        $.ajax({
-            url: host + "/user/login", //localhost:8050/user/login
-            method: "POST",
-            crossDomain: true,
-            data: JSON.stringify(json),
-            contentType: "application/json",
-            success: function(data) {
-                console.log("login erfolgreich");
-                if (typeof data == 'undefined') {
-                    $('.login .failureMessage').html("Login fehlgeschlagen!");
-                    return;
+        }else{
+            console.log("das ist das json mit den Benutzernamen: "+ JSON.stringify(json));
+
+
+            $.ajax({
+                url: host + "/user/login", //localhost:8050/user/login
+                method: "POST",
+                crossDomain: true,
+                data: JSON.stringify(json),
+                contentType: "application/json",
+                success: function(data) {
+                    console.log("login erfolgreich");
+                    if (typeof data == 'undefined') {
+                        $('.login .failureMessage').html("Login fehlgeschlagen!");
+                        return;
+                    }
+                    user = data;
+                    var jwt = user.jsonWebToken;
+                    console.log("Das JWT dieses Users lautet: "+jwt);
+
+                    loginSuccessful();
+                },
+                error: function() {
+                  console.log("login error", arguments);
+                  $('.login page').hide();
+
                 }
-                user = data;
-                var jwt = user.jsonWebToken;
-                console.log("Das JWT dieses Users lautet: "+jwt);
-
-                loginSuccessful();
-            },
-            error: function() {
-              console.log("login error", arguments);
-              $('.login page').hide();
-
-            }
-        });
+            }); // end ajax request
+        }
     });
+
+    function loginFailureMessage(message) {
+        $(".login .failureMessage").fadeTo(100, 1, function(){ $(this).html(message).fadeOut(4000); });
+    }
+
+    function registrationFailureMessage(message) {
+        $(".registration .failureMessage").fadeTo(100, 1, function(){ $(this).html(message).fadeOut(4000); });
+    }
+
 
     function loginSuccessful() {
         var loginMessage = '<div class="alert alert-info" role="alert">'+ "Du hast Dich erfolgreich eingeloggt."+ '</div>';
@@ -408,9 +385,9 @@ $(function() {
     }
 
     function registrationSuccessful() {
-        var loginMessage = '<div class="alert alert-info" role="alert">'+ "Du hast Dich erfolgreich registriert."+ '</div>';
+        var registrationMessage = '<div class="alert alert-info" role="alert">'+ "Du hast Dich erfolgreich registriert."+ '</div>';
 
-        $(".main .failureMessage").fadeTo(100, 1, function(){ $(this).html(loginMessage).fadeOut(4000); });
+        $(".main .failureMessage").fadeTo(100, 1, function(){ $(this).html(registrationMessage).fadeOut(4000); });
         $("#login-b").text("Logout");
         $(".registration").hide();
         $(".main").show();
@@ -423,7 +400,7 @@ $(function() {
         var mail= $("#reg-email").val();
         var fn = $('#firstname').val();
         var ln = $('#lastname').val();
-        var pw = $('#reg-pw').val();
+        var pw = b64_sha256($('#reg-pw').val())+"="; //$('#reg-pw').val();
 
         // var regJson = $('.registration form').serializeArray();
         var regJson = {
@@ -432,16 +409,7 @@ $(function() {
             "lastname" : ln,
             "password" : pw
         };
-
-
-        if(mail || fn || ln || pw == null){
-            console.log("if funktioniert");
-
-            $(".fieldValidationMessage").addClass('alert alert-warning').text("Alle Felder ausfüllen.");
-            $(".registration").show();
-            $(".main").hide();
-        }
-
+        // ToDo: Felder validieren wie bei Login
 
         console.log("das ist das json mit dem Benutzernamen: "+ JSON.stringify(regJson));
 
@@ -452,7 +420,8 @@ $(function() {
             data: JSON.stringify(regJson),
             contentType: "application/json",
             success: function(data) {
-                console.log("registrierung erfolgreich");
+                // ToDo: warum funktioniert das hier nicht?
+                console.log("Registrierung erfolgreich");
                 if (typeof data == 'undefined') {
                     $('.registration .failureMessage').html("Registrierung fehlgeschlagen!");
                     return;
@@ -460,13 +429,14 @@ $(function() {
                 user = data;
                 var jwt = user.jsonWebToken;
                 console.log("Das JWT dieses Users lautet: "+jwt);
-                window.alert(("Sie haben sich erfolgreich registriert."))
+                //window.alert(("Sie haben sich erfolgreich registriert."))
+                registrationSuccessful();
             },
             error: function() {
                 console.log("registration error", arguments);
             }
         });
-        registrationSuccessful();
+
     });
 
 
