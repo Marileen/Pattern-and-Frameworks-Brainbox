@@ -1,5 +1,5 @@
 
-// Returns if browser supports the crypto api
+// Returns true if browser supports the crypto api
  export function supportsCrypto() {
   return window.crypto && crypto.subtle && window.TextEncoder;
 };

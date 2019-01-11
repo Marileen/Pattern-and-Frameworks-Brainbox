@@ -26,9 +26,11 @@ public class App {
         LearningStateService learningStateService = new LearningStateService();
 
         // Create users
-        User marileen = new User("marileen.stamer@stud.fh-luebeck.de","Marileen","Stamer", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", true);
+        User marileen = new User("marileen.stamer@stud.th-luebeck.de","Marileen","Stamer", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", true);
         userService.save(marileen);
 
+        User test = new User("m@test.de","Marileen","Stamer", "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=", false);
+        userService.save(test);
 
         // create Courses
         lernapp.model.Course pafCourse = new lernapp.model.Course(

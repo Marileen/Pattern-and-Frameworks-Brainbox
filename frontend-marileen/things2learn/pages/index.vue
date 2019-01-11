@@ -38,13 +38,17 @@ export default {
     Courses
   },
 
+  //just for testing the Store
   fetch({ store }) {
     store.commit('increment')
   },
 
+  //just for testing the Store
   computed: mapState([
     'counter'
   ]),
+
+
 }
 </script>
 

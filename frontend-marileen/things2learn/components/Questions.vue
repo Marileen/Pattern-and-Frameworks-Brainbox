@@ -1,7 +1,7 @@
 <template>
 
-  <section class="">
-        <swiper :options="swiperOption" ref="questionSwiper" v-on:slideChange="setTopicAndLsImage">
+  <section class="questions">
+        <swiper :options="swiperOption" ref="questionSwiper" v-on:slideChange="handleSlideChange">
           <swiper-slide v-for="question in questions" :key="question.questionID" :id="question.questionID">
 
             <div class="learningstate">
@@ -15,8 +15,9 @@
 
             </div>
 
-          <div class="question-box" v-html="question.question"> </div>
-          <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
+            <div class="question-box" v-html="question.question"> </div>
+            <div class="answer-box" v-if="showAnswer" v-html="question.answer"> </div>
+            <a class="btn btn-primary btn-lg" v-on:click="toggleAnswer">Zeige Antwort</a>
 
           </swiper-slide>
 
@@ -86,37 +87,36 @@
           //init: this.setTopic,
         },
 
-        showAnswer : true,
+        showAnswer : false,
         lsImage : null
       }
     },
     methods : {
 
-      updateLearningstate (evt, data) {
-        console.log(evt);
-        this.questions = data;
-        this.setTopicAndLsImage(evt);
+      toggleAnswer () {
+        this.showAnswer = !this.showAnswer;
       },
 
-      setTopicAndLsImage(e) {
+      updateLearningstate (evt, data) {
 
-        console.log('set topic:');
-        //console.log(this.questions[this.swiper.activeIndex || 0].topic.topicName);
+        this.questions = data;
 
-        //dispatch/emit event active-topic (handled in parent component _course)
+        //Bild für den geänderten Learningstate abfragen
+        if (this.questions[this.swiper.activeIndex || 0].learningState) {
+          this.setLearningStateImage(this.questions[this.swiper.activeIndex || 0].learningState.learningStateID);
+        }
+      },
+
+      handleSlideChange(e) {
+
+        //initially hide the answer on every new slide
+        this.showAnswer = false;
+
+        //dispatch/emit event active-topic (for handling in parent component _course)
         this.$emit('active-topic', {
           activeTopic : this.questions[this.swiper.activeIndex || 0].topic.topicName
         });
 
-        //console.log(this.questions[this.swiper.activeIndex || 0].learningState);
-        if (this.questions[this.swiper.activeIndex || 0].learningState) {
-          this.setLearningStateImage(this.questions[this.swiper.activeIndex || 0].learningState.learningStateID);
-        }
-
-        //this.$store.dispatch('getLearningState', {userId : this.$store.state.user.userID, questionId : this.questions[this.swiper.activeIndex].questionID, token : 'Bearer ' + this.$store.state.user.jsonWebToken});
-        //console.log(this.$store.state.user.userID);
-        //console.log(this.questions[this.swiper.activeIndex]);
-        // this.$forceUpdate();
       },
 
       async setLearningStateImage (lsId) {
@@ -128,7 +128,6 @@
             method: 'GET',
             mode: 'cors',
             headers: {
-              // 'Authorization': `bearer ${token}`,
               'Content-Type': 'application/json'
             }
           });
@@ -136,11 +135,8 @@
           if (response.ok) {
 
             console.log('ls image ok');
-            // todo data image einfügen
             var imgStream = await response.blob();
-            console.log(imgStream);
             this.lsImage = URL.createObjectURL(imgStream);
-            //this.lsImage = 'data:image/png;base64,' + imgStream
 
           } else {
             console.log('ls image failed');
@@ -191,13 +187,18 @@
     background-color: $color-secondary;
   }
 
+  .questions .btn-primary {
+    color : #fff !important;
+  }
+
   .swiper-slide {
 
     position: relative;
 
     .learningstate {
       height: 40px;
-      margin: 20px 0 3px 0;
+      margin: 40px 0 3px 0;
+      padding: 0 25px;
 
       display: flex;
       justify-content: space-between;
@@ -238,7 +239,7 @@
   .swiper-container-horizontal > .swiper-pagination-progressbar,
   .swiper-pagination-progressbar {
 
-    height: 6px;
+    height: 12px;
 
     .swiper-pagination-progressbar-fill {
       background: $color-menu;
@@ -248,6 +249,7 @@
 
   .swiper-button-next {
     right:0;
+    top:124px;
 
     width: 0px;
     height: 0px;
@@ -259,6 +261,7 @@
 
   .swiper-button-prev {
     left:0;
+    top:124px;
 
     background: none;
     width: 0px;

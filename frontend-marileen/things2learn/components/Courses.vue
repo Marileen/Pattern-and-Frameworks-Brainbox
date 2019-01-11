@@ -2,14 +2,6 @@
 
   <section class="">
 
-
-    <!--<div class="store-test">Store State Counter: {{ $store.state.counter }}  </div>-->
-    <!--<div class="store-test">Courses Length: {{ $store.state.courses.length }}  </div>-->
-
-    <!--<button @click="$store.commit('increment')">-->
-      <!--{{ $store.state.counter }}-->
-    <!--</button><br>-->
-
       <div class="component" data-component="courses">
         <a :href="isLoggedIn ? `kurs/${course.courseName}` : '/register'" data-atom="card" v-for="course in $store.state.courses" :key="course.courseName">
           <span>{{ course.courseName }}</span>
@@ -27,7 +19,7 @@
   export default {
 
     fetch({ store }) {
-
+      store.commit('setUser')
     },
 
     computed: {
@@ -41,17 +33,11 @@
 
     data()  {
       return {
-        isLoggedIn : false
+        isLoggedIn : this.$store.state.user.isLoggedIn || false
       }
     },
     methods : {
 
-      showCourse (e) {
-        //console.log('ddd course');
-
-        //this.$nuxt.$router.replace({ path: 'kurs/' + e.target.attr('href') })
-        //:to="`kurs/${course.courseName}`"
-      }
 
     },
     beforeMount(){
@@ -64,7 +50,6 @@
 
     mounted() {
       console.log('courses mounted');
-      console.log(this.$store.state.user.isLoggedIn)
     }
   }
 
