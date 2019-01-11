@@ -31,6 +31,7 @@ $(function() {
     $("#nav-questions").click(function () {
         if(jwt==null) {
             $(".failureMessage").addClass('alert alert-warning').text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+
         }else{
             $("#login-b").text("Logout");
         }
@@ -68,8 +69,8 @@ $(function() {
                     // hier wird die CourseCard zs.gebaut, die danach zs. mit dem Course in der
                     // fetchTopics verwurstet wird
                     var courseCard =
-                        $('<div class="col"/>').append(
-                            $('<div class="card" style="width: 18rem;"/>')
+                        $('<div class="col scale"/>').append(
+                            $('<div class="card scale" />')
                                 .append($('<img>', {
                                     class: "card-img-top",
                                     alt: "Card image cap",
@@ -161,6 +162,8 @@ $(function() {
     // Rendering questions
     function renderQuestions() {
         // ajax request with JWT
+        $("#courses").hide();
+
         var jwt = user.jsonWebToken;
         console.log("neue Abfrage ueber renderQuestions");
 
@@ -182,7 +185,7 @@ $(function() {
 
             url: host + "/questions", // holt erstmal alle Questions
             success: function (data) {
-                var testQuestionsElement = $("#testQuestions"); // Aequivalent zu coursesElement
+                var testQuestionsElement = $("#questions"); // Aequivalent zu coursesElement
                 console.log("xhr-Request laeuft");
 
                 $.each(data, function (index, element) {
@@ -190,7 +193,7 @@ $(function() {
 
 
                     var questionBox = // Aequivalent zu courseCard
-                        $('<div id="testQuestions"/>').append($('<div class="accordion" id="questionsAccordion"/>') // end div #accordionExample
+                        $('<div class="row" id="testQuestions"/>').append($('<div class="col accordion" id="questionsAccordion"/>') // end div #accordionExample
                                 .append($('<div class="card"/>')
                                     .append(
                                         $('<div/>',
@@ -243,6 +246,7 @@ $(function() {
                                                     })
                                                     .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>')).click(function() {
                                                         console.log("Clicked on right button of question", element.questionID);
+                                                        // $( this ).find( "div:last" )
                                                      })
                                                 )
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
@@ -382,6 +386,7 @@ $(function() {
         $("#login-b").text("Logout");
         $(".login").hide();
         $(".main").show();
+        $("#courses").show();
     }
 
     function registrationSuccessful() {
@@ -438,6 +443,18 @@ $(function() {
         });
 
     });
+
+    /* noch irgendwo einbauen?
+    $("#testQuestions").hover(
+        function(){$("#testQuestions").animate ({color: blue, opacity: 0.6}, 1000);},
+        function () {$("#testQuestions").show("scale", {percent: 200, direction: 'vertical' }, 2000)}
+    ); */
+
+    //
+    $(".card").hover( function (e) {
+        $(this).toggleClass('card', e.type === 'mouseenter');
+    });
+
 
 
 }); // Ende jQuery

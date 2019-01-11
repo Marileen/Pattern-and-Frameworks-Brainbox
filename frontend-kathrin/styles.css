@@ -7,6 +7,28 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
+.card {
+    width: 18rem;
+    transition: all .2s ease-in-out;
+    margin: 0px 2.5px 20px 2.5px;
+}
+
+#questionsAccordion. accordion {
+    width: 100%;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.col {
+    margin: 20px;
+}
+
+.accordion.card {
+    width: 100%;
+}
+
 .ev-b {
     margin: 0px;
 }
@@ -57,9 +79,10 @@ body {
 }
 
 
-a:hover {
+
+/*a:hover {
     text-decoration: none;
-}
+} */
 
 .footer {
     position: fixed;
@@ -99,63 +122,3 @@ a:hover {
     color: white;
 }
 
-.card {
-    margin: 0px 2.5px 20px 2.5px;
-}
-
-/*
-.header h3 {
-  color: #fff;
-  font-size: 14px;
-  display: inline-block;
-  margin: 0;
-  font-weight: normal;
-  cursor: pointer;
-}
-
-.header .dropdown {
-  position: relative;
-}
-
-.header .dropdown-menu {
-  position: absolute;
-  top: 20px;
-  border-radius: 0;
-}
-
-.header .dropdown-menu li {
-  display: block;
-  margin: 0;
-  padding: 3px 10px;
-} */
-
-/* Main
-.main {
-  background: url('https://s3.amazonaws.com/codecademy-content/projects/2/madison-square-market/s1.jpg') no-repeat center center;
-  background-size: cover;
-  height: 400px;
-  width: 100%;
-}
-*/
-
-/* Footer
-.footer {
-  background-color: #0074ff;
-  padding: 20px 0;
-  height: 200px;
-}
-
-
-@media (max-width: 1024px) {
-  .header h1 {
-    width: 100%;
-    text-align: center;
-  }
-
-  .pull-right {
-    float: none !important;
-    margin: 20px auto 0;
-    width: 225px;
-  }
-
-}*/
