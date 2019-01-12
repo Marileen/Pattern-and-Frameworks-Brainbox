@@ -13,11 +13,6 @@ body {
     margin: 0px 2.5px 20px 2.5px;
 }
 
-/*
-#questionsAccordion. accordion > card {
-    width: 100%;
-} */
-
 #questionsAccordion.accordion .card {
     width: 100%;
 }

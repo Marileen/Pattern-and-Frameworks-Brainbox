@@ -13,6 +13,8 @@ $(function() {
         $(".login").hide();
         $(".registration").hide();
         $(".main").show();
+        $(".questions").hide();
+        console.log("Auf Home geklickt");
     });
 
     // prevents reload of the page caused by the form elements default behaviour
@@ -42,7 +44,7 @@ $(function() {
 
 
     // COURSES
-    // rendering of the main container on home
+    // rendering of the courses on home
     function renderCoursesMain () {
         $.ajax({
             method: 'GET',
@@ -99,20 +101,12 @@ $(function() {
                                                     {class: "topic-list collapse", id: 'topicsForCourse'+element.courseID}).append(
                                                     $('<div class="card card-body"/>'
                                                     ))
-
-                                                /*
-                                                // text mit fetchTopics ersetzen
-                                                var topics = fetchTopics(element.courseName);
-                                                $.each(topics, function (index, element) {
-                                                        $("card-body").text(element.topicName);
-                                                });
-                                                */
                                             )
                                     )
                                 ) // end card-body
                         ); // end col
 
-                    coursesElement.append(courseCard); // ende der appends
+                    coursesElement.append(courseCard); // end of all appends
 
                     fetchTopics(courseCard, element.courseName);
 
@@ -137,6 +131,17 @@ $(function() {
                 }
             });
         }
+
+        /* funktioniert nicht --> ggf. ersetzen durch Hinweis auf Login
+        $(".topic-list > .card-body").click(function(){
+            // tests if jwt is available
+            if(jwt==null) {
+                $(".login").show();
+                console.log("weiterleitung müsste hier stattfinden");
+            }else{
+                renderQuestions();
+            }
+        }); */
 
 
     // QUESTIONS
@@ -238,17 +243,25 @@ $(function() {
                                             })
                                                 .html(element.answer))
                                                 .append($('<div name="ev-b" class="btn-group ls-icon ev-b" role="group" aria-label="Basic example"/>')
-                                                    .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>')).click(function() {
-                                                        console.log("Clicked on left button of question", element.questionID);
-                                                    })
-                                                    .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>')).click(function() {
-                                                        console.log("Clicked on middle button of question", element.questionID);
-                                                    })
-                                                    .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>')).click(function() {
-                                                        console.log("Clicked on right button of question", element.questionID);
-                                                        // $( this ).find( "div:last" )
-                                                     })
+                                                    .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>')
+                                                        .click(function() {
+                                                            console.log("Clicked on left button of question", element.questionID, "element: ", this);
+                                                        })
+                                                    )
+                                                    .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>').click(function() {
+                                                        console.log("Clicked on middle button of question", element.questionID, "element: ", this);
+
+                                                    }))
+                                                    .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>').click(function() {
+                                                        console.log("Clicked on right button of question", element.questionID, "element: ", this);
+
+                                                     }))
                                                 )
+                                                /* .click(function () {
+                                                    var clicked = $( this ).attr('name');
+                                                    console.log("geklickt wurde: "+ clicked);
+                                                 }) */
+
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
                                     ) // end append collapseOne
                                      // end appends #question-box
@@ -396,6 +409,7 @@ $(function() {
         $("#login-b").text("Logout");
         $(".registration").hide();
         $(".main").show();
+        renderCoursesMain();
     }
 
     // Registration
