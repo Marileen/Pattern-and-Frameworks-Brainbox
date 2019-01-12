@@ -61,18 +61,6 @@ $(function() {
                 $.each(data, function (index, element) {
                     console.log(element, $("#courseID" + element.courseID));
 
-                    // TODO: Bild aus DB holen - siehe Bsp-Code Ehlers
-                    /* Load product image
-                    $.ajax({
-                        url: host + "/products/" + product.id,
-                        dataType: 'binary',
-                        headers: {"accept": "application/octet-stream"},
-                        success: function(data) {
-                            product.img = data;
-                            $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
-                        }
-                    }); */
-
                     // ggf. noch in Funktion auslagern
                     // hier wird die CourseCard zs.gebaut, die danach zs. mit dem Course in der
                     // fetchTopics verwurstet wird
@@ -169,7 +157,7 @@ $(function() {
         });
     }
 
-
+    // QUESTIONS PAGE
     // Rendering questions
     function renderQuestions() {
         // ajax request with JWT
@@ -184,6 +172,20 @@ $(function() {
         }else{
             $("#login-b").text("Logout");
         }
+
+
+
+        $(".ls-icon").append($('<p>blablabla</p>'))
+        //"<img scr='getLSImage(1)'/>"
+            .append($('<img/>',
+                {   // Parameter für createObjectURL ist ein blob oder File-Objekt
+                    // kein Rückgabewert möglich, weil Callback-Funktion?
+                    src: getLSImage(1)
+                }
+            )); // end append
+
+        // Zeile 66 von Ehlers:
+        // $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
 
 
         $.ajax({
@@ -224,9 +226,9 @@ $(function() {
                                                     'aria-controls':"collapse"+element.questionID
                                                 })
                                                 .append($('<div class="ls-icon" style="width: 18rem;"/>')
-                                                    .append($('<img src="img/icon_3.jpg"/>')
+                                                   // .append($('<img src="img/icon_3.jpg"/>')
                                                         .append($('<p>noch nicht</p>'))
-                                                    )).append($('<h3>neues Patterns and Frameworks</h3>'))
+                                                    ).append($('<h3>neues Patterns and Frameworks</h3>'))
                                                 .append($('<h5>Thema: JWT</h5>'))
                                                 .append($('<p/>',
                                                     {
@@ -252,6 +254,7 @@ $(function() {
                                                     .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>')
                                                         .click(function() {
                                                             console.log("Clicked on left button of question", element.questionID, "element: ", this);
+                                                            
                                                         })
                                                     )
                                                     .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>').click(function() {
@@ -474,6 +477,58 @@ $(function() {
     $(".card").hover( function (e) {
         $(this).toggleClass('card', e.type === 'mouseenter');
     });
+
+    // fetches Image for a Learning State
+    function getLSImage (learningStateID) {
+
+        // ajax request with JWT
+        var jwt = user.jsonWebToken;
+        console.log("neue Abfrage ueber getLSImage");
+
+        // tests if jwt is available - not necessary here
+        if (jwt == null) {
+            $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+        } else {
+            $("#login-b").text("Logout");
+        }
+
+        $.ajax({
+            method: 'GET',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+            },
+
+            url: host + "/state/"+ learningStateID + "/image",
+            //dataType: 'binary',
+            //headers: {"accept": "application/octet-stream"},
+            success: function (data) {
+                console.log("Learning State");
+                console.log("data "+data);
+                return data;
+               // return data.toSource;
+            },
+            error: function() {
+                console.log("LS error", arguments);
+            }
+
+        // TODO: Bild aus DB holen - siehe Bsp-Code Ehlers
+        /* Load product image
+        $.ajax({
+            url: host + "/products/" + product.id,
+            dataType: 'binary',
+            headers: {"accept": "application/octet-stream"},
+            success: function(data) {
+                product.img = data;
+                // das hier steht bei mir oben beim Methodenaufruf
+                $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
+            }
+        }); */
+
+
+        });
+    }
 
 
 
