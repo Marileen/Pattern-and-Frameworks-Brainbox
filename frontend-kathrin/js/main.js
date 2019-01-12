@@ -9,12 +9,15 @@ $(function() {
     $(".login").hide();
     $(".registration").hide();
 
-    $(".home").click(function () {
+    $(".home").click(function (e) {
         $(".login").hide();
         $(".registration").hide();
         $(".main").show();
-        $(".questions").hide();
+        $("#questions").hide();
         console.log("Auf Home geklickt");
+        renderCoursesMain();
+        $("#courses").show();
+        e.preventDefault(e);
     });
 
     // prevents reload of the page caused by the form elements default behaviour
@@ -46,11 +49,14 @@ $(function() {
     // COURSES
     // rendering of the courses on home
     function renderCoursesMain () {
+        var coursesElement = $("#courses");
+        coursesElement.html("");
+
         $.ajax({
             method: 'GET',
             url: host + "/courses",
             success: function (data) {
-                var coursesElement = $("#courses");
+
 
                 $.each(data, function (index, element) {
                     console.log(element, $("#courseID" + element.courseID));
