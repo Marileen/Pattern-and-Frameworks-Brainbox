@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -95,10 +95,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Alle Kurse<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Alle Themen</a>
+                        <a class="nav-link" href="#">Alle Themen<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <!-- ggf. noch disabled einbauen: <a id="nav-questions" class="nav-link disabled" href="#">Alle Fragen</a> -->
@@ -115,153 +112,12 @@
         </nav>
 
         <!-- all courses -->
-        <div id="courses" class="row">
-        </div>
+        <div id="courses" class="row"></div>
 
         <!-- all questions -->
-        <div id="questions">
+        <div id="questions"></div>
 
-        </div>
-
-        <div id="testQuestions">
-            <p>hier kommt das alte Akkordeon:</p>
-            <div class="accordion" id="accordionExample"> <!-- accordionExample bei mir questionsAccordion -->
-                <div class="card">
-                    <div class="card-header" id="headingOne"> <!-- headingOne bei mir questions-box1 -->
-                        <h2 class="mb-0">
-                            <button class="btn btn-link col collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <div class="ls-icon" style="width: 18rem;">
-                                    <img src="img/icon_3.jpg"/>
-                                    <p>noch nicht</p>
-                                </div>
-                                <h3>Patterns and Frameworks</h3>
-                                <h5>Thema: JWT</h5>
-                                <p>Frage: alsdkfj öalsdfkjasöldfjlaösdjf$ aäsdojf $asdfö w fjaäs äba jlöakäsdf alköer jkfldsaä  </p>
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-
-                            <div id="ev-b" class="btn-group ls-icon" role="group" aria-label="Basic example">
-                                <button type="button" id="left-b" class="btn btn-secondary standard-button">kann ich</button>
-                                <button type="button" class="btn btn-secondary standard-button">geht so</button>
-                                <button type="button" class="btn btn-secondary standard-button">noch nicht</button>
-                            </div>
-                            <p id="evaluation-text">
-                                Aktueller Stand
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Collapsible Group Item #2
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingThree">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Collapsible Group Item #3
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- jetzt dynamisch
-        <div class="row">
-
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="img/card_1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 id="courseID0" class="card-title show-courses">Paf</h5>
-                        <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
-                        <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
-                    </div>
-                </div>
-                <p class="topics-list">bla bla</p>
-            </div>
-
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="img/card_2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 id="courseID1"  class="card-title show-courses">Db</h5>
-                        <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
-                        <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="img/card_3.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 id="courseID2" class="card-title show-courses">Bwl</h5>
-                        <p class="card-text">Hier überprüfst Du Dein Wissen zu aktuellen Patterns und Frameworks.</p>
-                        <a class="show-topics btn btn-primary" href="#" >Themen anzeigen</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="img/card_4.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 id="courseID3" class="card-title show-courses">Itr</h5>
-                        <p class="card-text">Hier überprüfst Du Dein Wissen zu Datenbanken.</p>
-                        <a class="show-topics btn btn-primary" href="#">Themen anzeigen</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="img/card_5.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 id="courseID5" class="card-title show-courses">Cg</h5>
-                        <p class="card-text">Hier überprüfst Du Dein Wissen zu Computergrafik.</p>
-                        <p>
-                           // Collapse button with data-target
-                            <button id="cog-t-button" class="show-topics btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                Themen anzeigen
-                            </button>
-                        </p>
-                        <div id="collapse" class="collapse" id="collapseExample">
-                            <div id="cog-t1" class="card card-body">Topic 1: alsdföjaslk fjsöadlfj</div>
-                            <div id="cog-t2" class="card card-body">Topic 2: alsdföjaslk fjsöadlfj</div>
-                            <div id="cog-t3" class="card card-body">Topic 3: alsdföjaslk fjsöadlfj</div>
-                            <div id="cog-t4" class="card card-body">Topic 4: alsdföjaslk fjsöadlfj</div>
-                            <div id="cog-t5" class="card card-body">Topic 5: alsdföjaslk fjsöadlfj</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            
-        </div> end of class row -->
-    </div> <!-- end of div class main -->
-
+    </div> <!-- end main container -->
 
     <div class="footer">
         Alle verwendeten Bilder unterliegen der Creative Commons-Lizenz.
