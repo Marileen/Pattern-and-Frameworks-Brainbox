@@ -47,13 +47,10 @@
     methods: {
       login () {
           this.$store.dispatch('login', {email : this.email, password : this.password});
-          //router.replace('index')
-          // nuxt.renderRoute('index');
           this.$nuxt.$router.replace({ path: '/' })
       },
       logout () {
         this.$store.dispatch('logout');
-        //router.replace('index')
         this.$nuxt.$router.replace({ path: '/' })
 
       }
