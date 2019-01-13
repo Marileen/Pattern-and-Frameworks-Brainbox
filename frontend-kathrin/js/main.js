@@ -173,19 +173,68 @@ $(function() {
             $("#login-b").text("Logout");
         }
 
+// hier eingefügt
+
+        // ajax request with JWT
+        var jwt = user.jsonWebToken;
+        var learningStateID = 1;
+        console.log("neue Abfrage ueber getLSImage");
+
+        // tests if jwt is available - not necessary here
+        if (jwt == null) {
+            $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+        } else {
+            $("#login-b").text("Logout");
+        }
+
+        $.ajax({
+            method: 'GET',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+            },
+
+            url: host + "/state/"+ learningStateID + "/image",
+            dataType: 'binary',
+            headers: {"accept": "application/octet-stream"},
+            success: function (data) {
+                console.log("Learning State");
+                console.log("data "+data);
+                var image = data;
+                //= $.base64.encode(data);
+
+                $('#questions').append($('<img ng-src="data:image/jpeg;base64,{{image}}"/>'));
+                //  <img ng-src="data:image/png;base64,{{image}}">
+
+               // $('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
+                console.log("Bild sollte funktionieren");
+
+                //($('<img src="getLSImage(1)"+;base64,' + data + ' />'));
+                // $.base64.encode("this is a test");
+                //  $.base64.decode("dGhpcyBpcyBhIHRlc3Q=");
+            },
+            error: function() {
+                console.log("LS error", arguments);
+            }
+        });
 
 
-        $(".ls-icon").append($('<p>blablabla</p>'))
-        //"<img scr='getLSImage(1)'/>"
+      //  $(".ls-icon").append($('<p>blablabla</p>'))
+        //"<img scr='getLSImage(1)'/>" //
+        // stackoverflow: $('...').html('<img src="data:image/png;base64,' + data + '" />');
+        // <img src="data:image/png;base64,'+msg+'"/>
+        /*
             .append($('<img/>',
                 {   // Parameter für createObjectURL ist ein blob oder File-Objekt
                     // kein Rückgabewert möglich, weil Callback-Funktion?
                     src: getLSImage(1)
                 }
-            )); // end append
+            )); // end append */
 
         // Zeile 66 von Ehlers:
         // $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
+
 
 
         $.ajax({
@@ -478,6 +527,7 @@ $(function() {
         $(this).toggleClass('card', e.type === 'mouseenter');
     });
 
+  /*
     // fetches Image for a Learning State
     function getLSImage (learningStateID) {
 
@@ -501,8 +551,8 @@ $(function() {
             },
 
             url: host + "/state/"+ learningStateID + "/image",
-            //dataType: 'binary',
-            //headers: {"accept": "application/octet-stream"},
+            dataType: 'binary',
+            headers: {"accept": "application/octet-stream"},
             success: function (data) {
                 console.log("Learning State");
                 console.log("data "+data);
@@ -524,13 +574,13 @@ $(function() {
                 // das hier steht bei mir oben beim Methodenaufruf
                 $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
             }
-        }); */
+        });
 
 
         });
-    }
+    } // end getLSImage
 
-
+*/
 
 }); // Ende jQuery
 
