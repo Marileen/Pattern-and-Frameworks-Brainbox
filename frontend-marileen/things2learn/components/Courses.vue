@@ -31,6 +31,14 @@
       //isLoggedIn : this.$store.state.user.isLoggedIn
     },
 
+    watch : {
+      user (newUser, oldUser) {
+        //this.handleSlideChange();
+        this.isLoggedIn = newUser.isLoggedIn;
+      }
+
+    },
+
     data()  {
       return {
         isLoggedIn : this.$store.state.user.isLoggedIn || false

@@ -65,6 +65,16 @@
 
     },
 
+    watch : {
+
+      // dieses watch sorgt dafür, dass beim Laden der ersten Frage im Slider (da das SlideChange Event noch nicht auftrat)
+      // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
+      questions (newq, old) {
+        this.handleSlideChange();
+      }
+
+    },
+
     filters: {
       lower: function (value) {
         if (!value) return '';
@@ -107,7 +117,7 @@
         }
       },
 
-      handleSlideChange(e) {
+      handleSlideChange() {
 
         //initially hide the answer on every new slide
         this.showAnswer = false;
@@ -155,8 +165,9 @@
       this.$store.dispatch('getLearningStates');
     },
 
-    mounted () {
-      //
+    mounted (e) {
+      // todo: initital das active-topic setzen
+      console.log('mounted:', this.questions[this.swiper.activeIndex]);
     }
 
   }
