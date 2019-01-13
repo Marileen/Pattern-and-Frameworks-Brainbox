@@ -57,7 +57,6 @@ $(function() {
             url: host + "/courses",
             success: function (data) {
 
-
                 $.each(data, function (index, element) {
                     console.log(element, $("#courseID" + element.courseID));
 
@@ -121,10 +120,21 @@ $(function() {
                         console.log("elemente: " + element.topicName);
                         courseCard.find('.topic-list > .card-body').append($('<p/>').text(element.topicName));
                         // window.alert(element.topicName);
+
+                        /*
+                        var myMap = new Map();
+                        var keyCourse = element.courseName;
+                        var keyTopic = element.topicName;
+                        myMap.set(keyCourse, element.courseName);
+                        myMap.set(keyTopic, element.topicName);
+                        console.log("Course: "+ myMap.get(keyCourse) +", Topic: "+ myMap.get(keyTopic));
+                        */
                     });
                 }
             });
+
         }
+
 
         /* funktioniert nicht --> ggf. ersetzen durch Hinweis auf Login
         $(".topic-list > .card-body").click(function(){
@@ -136,6 +146,12 @@ $(function() {
                 renderQuestions();
             }
         }); */
+
+
+
+    // was will ich
+   // fuer jede Question den entsprechenden TopicName & CourseName
+
 
 
     // QUESTIONS
@@ -178,7 +194,7 @@ $(function() {
         // ajax request with JWT
         var jwt = user.jsonWebToken;
         var learningStateID = 1;
-        console.log("neue Abfrage ueber getLSImage");
+        console.log("neue Abfrage für LSImage");
 
         // tests if jwt is available - not necessary here
         if (jwt == null) {
@@ -278,7 +294,7 @@ $(function() {
                                                    // .append($('<img src="img/icon_3.jpg"/>')
                                                         .append($('<p>noch nicht</p>'))
                                                     ).append($('<h3>neues Patterns and Frameworks</h3>'))
-                                                .append($('<h5>Thema: JWT</h5>'))
+                                                .append($('<h5/>').text("Thema: "+element.topic.topicName))
                                                 .append($('<p/>',
                                                     {
                                                     class: "question-body"
@@ -343,11 +359,7 @@ $(function() {
         // gerade nicht genutzt
     // für was wollte ich das nochmal?
     // könnte man nehmen um alle, alle Themen anzeigen zu lassen
-    $(".show-topics").click(function () { // wenn ich auf knopf Alle Themen klicke, dann
-        $(this).text("dieses Element wurde geklickt");
-        // von diesem geklickten Element brauche ich aus dem h5 die courseID
-        var id = $(this).attr('id');
-        console.log("Id des Elements:"+id);
+    $(".show-topics").click(function () { // wenn ich auf knopf Alle Themen klicke
 
         $.ajax({
             type: 'GET',
@@ -362,6 +374,7 @@ $(function() {
             }
         });
     });
+
 
     // LOGIN AND REGISTRATION
     // Registrierung
