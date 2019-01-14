@@ -213,22 +213,13 @@ $(function() {
 
             url: host + "/state/"+ learningStateID + "/image",
             dataType: 'binary',
-            headers: {"accept": "application/octet-stream"},
+            headers: {"accept": "image/jpeg"},
             success: function (data) {
                 console.log("Learning State");
                 console.log("data "+data);
                 var image = data;
-                //= $.base64.encode(data);
 
-                $('#questions').append($('<img ng-src="data:image/jpeg;base64,{{image}}"/>'));
-                //  <img ng-src="data:image/png;base64,{{image}}">
-
-               // $('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
-                console.log("Bild sollte funktionieren");
-
-                //($('<img src="getLSImage(1)"+;base64,' + data + ' />'));
-                // $.base64.encode("this is a test");
-                //  $.base64.decode("dGhpcyBpcyBhIHRlc3Q=");
+               $('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
             },
             error: function() {
                 console.log("LS error", arguments);
