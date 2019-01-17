@@ -45,8 +45,6 @@ https://mariadb.com/kb/en/library/mariadb-basics/
 
 ## frontend-marileen
 
-Hier sind meine ersten chaotischen Versuche drin was mit Vue zu versuchen - hat nix mit dem Backend zu tun und kann ignoriert werden, ich wollte es nur für mich mit eingecheckt haben.
-
  To get started:
 
     cd things2learn
