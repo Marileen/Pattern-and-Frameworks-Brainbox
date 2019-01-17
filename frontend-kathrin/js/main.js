@@ -284,7 +284,7 @@ $(function() {
                                                 .append($('<div class="ls-icon" style="width: 18rem;"/>')
                                                    // .append($('<img src="img/icon_3.jpg"/>')
                                                         .append($('<p>noch nicht</p>'))
-                                                    ).append($('<h3>neues Patterns and Frameworks</h3>'))
+                                                    ).append($('<h3/>').text("Kurs: "+ element.topic.course.courseName))
                                                 .append($('<h5/>').text("Thema: "+element.topic.topicName))
                                                 .append($('<p/>',
                                                     {
