@@ -193,7 +193,7 @@ $(function() {
 
         // ajax request with JWT
         var jwt = user.jsonWebToken;
-        var learningStateID = 1;
+        var learningStateID = 3;
         console.log("neue Abfrage für LSImage");
 
         // tests if jwt is available - not necessary here

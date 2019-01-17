@@ -1,6 +1,5 @@
 package lernapp.model;
 
-import lernapp.model.*;
 import javax.persistence.*;
 
 import java.util.Set;
@@ -9,7 +8,7 @@ import java.util.Set;
 public class Course {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column
+    @Column(nullable = false)
     private long courseID;
 
     @Column

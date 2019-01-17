@@ -29,7 +29,6 @@ public class UserQuestionLS {
     private LearningState learningState;
 
     public UserQuestionLS(){
-
     }
 
     public UserQuestionLS(User user, Question question, LearningState learningState){

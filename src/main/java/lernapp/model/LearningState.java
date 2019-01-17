@@ -9,24 +9,17 @@ public class LearningState {
     @Column(nullable = false)
     private long learningStateID;
 
-    // z. B. gut, mittel, noch nicht
     @Column(nullable = false)
     private String stateName;
 
-    // zugehöriges Bildchen
-    // wird aus einem media verzeichnis ausgeliefert (weil man Bilder nicht in der DB speichert)
+    // LearningState image from media folder
     @Column
     private String imageUrl;
 
-    // Beschreibung
     @Column(nullable = false)
     private String LearningStateDescr;
 
-//    @OneToMany(mappedBy = "linkPk.learningState", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    public List<UserQuestionLS> user_question_ls;
-
     public LearningState(){
-
     }
 
     public LearningState(String stateName, String imageFileName, String LearningStateDescr){
@@ -35,6 +28,7 @@ public class LearningState {
         this.LearningStateDescr = LearningStateDescr;
     }
 
+    // Getter and Setter
 
     public long getLearningStateID() {
         return learningStateID;
