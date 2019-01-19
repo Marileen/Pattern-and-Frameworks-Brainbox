@@ -1,9 +1,9 @@
 $(function() {
+
     console.log("INIT");
 
     var host = "http://localhost:8050";
     var user = {};
-    var clickedLS;
 
     var warning = '<div class="alert alert-warning" role="alert">';
     var info = '<div class="alert alert-info" role="alert">';
@@ -32,13 +32,11 @@ $(function() {
 
     // LEARNING STATE
 
-
     renderCoursesMain();
 
     // displays all questions through click on Alle Fragen button
     $("#nav-questions").click(function () {
         if(jwt==null) {
-            //$(".failureMessage").addClass('alert alert-warning').text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
             var message = warning+ "Um diese Inhalte zu sehen musst Du Dich erst einloggen."+ '</div>';
             loginFirst(message);
         }else{
@@ -64,7 +62,6 @@ $(function() {
                 $.each(data, function (index, element) {
                     console.log(element, $("#courseID" + element.courseID));
 
-                    // ggf. noch in Funktion auslagern
                     // hier wird die CourseCard zs.gebaut, die danach zs. mit dem Course in der
                     // fetchTopics verwurstet wird
                     var courseCard =
@@ -123,44 +120,15 @@ $(function() {
                     $.each(data, function (index, element) {
                         console.log("elemente: " + element.topicName);
                         courseCard.find('.topic-list > .card-body').append($('<p/>').text(element.topicName));
-                        // window.alert(element.topicName);
-
-                        /*
-                        var myMap = new Map();
-                        var keyCourse = element.courseName;
-                        var keyTopic = element.topicName;
-                        myMap.set(keyCourse, element.courseName);
-                        myMap.set(keyTopic, element.topicName);
-                        console.log("Course: "+ myMap.get(keyCourse) +", Topic: "+ myMap.get(keyTopic));
-                        */
                     });
                 }
             });
-
-        }
-
-
-        /* funktioniert nicht --> ggf. ersetzen durch Hinweis auf Login
-        $(".topic-list > .card-body").click(function(){
-            // tests if jwt is available
-            if(jwt==null) {
-                $(".login").show();
-                console.log("weiterleitung müsste hier stattfinden");
-            }else{
-                renderQuestions();
-            }
-        }); */
-
-
-
-    // was will ich
-   // fuer jede Question den entsprechenden TopicName & CourseName
-
+        } // end fetchTopics
 
 
     // QUESTIONS
 
-    // FUNKTIONIERT NOCH NICHT
+    /*FUNKTIONIERT NOCH NICHT
     // fetches questions for a certain course
     function fetchQuestions (questionBox, courseName) {
         $.ajax({
@@ -175,7 +143,7 @@ $(function() {
                 });
             }
         });
-    }
+    } // end fetchQUestions */
 
     // QUESTIONS PAGE
     // Rendering questions
@@ -199,56 +167,6 @@ $(function() {
         // ajax request with JWT
         var jwt = user.jsonWebToken;
         var learningStateID;
-
-
-        // tests if jwt is available - not necessary here
-       /* if (jwt == null) {
-            $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
-            $("#courses").show();
-        } else {
-            $("#logreg").text("Logout");
-        }*/
-
-       // setting picture for LearningState
-        /*$.ajax({
-            method: 'GET',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Accept", "application/json");
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
-            },
-
-            url: host + "/state/"+ learningStateID + "/image",
-            dataType: 'binary',
-            headers: {"accept": "image/jpeg"},
-            success: function (data) {
-                console.log("Learning State");
-                console.log("data "+data);
-                var image = data;
-
-               $('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
-            },
-            error: function() {
-                console.log("LS error", arguments);
-            }
-        });*/
-
-
-      //  $(".ls-icon").append($('<p>blablabla</p>'))
-        //"<img scr='getLSImage(1)'/>" //
-        // stackoverflow: $('...').html('<img src="data:image/png;base64,' + data + '" />');
-        // <img src="data:image/png;base64,'+msg+'"/>
-        /*
-            .append($('<img/>',
-                {   // Parameter für createObjectURL ist ein blob oder File-Objekt
-                    // kein Rückgabewert möglich, weil Callback-Funktion?
-                    src: getLSImage(1)
-                }
-            )); // end append */
-
-        // Zeile 66 von Ehlers:
-        // $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
-
 
 
         $.ajax({
@@ -288,17 +206,19 @@ $(function() {
                                                     'aria-expanded': "true",
                                                     'aria-controls':"collapse"+element.questionID
                                                 })
-                                                .append($('<div class="ls-icon" style="width: 18rem;"/>')
+                                                .append($('<div class="col-6 ls-icon" style="width: 18rem;"/>')
                                                    // .append($('<img src="img/icon_3.jpg"/>')
                                                         .append($('<p>Noch kein Lernstatus festgelegt</p>'))
-                                                    ).append($('<h3/>').text("Kurs: "+ element.topic.course.courseName))
-                                                .append($('<h5/>').text("Thema: "+element.topic.topicName))
-                                                .append($('<p/>',
+                                                    )
+                                                .append($('<div class="ls-text col-6">')
+                                                    .append($('<h3/>').text(element.topic.course.courseName))
+                                                    .append($('<h5/>').text("Thema: "+element.topic.topicName))
+                                                    .append($('<p/>',
                                                     {
                                                     class: "question-body"
                                                     })
                                                     .html(element.question)
-                                                )
+                                                ))
                                             ) // end button                                        ) // end append h2
                                     )) // end div card-header
                                     .append($('<div/>',
@@ -352,10 +272,6 @@ $(function() {
 
                                                      }))
                                                 )
-                                                /* .click(function () {
-                                                    var clicked = $( this ).attr('name');
-                                                    console.log("geklickt wurde: "+ clicked);
-                                                 }) */
 
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
                                     ) // end append collapseOne
@@ -404,29 +320,6 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
 } // end fetchLSImage
 
 
-
-    // TOPICS
-
-      /*  // gerade nicht genutzt
-    // für was wollte ich das nochmal?
-    // könnte man nehmen um alle, alle Themen anzeigen zu lassen
-    $(".show-topics").click(function () { // wenn ich auf knopf Alle Themen klicke
-
-        $.ajax({
-            type: 'GET',
-            url: host + "/topics/",
-            success: function (data) {
-                // window.alert(data);
-               // $("#topics-paf").html(data[0].topicName);
-                $.each(data, function (index, element) {
-                    $("courseID5-topic1").text(element.topicName);
-                    }
-                )
-            }
-        });
-    });*/
-
-
     // LOGIN AND REGISTRATION
     // Registrierung
     $('#register-button').click( function () {
@@ -437,11 +330,6 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
 
     });
 
-    /*$( "#clickme" ).click(function() {
-      $( "#book" ).fadeOut( "slow", function() {
-        // Animation complete.
-      });
-    }); */
 
     // shows Login form (again)
     $('#logreg').click( function() {
@@ -601,61 +489,6 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
     $(".card").hover( function (e) {
         $(this).toggleClass('card', e.type === 'mouseenter');
     });
-
-    /*
-      // fetches Image for a Learning State
-      function getLSImage (learningStateID) {
-
-          // ajax request with JWT
-          var jwt = user.jsonWebToken;
-          console.log("neue Abfrage ueber getLSImage");
-
-          // tests if jwt is available - not necessary here
-          if (jwt == null) {
-              $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
-          } else {
-              $("#login-b").text("Logout");
-          }
-
-          $.ajax({
-              method: 'GET',
-              beforeSend: function (xhr) {
-                  xhr.setRequestHeader("Accept", "application/json");
-                  xhr.setRequestHeader("Content-Type", "application/json");
-                  xhr.setRequestHeader("Authorization", "Bearer " + jwt);
-              },
-
-              url: host + "/state/"+ learningStateID + "/image",
-              dataType: 'binary',
-              headers: {"accept": "application/octet-stream"},
-              success: function (data) {
-                  console.log("Learning State");
-                  console.log("data "+data);
-                  return data;
-                 // return data.toSource;
-              },
-              error: function() {
-                  console.log("LS error", arguments);
-              }
-
-          // TODO: Bild aus DB holen - siehe Bsp-Code Ehlers
-          /* Load product image
-          $.ajax({
-              url: host + "/products/" + product.id,
-              dataType: 'binary',
-              headers: {"accept": "application/octet-stream"},
-              success: function(data) {
-                  product.img = data;
-                  // das hier steht bei mir oben beim Methodenaufruf
-                  $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
-              }
-          });
-
-
-          });
-      } // end getLSImage
-
-  */
 
 }); // Ende jQuery
 
