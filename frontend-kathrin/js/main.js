@@ -319,6 +319,9 @@ $(function() {
                                                             console.log("Clicked on left button of question", element.questionID, "element: ", this);
                                                             learningStateID = 1;
 
+                                                          // var closest = $(this).closest("div").attr("id");
+                                                           // console.log("closest div: "+closest);
+
                                                             var clickedID = "question-box"+element.questionID; // e.g. question-box1
 
                                                             console.log("clickedID: "+clickedID);
@@ -375,12 +378,14 @@ function fetchLSImage(learningStateID, questionID, clickedID, jwt) {
             console.log("data "+data);
             var image = data;
 
-            var imgContainer = "#"+clickedID+""; // e. g. "#question-box1"
-            console.log("imgContainer wäre hier \"#question-box1\": "+imgContainer);
+            //var imgContainer = "#"+clickedID+""; // e. g. "#question-box1"
+            console.log("clickedID: "+clickedID);
+            // console.log("imgContainer wäre hier \"#question-box1\": "+imgContainer);
 
 
             //$("#question-box1").find('.ls-icon').html($('<p>anderer Text</p>')); // funktioniert
-            $("imgContainer").find('.ls-icon').html($('<p>anderer Text</p>')); // funktioniert nicht
+            $("#"+clickedID).find('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
+               // .html($('<p>anderer Text</p>')); // funktioniert nicht
 
             // NICHT weglöschen!!! $('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
 
@@ -389,6 +394,8 @@ function fetchLSImage(learningStateID, questionID, clickedID, jwt) {
                     id: "question-box"+questionID
                // }).find('.ls-icon').replaceWith($("<img>", {src: window.URL.createObjectURL(image)}));
                 }).find('.ls-icon').html($('<p>anderer Text</p>'));*/
+
+
 
             console.log("questionID ist "+ questionID);
         },
