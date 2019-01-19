@@ -5,6 +5,9 @@ $(function() {
     var user = {};
     var clickedLS;
 
+    var warning = '<div class="alert alert-warning" role="alert">';
+    var info = '<div class="alert alert-info" role="alert">';
+
 
     $(".login").hide();
     $(".registration").hide();
@@ -35,10 +38,11 @@ $(function() {
     // displays all questions through click on Alle Fragen button
     $("#nav-questions").click(function () {
         if(jwt==null) {
-            $(".failureMessage").addClass('alert alert-warning').text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
-
+            //$(".failureMessage").addClass('alert alert-warning').text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+            var message = warning+ "Um diese Inhalte zu sehen musst Du Dich erst einloggen."+ '</div>';
+            loginFirst(message);
         }else{
-            $("#login-b").text("Logout");
+            $("#logreg").text("Logout");
         }
         var jwt = user.jsonWebToken;
         renderQuestions();
@@ -185,11 +189,11 @@ $(function() {
         // tests if jwt is available
         if(jwt==null) {
             $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+            $("#courses").show();
         }else{
-            $("#login-b").text("Logout");
+            $("#logreg").text("Logout");
+            $("#questions").show();
         }
-
-// hier eingefügt
 
         // ajax request with JWT
         var jwt = user.jsonWebToken;
@@ -197,11 +201,12 @@ $(function() {
         console.log("neue Abfrage für LSImage");
 
         // tests if jwt is available - not necessary here
-        if (jwt == null) {
+       /* if (jwt == null) {
             $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+            $("#courses").show();
         } else {
-            $("#login-b").text("Logout");
-        }
+            $("#logreg").text("Logout");
+        }*/
 
         $.ajax({
             method: 'GET',
@@ -333,12 +338,7 @@ $(function() {
                                 ) // end appends card
                         ) // end appends accordion
 
-
-
                     testQuestionsElement.append(questionBox);
-
-                    //console.log("genau diese Anfrage funktioniert nicht:");
-                   // fetchQuestions(questionBox, element.topic_topicID);
 
                 }) // end each
             } // end success function
@@ -347,7 +347,8 @@ $(function() {
 
 
     // TOPICS
-        // gerade nicht genutzt
+
+      /*  // gerade nicht genutzt
     // für was wollte ich das nochmal?
     // könnte man nehmen um alle, alle Themen anzeigen zu lassen
     $(".show-topics").click(function () { // wenn ich auf knopf Alle Themen klicke
@@ -364,7 +365,7 @@ $(function() {
                 )
             }
         });
-    });
+    });*/
 
 
     // LOGIN AND REGISTRATION
@@ -383,12 +384,22 @@ $(function() {
       });
     }); */
 
-    // shows Login form
-    $('#login-b').click( function() {
+    // shows Login form (again)
+    $('#logreg').click( function() {
       $(".login").show();
-      $(".main").hide();
-        $(".failureMessage").hide();
+      $(".failureMessage").hide();
+      emptyForm();
+      //if
+      console.log("läuft auch nach emptyForm.");
+     // $(".main").hide();
+
     });
+
+
+    function emptyForm () {
+       $('#loginForm')[0].reset();
+       $('#loginForm')[1].reset();
+    };
 
 
     // Login
@@ -403,15 +414,16 @@ $(function() {
         var pwVal = $('#password').val();
 
         if (json.email.length==0 && pwVal==0) {
-            var message = '<div class="alert alert-warning" role="alert">'+ "Bitte fülle beide Felder aus."+ '</div>';
+            var message = warning + "Bitte fülle beide Felder aus."+ '</div>';
+           // var message = '<div class="alert alert-warning" role="alert">'+ "Bitte fülle beide Felder aus."+ '</div>';
             loginFailureMessage(message);
 
         }else if (json.email.length==0) {
-            var message = '<div class="alert alert-warning" role="alert">'+ "Bitte trage eine gültige Mailadresse ein."+ '</div>';
+            var message = warning + "Bitte trage eine gültige Mailadresse ein."+ '</div>';
             loginFailureMessage(message);
 
         }else if (pwVal.length==0) {
-            var message = '<div class="alert alert-warning" role="alert">'+ "Bitte trage ein Passwort ein."+ '</div>';
+            var message = warning + "Bitte trage ein Passwort ein."+ '</div>';
             loginFailureMessage(message);
 
         }else{
@@ -419,7 +431,7 @@ $(function() {
 
 
             $.ajax({
-                url: host + "/user/login", //localhost:8050/user/login
+                url: host + "/user/login",
                 method: "POST",
                 crossDomain: true,
                 data: JSON.stringify(json),
@@ -440,35 +452,42 @@ $(function() {
                   console.log("login error", arguments);
                   $('.login page').hide();
 
+
+                  var message = warning+ "Login fehlgeschlagen."+ '</div>';
+                  loginFailureMessage(message);
                 }
             }); // end ajax request
         }
     });
 
+    function loginFirst(message) {
+        $(".failureMessage").fadeTo(100, 1, function(){ $(this).html(message).fadeOut(2000); });
+    }
+
     function loginFailureMessage(message) {
-        $(".login .failureMessage").fadeTo(100, 1, function(){ $(this).html(message).fadeOut(4000); });
+        $(".login .failureMessage").fadeTo(100, 1, function(){ $(this).html(message).fadeOut(2000); });
     }
 
     function registrationFailureMessage(message) {
-        $(".registration .failureMessage").fadeTo(100, 1, function(){ $(this).html(message).fadeOut(4000); });
+        $(".registration .failureMessage").fadeTo(100, 1, function(){ $(this).html(message).fadeOut(2000); });
     }
 
-
     function loginSuccessful() {
-        var loginMessage = '<div class="alert alert-info" role="alert">'+ "Du hast Dich erfolgreich eingeloggt."+ '</div>';
+        var loginMessage = info + "Du hast Dich erfolgreich eingeloggt."+ '</div>';
 
-        $(".main .failureMessage").fadeTo(100, 1, function(){ $(this).html(loginMessage).fadeOut(4000); });
-        $("#login-b").text("Logout");
+        $(".main .failureMessage").removeClass("alert-warning")
+            .fadeTo(100, 1, function(){ $(this).html(loginMessage).fadeOut(2000); });
+        $("#logreg").text("Logout");
         $(".login").hide();
         $(".main").show();
         $("#courses").show();
     }
 
     function registrationSuccessful() {
-        var registrationMessage = '<div class="alert alert-info" role="alert">'+ "Du hast Dich erfolgreich registriert."+ '</div>';
+        var registrationMessage = info + "Du hast Dich erfolgreich registriert."+ '</div>';
 
-        $(".main .failureMessage").fadeTo(100, 1, function(){ $(this).html(registrationMessage).fadeOut(4000); });
-        $("#login-b").text("Logout");
+        $(".main .failureMessage").fadeTo(100, 1, function(){ $(this).html(registrationMessage).fadeOut(2000); });
+        $("#logreg").text("Logout");
         $(".registration").hide();
         $(".main").show();
         renderCoursesMain();
@@ -481,21 +500,21 @@ $(function() {
         var mail= $("#reg-email").val();
         var fn = $('#firstname').val();
         var ln = $('#lastname').val();
-        var pw = b64_sha256($('#reg-pw').val())+"="; //$('#reg-pw').val();
+        var pw = b64_sha256($('#reg-pw').val())+"=";
 
-        // var regJson = $('.registration form').serializeArray();
         var regJson = {
             "email": mail,
             "firstname" : fn,
             "lastname" : ln,
             "password" : pw
         };
+
         // ToDo: Felder validieren wie bei Login
 
         console.log("das ist das json mit dem Benutzernamen: "+ JSON.stringify(regJson));
 
         $.ajax({
-            url: host + "/user/register", //http://localhost:8050/user/register
+            url: host + "/user/register",
             method: "POST",
             crossDomain: true,
             data: JSON.stringify(regJson),
@@ -515,6 +534,9 @@ $(function() {
             },
             error: function() {
                 console.log("registration error", arguments);
+               // $('.registration .failureMessage').show().html("Registrierung fehlgeschlagen!");
+                var message = '<div class="alert alert-warning" role="alert">'+ "Registrierung fehlgeschlagen."+ '</div>';
+                registrationFailureMessage(message);
             }
         });
 
@@ -531,60 +553,60 @@ $(function() {
         $(this).toggleClass('card', e.type === 'mouseenter');
     });
 
-  /*
-    // fetches Image for a Learning State
-    function getLSImage (learningStateID) {
+    /*
+      // fetches Image for a Learning State
+      function getLSImage (learningStateID) {
 
-        // ajax request with JWT
-        var jwt = user.jsonWebToken;
-        console.log("neue Abfrage ueber getLSImage");
+          // ajax request with JWT
+          var jwt = user.jsonWebToken;
+          console.log("neue Abfrage ueber getLSImage");
 
-        // tests if jwt is available - not necessary here
-        if (jwt == null) {
-            $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
-        } else {
-            $("#login-b").text("Logout");
-        }
+          // tests if jwt is available - not necessary here
+          if (jwt == null) {
+              $(".failureMessage").text("Um diese Inhalte zu sehen musst Du Dich erst einloggen.");
+          } else {
+              $("#login-b").text("Logout");
+          }
 
-        $.ajax({
-            method: 'GET',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Accept", "application/json");
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
-            },
+          $.ajax({
+              method: 'GET',
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader("Accept", "application/json");
+                  xhr.setRequestHeader("Content-Type", "application/json");
+                  xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+              },
 
-            url: host + "/state/"+ learningStateID + "/image",
-            dataType: 'binary',
-            headers: {"accept": "application/octet-stream"},
-            success: function (data) {
-                console.log("Learning State");
-                console.log("data "+data);
-                return data;
-               // return data.toSource;
-            },
-            error: function() {
-                console.log("LS error", arguments);
-            }
+              url: host + "/state/"+ learningStateID + "/image",
+              dataType: 'binary',
+              headers: {"accept": "application/octet-stream"},
+              success: function (data) {
+                  console.log("Learning State");
+                  console.log("data "+data);
+                  return data;
+                 // return data.toSource;
+              },
+              error: function() {
+                  console.log("LS error", arguments);
+              }
 
-        // TODO: Bild aus DB holen - siehe Bsp-Code Ehlers
-        /* Load product image
-        $.ajax({
-            url: host + "/products/" + product.id,
-            dataType: 'binary',
-            headers: {"accept": "application/octet-stream"},
-            success: function(data) {
-                product.img = data;
-                // das hier steht bei mir oben beim Methodenaufruf
-                $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
-            }
-        });
+          // TODO: Bild aus DB holen - siehe Bsp-Code Ehlers
+          /* Load product image
+          $.ajax({
+              url: host + "/products/" + product.id,
+              dataType: 'binary',
+              headers: {"accept": "application/octet-stream"},
+              success: function(data) {
+                  product.img = data;
+                  // das hier steht bei mir oben beim Methodenaufruf
+                  $('#img-' + product.id).html($("<img>", {src: window.URL.createObjectURL(data)}));
+              }
+          });
 
 
-        });
-    } // end getLSImage
+          });
+      } // end getLSImage
 
-*/
+  */
 
 }); // Ende jQuery
 
