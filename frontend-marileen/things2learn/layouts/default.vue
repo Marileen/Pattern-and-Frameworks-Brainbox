@@ -4,11 +4,11 @@
 
       <div class="col-12 text-center">
 
-        <a href="/" class="menu-item">Start</a>
+        <nuxt-link to="/" class="menu-item"><span>Start</span></nuxt-link>
 
         <form v-if="!user.isLoggedIn" v-on:submit.prevent="login()">
           <input type="text" placeholder="email" v-model="email"/>
-          <input type="text" placeholder="passwort" v-model="password"/>
+          <input type="password" placeholder="passwort" v-model="password"/>
           <button>login</button>
           <nuxt-link to="/register" class="menu-item"><span>Registrieren</span></nuxt-link>
 
