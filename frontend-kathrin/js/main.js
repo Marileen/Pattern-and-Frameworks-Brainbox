@@ -319,23 +319,36 @@ $(function() {
                                                             console.log("Clicked on left button of question", element.questionID, "element: ", this);
                                                             learningStateID = 1;
 
-                                                          // var closest = $(this).closest("div").attr("id");
-                                                           // console.log("closest div: "+closest);
-
-                                                            var clickedID = "question-box"+element.questionID; // e.g. question-box1
+                                                            var clickedID = "question-box"+element.questionID; // question-box1
 
                                                             console.log("clickedID: "+clickedID);
 
-                                                            fetchLSImage(learningStateID, element.questionID, clickedID, jwt);
+                                                            fetchLSImage(learningStateID, clickedID, jwt);
 
                                                         })
                                                     )
-                                                    .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>').click(function() {
-                                                        console.log("Clicked on middle button of question", element.questionID, "element: ", this);
+                                                    .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>')
+                                                        .click(function() {
+                                                            console.log("Clicked on middle button of question", element.questionID, "element: ", this);
+                                                            learningStateID = 2;
+
+                                                            var clickedID = "question-box"+element.questionID; // question-box2
+
+                                                            console.log("clickedID: "+clickedID);
+
+                                                            fetchLSImage(learningStateID, clickedID, jwt);
 
                                                     }))
-                                                    .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>').click(function() {
-                                                        console.log("Clicked on right button of question", element.questionID, "element: ", this);
+                                                    .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>')
+                                                        .click(function() {
+                                                            console.log("Clicked on right button of question", element.questionID, "element: ", this);
+                                                            learningStateID = 3;
+
+                                                            var clickedID = "question-box"+element.questionID; // question-box3
+
+                                                            console.log("clickedID: "+clickedID);
+
+                                                            fetchLSImage(learningStateID, clickedID, jwt);
 
                                                      }))
                                                 )
@@ -358,9 +371,7 @@ $(function() {
     } // end function renderQuestions
 
 
-function fetchLSImage(learningStateID, questionID, clickedID, jwt) {
-
-    //this.questionID = questionID;
+function fetchLSImage(learningStateID, clickedID, jwt) {
 
     $.ajax({
         method: 'GET',
@@ -378,32 +389,19 @@ function fetchLSImage(learningStateID, questionID, clickedID, jwt) {
             console.log("data "+data);
             var image = data;
 
-            //var imgContainer = "#"+clickedID+""; // e. g. "#question-box1"
             console.log("clickedID: "+clickedID);
-            // console.log("imgContainer wäre hier \"#question-box1\": "+imgContainer);
 
 
             //$("#question-box1").find('.ls-icon').html($('<p>anderer Text</p>')); // funktioniert
             $("#"+clickedID).find('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
-               // .html($('<p>anderer Text</p>')); // funktioniert nicht
 
-            // NICHT weglöschen!!! $('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
-
-/*            $('<div/>',
-                {
-                    id: "question-box"+questionID
-               // }).find('.ls-icon').replaceWith($("<img>", {src: window.URL.createObjectURL(image)}));
-                }).find('.ls-icon').html($('<p>anderer Text</p>'));*/
-
-
-
-            console.log("questionID ist "+ questionID);
+            //console.log("questionID ist "+ questionID);
         },
         error: function() {
             console.log("LS error", arguments);
         }
     });
-}
+} // end fetchLSImage
 
 
 
