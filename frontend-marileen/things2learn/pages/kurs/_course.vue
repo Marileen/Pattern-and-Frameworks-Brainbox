@@ -35,10 +35,16 @@
 
     components: {Topics, Questions},
 
+    async fetch ({ store, error, params : { course } }) {
+      await store.dispatch('getCourses');
 
-    validate : ({course}) =>  ({
-      //todo
-    }),
+      console.log(store.state.courses);
+
+      if (!store.state.courses.some( (c) => c.courseName === course )) {
+        error('Dieser Kurs existiert leider nicht');
+      }
+
+    },
 
     data () {
       return {

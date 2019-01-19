@@ -45,11 +45,9 @@ https://mariadb.com/kb/en/library/mariadb-basics/
 
 ## frontend-marileen
 
-    Grizzly hostet die Dateien von Marileens und Kathrins Frontend
-    Server hostet einfach in bestimmten ordner
+    http://localhost:8050/mstamer/
 
-
- To get started:
+ Für die Entwicklung :
 
     cd things2learn
     npm run dev
@@ -58,7 +56,6 @@ https://mariadb.com/kb/en/library/mariadb-basics/
 
     cd things2learn
     npm run build
-    npm start
 
 
 ## Maven Central
