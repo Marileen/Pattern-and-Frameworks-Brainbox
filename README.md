@@ -45,6 +45,10 @@ https://mariadb.com/kb/en/library/mariadb-basics/
 
 ## frontend-marileen
 
+    Grizzly hostet die Dateien von Marileens und Kathrins Frontend
+    Server hostet einfach in bestimmten ordner
+
+
  To get started:
 
     cd things2learn
