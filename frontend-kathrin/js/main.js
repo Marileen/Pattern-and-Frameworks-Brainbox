@@ -193,12 +193,15 @@ $(function() {
         }else{
             $("#logreg").text("Logout");
             $("#questions").show();
+            $(".failureMessage").hide();
         }
 
         // ajax request with JWT
         var jwt = user.jsonWebToken;
         var learningStateID = 3;
         console.log("neue Abfrage für LSImage");
+
+
 
         // tests if jwt is available - not necessary here
        /* if (jwt == null) {
@@ -388,18 +391,8 @@ $(function() {
     $('#logreg').click( function() {
       $(".login").show();
       $(".failureMessage").hide();
-      emptyForm();
-      //if
-      console.log("läuft auch nach emptyForm.");
-     // $(".main").hide();
-
+      $('#loginForm').trigger("reset");
     });
-
-
-    function emptyForm () {
-       $('#loginForm')[0].reset();
-       $('#loginForm')[1].reset();
-    };
 
 
     // Login
