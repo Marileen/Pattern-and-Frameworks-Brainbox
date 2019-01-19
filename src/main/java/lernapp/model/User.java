@@ -2,13 +2,10 @@ package lernapp.model;
 
 import javax.persistence.*;
 
-// unser User
 @Entity(name = "user")
 public class User {
 
-
     @Column(nullable = false, unique=true)
-    //@JsonIgnore
     private String email;
 
     @Id
@@ -31,9 +28,6 @@ public class User {
     @Transient
     private String jsonWebToken;
 
-//    @OneToMany(mappedBy = "linkPk.user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    public List<UserQuestionLS> user_question_ls;
-
     public User() {
     }
 
@@ -44,7 +38,7 @@ public class User {
         this.password = password;
     }
 
-    //Construktor mit Admin Flag
+    // Constructor with Admin Flag
     public User(String email, String firstname, String lastname,  String password, boolean isAdmin) {
         this.email = email;
         this.firstname = firstname;
@@ -52,6 +46,8 @@ public class User {
         this.password = password;
         this.isAdmin = isAdmin;
     }
+
+    // Getter and Setter
 
     public long getUserID() {
         return userID;

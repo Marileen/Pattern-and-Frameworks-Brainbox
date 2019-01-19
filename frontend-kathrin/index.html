@@ -41,15 +41,15 @@
     </header>
 
     <!-- login container -->
-    <div class="fehler"></div>
+    <!--<div class="fehler"></div> -->
     <div class="login page jumbotron jumbotron-fluid">
         <div class="container">
             <div class="failureMessage"></div>
-            <form>
+            <form id="loginForm">
                 <div class="row">
                     <div class="col margin">
                         <h2 class="margin" >Login</h2>
-                        <input type="email" id="email" class="form-control margin" placeholder="Username" autofocus required>
+                        <input type="email" id="email" class="form-control margin" placeholder="Mailadresse" autofocus required>
                         <input type="password" id="password" class="form-control margin" placeholder="Passwort" required>
                         <button id="login-button" type="button" class="btn btn-info margin-left" type="submit">Login</button>
                         <button id="register-button" type="button" class="btn btn-secondary float-right margin-right">Registrieren</button>
@@ -63,8 +63,8 @@
 
     <!-- registration container -->
     <div class="registration jumbotron jumbotron-fluid">
+        <div class="failureMessage"></div>
         <form class="container">
-            <div class="failureMessage"></div>
             <div class="fieldValidationMessage"></div>
             <div class="row">
                 <div class="col margin">
@@ -103,7 +103,7 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0"> <!-- Logout button verschwindet wenn toggled -->
                     <div>
-                        <button id="login-b" class="btn btn-secondary float-right" type="submit">Login / Registrierung</button>
+                        <button id="logreg" class="btn btn-secondary float-right" type="submit">Login / Registrierung</button>
                         <!-- <button id="logout-b" class="btn btn-secondary float-right" type="submit">Logout</button> -->
                     </div>
                 </form>
