@@ -198,9 +198,7 @@ $(function() {
 
         // ajax request with JWT
         var jwt = user.jsonWebToken;
-        var learningStateID = 3;
-        console.log("neue Abfrage für LSImage");
-
+        var learningStateID;
 
 
         // tests if jwt is available - not necessary here
@@ -211,7 +209,8 @@ $(function() {
             $("#logreg").text("Logout");
         }*/
 
-        $.ajax({
+       // setting picture for LearningState
+        /*$.ajax({
             method: 'GET',
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Accept", "application/json");
@@ -232,7 +231,7 @@ $(function() {
             error: function() {
                 console.log("LS error", arguments);
             }
-        });
+        });*/
 
 
       //  $(".ls-icon").append($('<p>blablabla</p>'))
@@ -291,7 +290,7 @@ $(function() {
                                                 })
                                                 .append($('<div class="ls-icon" style="width: 18rem;"/>')
                                                    // .append($('<img src="img/icon_3.jpg"/>')
-                                                        .append($('<p>noch nicht</p>'))
+                                                        .append($('<p>Noch kein Lernstatus festgelegt</p>'))
                                                     ).append($('<h3/>').text("Kurs: "+ element.topic.course.courseName))
                                                 .append($('<h5/>').text("Thema: "+element.topic.topicName))
                                                 .append($('<p/>',
@@ -318,7 +317,14 @@ $(function() {
                                                     .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>')
                                                         .click(function() {
                                                             console.log("Clicked on left button of question", element.questionID, "element: ", this);
-                                                            
+                                                            learningStateID = 1;
+
+                                                            var clickedID = "question-box"+element.questionID; // e.g. question-box1
+
+                                                            console.log("clickedID: "+clickedID);
+
+                                                            fetchLSImage(learningStateID, element.questionID, clickedID, jwt);
+
                                                         })
                                                     )
                                                     .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>').click(function() {
@@ -347,6 +353,51 @@ $(function() {
             } // end success function
         })// ende ajax
     } // end function renderQuestions
+
+
+function fetchLSImage(learningStateID, questionID, clickedID, jwt) {
+
+    //this.questionID = questionID;
+
+    $.ajax({
+        method: 'GET',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+        },
+
+        url: host + "/state/"+ learningStateID + "/image",
+        dataType: 'binary',
+        headers: {"accept": "image/jpeg"},
+        success: function (data) {
+            console.log("Learning State");
+            console.log("data "+data);
+            var image = data;
+
+            var imgContainer = "#"+clickedID+""; // e. g. "#question-box1"
+            console.log("imgContainer wäre hier \"#question-box1\": "+imgContainer);
+
+
+            //$("#question-box1").find('.ls-icon').html($('<p>anderer Text</p>')); // funktioniert
+            $("imgContainer").find('.ls-icon').html($('<p>anderer Text</p>')); // funktioniert nicht
+
+            // NICHT weglöschen!!! $('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
+
+/*            $('<div/>',
+                {
+                    id: "question-box"+questionID
+               // }).find('.ls-icon').replaceWith($("<img>", {src: window.URL.createObjectURL(image)}));
+                }).find('.ls-icon').html($('<p>anderer Text</p>'));*/
+
+            console.log("questionID ist "+ questionID);
+        },
+        error: function() {
+            console.log("LS error", arguments);
+        }
+    });
+}
+
 
 
     // TOPICS
