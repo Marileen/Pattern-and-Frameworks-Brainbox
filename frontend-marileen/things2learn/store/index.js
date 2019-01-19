@@ -2,6 +2,7 @@
 import {supportsCrypto, hash, encode64} from '../utils/hashing.js'
 
 export const state = () => ({
+  counter : 0,
   courses : [],
   topics : [],
   questions : [],
@@ -31,7 +32,6 @@ export const mutations = {
   },
   setUser (state, user) {
     state.user = user;
-    console.log('set user: ', user);
   }
 }
 
@@ -43,6 +43,8 @@ export const actions = {
 
     var hashedPassword = null;
 
+    // todo Kommentar dass mir bewusst ist dass es hier krachen kann
+    // todo um pw schutz einzubauen, was anderes machen
     if ( supportsCrypto() ) {
       console.log('encrypt pw');
       hashedPassword = await hash('SHA-256', password);

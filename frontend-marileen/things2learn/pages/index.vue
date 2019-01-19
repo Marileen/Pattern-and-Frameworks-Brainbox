@@ -40,7 +40,7 @@ export default {
 
   //just for testing the Store
   fetch({ store }) {
-    store.commit('increment')
+    //store.commit('increment')
   },
 
   //just for testing the Store

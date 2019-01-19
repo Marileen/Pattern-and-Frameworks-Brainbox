@@ -3,7 +3,7 @@
   <section class="">
 
       <div class="component" data-component="courses">
-        <a :href="isLoggedIn ? `kurs/${course.courseName}` : '/register'" data-atom="card" v-for="course in $store.state.courses" :key="course.courseName">
+        <a :href="isLoggedIn ? `kurs/${course.courseName}` :  `register`" data-atom="card" v-for="course in $store.state.courses" :key="course.courseName">
           <span>{{ course.courseName }}</span>
         </a>
       </div>
@@ -32,6 +32,7 @@
     },
 
     watch : {
+
       user (newUser, oldUser) {
         //this.handleSlideChange();
         this.isLoggedIn = newUser.isLoggedIn;
