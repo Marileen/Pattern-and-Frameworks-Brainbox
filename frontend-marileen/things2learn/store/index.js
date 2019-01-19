@@ -213,7 +213,7 @@ export const actions = {
 
       if (response.ok) {
 
-        console.log('this: ', this);
+        console.log('this courses: ', this);
         commit('setCourses', await response.json());
 
 
