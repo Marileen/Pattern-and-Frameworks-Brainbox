@@ -30,6 +30,11 @@
 
 <script type="application/javascript">
 
+  /*
+   * The default layout handles the user login and logout
+   *
+   */
+
   import { mapState } from 'vuex';
 
   export default {
@@ -56,7 +61,7 @@
       }
     },
     mounted() {
-      //user state aus session holen, falls user eingeloggt ist
+      //get user state from session, since user can stay logged in
       if (window.sessionStorage.getItem("user") != null) {
         this.$store.commit( 'setUser', JSON.parse(window.sessionStorage.getItem("user")) );
       }

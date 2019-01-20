@@ -6,16 +6,19 @@
         <nuxt-link :to="isLoggedIn ? `kurs/${course.courseName}` :  `register`" data-atom="card" v-for="course in $store.state.courses" :key="course.courseName">
           <span>{{ course.courseName }}</span>
         </nuxt-link>
-
-        <!--<a :href="isLoggedIn ? `kurs/${course.courseName}` :  `register`" data-atom="card" v-for="course in $store.state.courses" :key="course.courseName">-->
-          <!--<span>{{ course.courseName }}</span>-->
-        <!--</a>-->
       </div>
 
   </section>
 </template>
 
 <script type="application/javascript">
+
+  /*
+   * The Courses Component fetches the Courses via Store
+   * and iterates over them to display the courses.
+   * A link for each Course is set in condition of logged in user, if not logged in it leads to registration page
+   *
+   */
 
 
   import { mapState } from 'vuex'

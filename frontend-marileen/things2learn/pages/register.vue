@@ -60,13 +60,17 @@
 
 <script>
 
-import Courses from '~/components/Courses.vue'
+  /*
+ * The register page handles the registration of new user
+ * After successfully registration user is logged in and will be stored in session storage
+ *
+ * todo: fetch request should be removed from here in the future
+ *
+ */
+
 import {supportsCrypto, hash, encode64} from '../utils/hashing.js'
 
 export default {
-  components: {
-    Courses
-  },
 
   data () {
     return {

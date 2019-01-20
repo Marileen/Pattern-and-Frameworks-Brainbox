@@ -2,23 +2,13 @@
 
   <section class="container">
 
-    <!--<div class="row">-->
-      <!--<div class="col-4 test">test bootstrap col</div>-->
-    <!--</div>-->
     <div>
-      <!--<logo/>-->
       <h1 class="title">
         things2learn
       </h1>
       <h2 class="subtitle">
         Lernapp
       </h2>
-
-      <!--<div class="store-test">Store State Counter: {{ $store.state.counter }}  </div>-->
-
-      <!--<button @click="$store.commit('increment')">-->
-        <!--{{ $store.state.counter }}-->
-      <!--</button><br>-->
 
       <Courses></Courses>
 
@@ -27,6 +17,14 @@
 </template>
 
 <script>
+
+  /*
+   * The index page is the starting point
+   * Available Courses will be listed
+   *
+   * @Components: Courses
+   */
+
 import Logo from '~/components/Logo.vue'
 import Courses from '~/components/Courses.vue'
 
@@ -34,20 +32,8 @@ import { mapState } from 'vuex'
 
 export default {
   components: {
-    Logo,
     Courses
   },
-
-  //just for testing the Store
-  fetch({ store }) {
-    //store.commit('increment')
-  },
-
-  //just for testing the Store
-  computed: mapState([
-    'counter'
-  ]),
-
 
 }
 </script>
