@@ -13,8 +13,12 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * Questions endpoint (REST API)
+ *
+ */
 
-@Path("/questions")    // ist dann unter der url im Browser aufrufbar
+@Path("/questions")    
 public class QuestionsResource {
 
     QuestionService questionService = new QuestionService();
@@ -24,14 +28,15 @@ public class QuestionsResource {
 
     @GET
     @JwtFilter.JwtNeeded
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Question> getQuestions() {
         return questionService.queryAll();
     }
 
+    
     @GET
     @JwtFilter.JwtNeeded
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON})
     //@Path("course/{coursename}")
     @Path("/{coursename}")
     public List<Question> getCourseQuestions(@PathParam("coursename") String coursename) {
@@ -41,7 +46,7 @@ public class QuestionsResource {
 
     @GET
     // @JwtFilter.JwtNeeded
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON})
     //@Path("course/{coursename}/topic/{topicname}")
     @Path("/{coursename}/{topicname}")
     public List<Question> getTopicQuestions(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {
@@ -52,8 +57,8 @@ public class QuestionsResource {
     @POST
     @JwtFilter.JwtNeeded
     @AdminOnlyFilter.AdminOnly
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Response postQuestion(Question question, @Context UriInfo uriInfo) {
 
         // Question is persisted with a new generated id,

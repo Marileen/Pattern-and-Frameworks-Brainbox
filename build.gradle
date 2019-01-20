@@ -29,8 +29,11 @@ dependencies {
     compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.9.7'
     // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
     compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '6.3'
+    // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl
     compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.1.2'
 
+
+    // logging framework which sends error messages to the console
     runtime 'org.apache.logging.log4j:log4j-api:2.11.1'
     runtime 'org.apache.logging.log4j:log4j-core:2.11.1'
     compile 'org.slf4j:slf4j-api:1.7.25'

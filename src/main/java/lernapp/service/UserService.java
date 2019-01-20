@@ -12,6 +12,13 @@ public class UserService extends BasicService<User> {
         super(User.class);
     }
 
+    /**
+     * Query a User by his credentials
+     *
+     * @param email, password
+     * @return User
+     *
+     */
     public User queryByCredentials (String email, String password) {
 
         try {
@@ -27,7 +34,5 @@ public class UserService extends BasicService<User> {
             return null;
         }
     }
-
-
 }
 

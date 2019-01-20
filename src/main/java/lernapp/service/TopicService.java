@@ -19,6 +19,7 @@ public class TopicService extends BasicService<Topic> {
     /**
      * Query Topics that belongs to a specific Course
      *
+     * @param courseName
      * @return List<Topic>
      *
      */
@@ -36,8 +37,9 @@ public class TopicService extends BasicService<Topic> {
     }
 
     /**
-     * Query a Topic by name
+     * Query a Topic by topicname
      *
+     * @param topicname
      * @return Topic
      *
      */
@@ -47,7 +49,6 @@ public class TopicService extends BasicService<Topic> {
 
         String queryString = "FROM " +  Topic.class.getName() + " WHERE topicName =:name";
 
-        // an dieser Stelle kann es eine Exception geben todo: abfangen
         TypedQuery<Topic> query = em.createQuery(queryString, Topic.class);
         query.setParameter( "name", topicname );
 

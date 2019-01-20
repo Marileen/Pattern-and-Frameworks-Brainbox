@@ -13,7 +13,7 @@ public class CourseService extends BasicService<Course> {
 
     /**
      * Query a Course by name
-     *
+     * @param courseName
      * @return Course
      *
      */
@@ -23,7 +23,7 @@ public class CourseService extends BasicService<Course> {
 
         String queryString = "FROM " +  Course.class.getName() + " WHERE courseName =:cName";
 
-        // an dieser Stelle kann es eine Exception geben todo: abfangen
+        // no try... catch here in order to keep genuine error message
         TypedQuery<Course> query = em.createQuery(queryString, Course.class);
         query.setParameter( "cName", courseName );
 
@@ -31,6 +31,5 @@ public class CourseService extends BasicService<Course> {
         em.close();
         return singleResult;
     }
-
 }
 

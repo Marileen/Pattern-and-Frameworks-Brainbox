@@ -7,15 +7,20 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
 
-// ist dann unter der url im Browser aufzurufen localhost:8050/courses
+/**
+ * Courses endpoint (REST API)
+ *
+ */
+
 @Path("/courses")
 public class CoursesResource {
 
     CourseService courseService = new CourseService();
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Course> getCourses() {
+        // calls method from CourseService which inherits this method from BasicService
         return courseService.queryAll();
     }
 
