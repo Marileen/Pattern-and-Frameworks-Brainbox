@@ -7,11 +7,25 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
+.btn {
+    text-align: left;
+}
+
+button.btn.btn-secondary.standard-button.ls3-button {
+    margin-right: 20px;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
 .card {
     width: 18rem;
     transition: all .2s ease-in-out;
     margin: 0px 2.5px 20px 2.5px;
+   /* text-decoration: none; */
 }
+
 
 #questionsAccordion.accordion .card {
     width: 100%;
