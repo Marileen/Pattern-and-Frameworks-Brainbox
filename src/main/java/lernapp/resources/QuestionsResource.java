@@ -13,8 +13,12 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * Questions endpoint (REST API)
+ *
+ */
 
-@Path("/questions")
+@Path("/questions")    
 public class QuestionsResource {
 
     QuestionService questionService = new QuestionService();
@@ -29,6 +33,7 @@ public class QuestionsResource {
         return questionService.queryAll();
     }
 
+    
     @GET
     @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON})
@@ -40,7 +45,9 @@ public class QuestionsResource {
     }
 
     @GET
+    // @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON})
+    //@Path("course/{coursename}/topic/{topicname}")
     @Path("/{coursename}/{topicname}")
     public List<Question> getTopicQuestions(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {
         List list = questionService.queryTopicQuestions(coursename, topicname);

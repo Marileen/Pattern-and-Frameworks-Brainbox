@@ -24,7 +24,7 @@ import java.util.List;
 
 public class BasicService<T> {
 
-    //Hier benutzen wir das SINGLETON PATTERN - wirklich? ist das nicht Factory?
+    // Singleton & Factory Pattern
     public static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("mariadb-localhost");
 
     private Class<T> entityClass;
@@ -46,10 +46,10 @@ public class BasicService<T> {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
 
-        //Kopie von object wird gespeichert (insert/update)
-        //T result = em.merge(entity);
+        // merge: create copy from object for insert / update to the database
+        // T result = em.merge(entity);
 
-        //Das Objekt selbst wird gespeichert (create)
+        // object itself will be saved (created) in the database incl. all changes of the object until commit
         em.persist(entity);
 
         em.getTransaction().commit();
@@ -60,7 +60,7 @@ public class BasicService<T> {
 
         /**
          * Generic Method for saving A LIST OF ENTITIES of any types of Entities
-         * The Entity will be persisted to the database (not merged)
+         * The Entities will be persisted to the database (not merged)
          *
          * @param  entities the Entity-List
          * @return entity
@@ -71,10 +71,6 @@ public class BasicService<T> {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
 
-        //Kopie von object wird gespeichert (insert/update)
-        //T result = em.merge(entity);
-
-        //Das Objekt selbst wird gespeichert (create)
         for (T item : entities) {
             em.persist(item);
         }
@@ -94,7 +90,7 @@ public class BasicService<T> {
      */
     public List<T> queryAll () {
 
-        EntityManager em = EMF.createEntityManager(); //SELECT t FROM [tablename] as t
+        EntityManager em = EMF.createEntityManager();
         String queryString = "FROM " + entityClass.getName();
         TypedQuery<T> query = em.createQuery(queryString, entityClass);
 
@@ -102,11 +98,23 @@ public class BasicService<T> {
     }
 
 
-    // Query an entity by id
+    /**
+     * Generic Method to query an entity by id
+     *
+     * @param id
+     * @return entity
+     *
+     */
     public T queryById(Long id) {
         return EMF.createEntityManager().find(entityClass, id);
     }
 
+    /**
+     * Generic Method to delete an entity by id
+     *
+     * @param id
+     *
+     */
     // Delete entity by id
     public void deleteById(Long id) {
         EntityManager em = EMF.createEntityManager();

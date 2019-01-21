@@ -13,14 +13,27 @@ public class LearningStateService extends BasicService<LearningState> {
         super(LearningState.class);
     }
 
-    // Query all entities
+    /**
+     * Query all LearningStates
+     * @return List<LearningState>
+     *
+     */
     public List<LearningState> queryAll() {
         String queryString = "SELECT t FROM " + LearningState.class.getName() + " t";
-        TypedQuery<LearningState> query = EMF.createEntityManager().createQuery(queryString, LearningState.class);
-        // müssen wir hier noch die DB-Verbindung schliessen, vgl. em.close();
-        return query.getResultList();
+        EntityManager em = EMF.createEntityManager();
+        TypedQuery<LearningState> query = em.createQuery(queryString, LearningState.class);
+
+        List<LearningState> lsList = query.getResultList();
+        em.close();
+        return lsList;
     }
 
+    /**
+     * save a LearningState for a certain user and a certain question
+     * @param UserQuestionLS
+     * @return UserQuestionLS
+     *
+     */
     public UserQuestionLS save(UserQuestionLS entity) {
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
@@ -30,43 +43,29 @@ public class LearningStateService extends BasicService<LearningState> {
         return result;
     }
 
-    /* zeigt alle Questions mit bestimmtem LS, z. B. "kann ich"
-    -> Funktion braucht als Parameter: den eingeloggten Benutzer und den gewünschten LS -> return: alle Fragen
-
-
-    public Question getMarkedQuestion(User userID, LearningState learningStateID){
-        EntityManager em = EMF.createEntityManager();
-        em.getTransaction().begin();
-
-        Question resultSet = em.find(userID, learningStateID);
-
-        em.getTransaction().commit();
-        em.close();
-        return resultSet;
-    }
+    /**
+     * queries LearningState for a certain question
+     * @param User, Question
+     * @return LearningState
+     *
      */
-
-   /* zeigt LS zu einer bestimmten Frage an -> Parameter: eingeloggter Benutzer + betreffende Frage -> return: LS
-
-    */
     public LearningState queryLearningState(User user, Question question) {
         EntityManager em = EMF.createEntityManager();
 
-//        SELECT * FROM learningState st
-//        JOIN userQuestionLs uqls
-//        ON uqls.learningState_learningStateID = st.learningStateID
-//        WHERE uqls.user_email = "marileen.stamer@stud.fh-luebeck.de"
-//        AND uqls.`question_questionID` = 11 #AND uqls.user = :user"
-
         String queryString = "SELECT st FROM learningState st JOIN "+ UserQuestionLS.class.getName() + " uqls ON uqls.learningState = st WHERE uqls.question = :question AND uqls.user = :user";
 
-        //String queryString = "SELECT q FROM question q JOIN topic t ON t.course = :course WHERE q.topic = t";
         TypedQuery<LearningState> query = em.createQuery(queryString, LearningState.class);
         query.setParameter("user", user ).setParameter("question", question);
 
         return query.getSingleResult();
     }
 
+    /**
+     * queries a list of questions for a certain user ID and a certain LearningState ID
+     * @param userId, lsId
+     * @return List<Question>
+     *
+     */
     public List<Question> queryQuestionsForLearningStateAndUser(Long userId, Long lsId) {
 
         UserService userService = new UserService();

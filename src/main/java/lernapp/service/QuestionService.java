@@ -16,8 +16,9 @@ public class QuestionService extends BasicService<Question> {
     TopicService topicService = new TopicService();
 
     /**
-     * Query Questions by a given Course
+     * Query Questions by a given courseName
      *
+     * @param coursename
      * @return List<Question>
      *
      */
@@ -36,8 +37,9 @@ public class QuestionService extends BasicService<Question> {
     }
 
     /**
-     * Query Questions by a given course and topic
+     * Query Questions by a given coursename and topicname
      *
+     * @param coursename, topicname
      * @return List<Question>
      *
      */
@@ -58,8 +60,9 @@ public class QuestionService extends BasicService<Question> {
 
 
     /**
-     * Query Questions for user State
+     * Query alle Questions that are marked with the same LearningState for a certain user
      *
+     * @param state, user
      * @return List<Question>
      *
      */

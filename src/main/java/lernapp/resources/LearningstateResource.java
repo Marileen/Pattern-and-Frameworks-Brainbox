@@ -14,6 +14,11 @@ import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.List;
 
+/**
+ * Learningstate endpoint (REST API)
+ *
+ */
+
 @Path("/state")
 public class LearningstateResource {
 
@@ -25,23 +30,20 @@ public class LearningstateResource {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<LearningState> getCourses() {
         return lsService.queryAll();
     }
 
-    /*
-     *
-     * Bild zu einem LearningState
-     */
+
     @GET
     @Path("{stateId}/image")
     public Response getLSImage(@PathParam("stateId") Long stateId) {
 
         LearningState ls = lsService.queryById(stateId);
 
-        //InputStream image = LearningstateResource.class.getResourceAsStream("/media/Icon_Dartscheibe.jpg");
         InputStream image = LearningstateResource.class.getResourceAsStream("/media/" + ls.getImageUrl());
+        // delivering an image type jpeg
         return Response.ok(image, new MediaType("image", "jpeg")).build();
     }
 
