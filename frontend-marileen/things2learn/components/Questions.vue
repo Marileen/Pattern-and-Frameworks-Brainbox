@@ -6,7 +6,7 @@
 
             <div class="learningstate">
 
-              <Learningstates v-bind:question="question" v-bind:learning-states="learningStates" v-on:newLearningstate="updateLearningstate"></Learningstates>
+              <Learningstates :question="question" :learning-states="learningStates" v-on:newLearningstate="updateLearningstate"></Learningstates>
 
               <figure v-if="question.learningState">
                 <p>Du beherrscht diese Frage {{ question.learningState.stateName | lower }}</p>

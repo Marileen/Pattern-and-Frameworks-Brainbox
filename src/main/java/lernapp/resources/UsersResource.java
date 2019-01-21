@@ -37,8 +37,8 @@ public class UsersResource {
 
     @Path("login")
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
     public Response login(User user) {
         // mit queryByCr... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
         User loggedInUser = userService.queryByCredentials(user.getEmail(), user.getPassword());
@@ -65,7 +65,6 @@ public class UsersResource {
                 return Response.ok().entity(loggedInUser).build();
 
             } catch (Exception e) {
-                //todo bessere Rückmeldung liefern
                 e.printStackTrace();
                 return Response.status(500, e.getMessage()).build();
             }
@@ -78,10 +77,9 @@ public class UsersResource {
 
     @Path("register")
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
     public Response register(User user) {
-        // TODO: nutzer versucht sich nochmal zu registrieren -> Exception abfangen
 
         if ( isNullOrEmpty(user.getEmail()) ) {
             //zurückgeben dass email nicht leer sein darf
