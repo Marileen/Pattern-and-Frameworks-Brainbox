@@ -7,7 +7,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
 
-@Path("/topics")    // ist dann unter der url im Browser aufrufbar
+/**
+ * Topics endpoint (REST API)
+ *
+ */
+
+@Path("/topics")
 public class TopicsResource {
 
     TopicService topicService = new TopicService();
@@ -15,18 +20,17 @@ public class TopicsResource {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Topic> getTopics() {
         return topicService.queryAll();
     }
 
-    // Beispiel URL: http://localhost:8050/topics/Computergrafik
+
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("/{coursename}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/{coursename}") // fetches topics for a certain course e. g. /topics/Computergrafik
     public List<Topic> getCourseTopics(@PathParam("coursename") String coursename) {
         List list = topicService.queryCourseTopics(coursename);
         return list;
     }
-
 }

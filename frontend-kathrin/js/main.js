@@ -1,6 +1,14 @@
+/**
+ *
+ * This file includes the main frontend jQuery code
+ *
+ * @author Kathrin Koehler <kathrin.koehler@stud.th-luebeck.de>
+ *
+ */
+
 $(function() {
 
-    console.log("INIT");
+    // console.log("INIT");
 
     var host = "http://localhost:8050";
     var user = {};
@@ -128,23 +136,6 @@ $(function() {
 
     // QUESTIONS
 
-    /*FUNKTIONIERT NOCH NICHT
-    // fetches questions for a certain course
-    function fetchQuestions (questionBox, courseName) {
-        $.ajax({
-            type: 'GET',
-            url: host + "/questions/" +courseName,
-            success: function (data) {
-
-                $.each(data, function (index, element) {
-                    console.log("fragen: " + element.question);
-                    questionBox.find('.question-body').append($('<p/>').text(element.topicName));
-                    // window.alert(element.topicName);
-                });
-            }
-        });
-    } // end fetchQUestions */
-
     // QUESTIONS PAGE
     // Rendering questions
     function renderQuestions() {
@@ -185,15 +176,13 @@ $(function() {
                 $.each(data, function (index, element) {
                     console.log("each "+element.questionID);
 
-
                     var questionBox = // Aequivalent zu courseCard
                         $('<div class="row" id="testQuestions"/>').append($('<div class="col accordion" id="questionsAccordion"/>') // end div #accordionExample
                                 .append($('<div class="card"/>')
                                     .append(
                                         $('<div/>',
                                         {
-                                            id: "question-box"+element.questionID, // bootstrap: headingOne
-
+                                            id: "question-box"+element.questionID,
                                             class: "card-header"
                                         })
                                         .append($('<h2 class="mb-0"/>')
@@ -219,7 +208,8 @@ $(function() {
                                                     })
                                                     .html(element.question)
                                                 ))
-                                            ) // end button                                        ) // end append h2
+                                            ) // end button
+                                              ) // end append h2
                                     )) // end div card-header
                                     .append($('<div/>',
                                         {
@@ -241,10 +231,9 @@ $(function() {
 
                                                             var clickedID = "question-box"+element.questionID; // question-box1
 
-                                                            console.log("clickedID: "+clickedID);
+                                                            // console.log("clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
-
                                                         })
                                                     )
                                                     .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>')
@@ -254,30 +243,28 @@ $(function() {
 
                                                             var clickedID = "question-box"+element.questionID; // question-box2
 
-                                                            console.log("clickedID: "+clickedID);
+                                                            // console.log("clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
-
                                                     }))
                                                     .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>')
                                                         .click(function() {
-                                                            console.log("Clicked on right button of question", element.questionID, "element: ", this);
+                                                            // console.log("Clicked on right button of question", element.questionID, "element: ", this);
                                                             learningStateID = 3;
 
                                                             var clickedID = "question-box"+element.questionID; // question-box3
 
-                                                            console.log("clickedID: "+clickedID);
+                                                            // console.log("clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
-
                                                      }))
                                                 )
 
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
                                     ) // end append collapseOne
                                      // end appends #question-box
-                                ) // end appends card
-                        ) // end appends accordion
+                               // ) // end appends card
+                        ); // end appends accordion
 
                     testQuestionsElement.append(questionBox);
 
@@ -316,7 +303,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         error: function() {
             console.log("LS error", arguments);
         }
-    });
+    })
 } // end fetchLSImage
 
 
@@ -326,8 +313,6 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         $(".login").hide();
         $(".registration").fadeTo(400, 1);
         $(".main").hide();
-
-
     });
 
 
@@ -342,10 +327,9 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
     // Login
     $('#login-button').click( function() {
 
-       // var json = {"name": $('#username').val(), "password": b64_sha256($('#password').val())+"="};
         var json = {
             "email": $('#email').val(),
-            "password": b64_sha256($('#password').val())+"="   // gehashed mit b64_sha256
+            "password": b64_sha256($('#password').val())+"="
             // "password": $('#password').val()
         };
         var pwVal = $('#password').val();
@@ -365,7 +349,6 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
 
         }else{
             console.log("das ist das json mit den Benutzernamen: "+ JSON.stringify(json));
-
 
             $.ajax({
                 url: host + "/user/login",
@@ -389,11 +372,10 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
                   console.log("login error", arguments);
                   $('.login page').hide();
 
-
                   var message = warning+ "Login fehlgeschlagen."+ '</div>';
                   loginFailureMessage(message);
                 }
-            }); // end ajax request
+            }) // end ajax request
         }
     });
 
@@ -446,9 +428,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
             "password" : pw
         };
 
-        // ToDo: Felder validieren wie bei Login
-
-        console.log("das ist das json mit dem Benutzernamen: "+ JSON.stringify(regJson));
+        // console.log("das ist das json mit dem Benutzernamen: "+ JSON.stringify(regJson));
 
         $.ajax({
             url: host + "/user/register",
@@ -457,8 +437,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
             data: JSON.stringify(regJson),
             contentType: "application/json",
             success: function(data) {
-                // ToDo: warum funktioniert das hier nicht?
-                console.log("Registrierung erfolgreich");
+
                 if (typeof data == 'undefined') {
                     $('.registration .failureMessage').html("Registrierung fehlgeschlagen!");
                     return;
@@ -466,17 +445,15 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
                 user = data;
                 var jwt = user.jsonWebToken;
                 console.log("Das JWT dieses Users lautet: "+jwt);
-                //window.alert(("Sie haben sich erfolgreich registriert."))
+
                 registrationSuccessful();
             },
             error: function() {
                 console.log("registration error", arguments);
-               // $('.registration .failureMessage').show().html("Registrierung fehlgeschlagen!");
                 var message = '<div class="alert alert-warning" role="alert">'+ "Registrierung fehlgeschlagen."+ '</div>';
                 registrationFailureMessage(message);
             }
-        });
-
+        }) // end ajax
     });
 
     /* noch irgendwo einbauen?
@@ -488,9 +465,9 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
     //
     $(".card").hover( function (e) {
         $(this).toggleClass('card', e.type === 'mouseenter');
-    });
+    })
 
-}); // Ende jQuery
+});// Ende jQuery
 
 
 

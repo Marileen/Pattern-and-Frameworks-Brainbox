@@ -20,6 +20,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * LearningState endpoint for a certain user (REST API)
+ *
+ */
+
 @Path("/user/{userId}/state")
 public class UserLearningstateResource {
 
@@ -30,74 +35,53 @@ public class UserLearningstateResource {
     public UserLearningstateResource() {
     }
 
-    /*
-     *
-     * Fragen zu einem bestimmten LearningState eines Users - todo: umlagern in QuestionResource
-     */
-    @JwtFilter.JwtNeeded
-    @GET
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Path("/{stateId}")
-    public List<Question> getMarkedQuestions (@PathParam("userId") Long userId, @PathParam("stateId") Long stateId ) {
 
-        //todo: gucken ob der eingeloggte user auch der ist, für den die Fragen geholt werden
-        return lsService.queryQuestionsForLearningStateAndUser(userId, stateId);
-
-    }
-
-    /*
-     *
-     * Learningstate zu einem User und einer Question abrufen
-     */
+    // fetches LearningState for a certain User and a certain Question
     @JwtFilter.JwtNeeded
     @Path("/question/{questionId}")
     @GET
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response getLS (@PathParam("userId") Long userId, @PathParam("questionId") Long qId) {
 
-        //Object that we want to return when found
+        // Object that we want to return when found
         LearningState learningState;
 
         try {
-
             Question question = questionService.queryById(qId);
             User user = userService.queryById(userId);
 
-            //schauen, ob es einen state zu der Frage und dem user gibt
+            // checks if there is a LearningState for this question and this user
             try {
                 learningState = lsService.queryLearningState(user, question);
                 return Response.ok().entity(learningState).build();
             } catch (Exception e) {
-                //no content
+                // returns status code 204 - no content
                 return Response.status(204, "No State found for User and Question").build();
             }
 
         } catch (Exception e) {
+            // returns status code 400
             return Response.status(400, "Requested User or Question not found").build();
         }
     }
 
 
-    /*
-     *
-     * Setzen eines Status für User und Question
-     */
+    // sets a LearningState for a certain user an a certain question
     @JwtFilter.JwtNeeded
     @Path("set")
     @POST
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
     public Response setLS (String userQuestionLS, @Context UriInfo uriInfo) {
 
-
-        //parse JSON with Jackson
+        // parse JSON with Jackson
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode;
 
         Question questionRef;
         User loggedInUser;
 
-        //read JSON like DOM Parser
+        // read JSON like DOM Parser
         try {
             rootNode = objectMapper.readTree(userQuestionLS);
         } catch (IOException e) {

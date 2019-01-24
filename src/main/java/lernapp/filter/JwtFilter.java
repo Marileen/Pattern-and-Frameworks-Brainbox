@@ -50,6 +50,7 @@ public class JwtFilter implements ContainerRequestFilter {
             }
 
             // Extract the token from the HTTP Authorization header
+            // trim: returns a copy of the string, with leading and trailing whitespace omitted
             String jsonWebToken = authorizationHeader.substring("Bearer".length()).trim();
 
             if (jsonWebToken != null) {

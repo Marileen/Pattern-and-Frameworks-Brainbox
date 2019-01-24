@@ -20,13 +20,13 @@ public class Topic {
     private String topicDescription;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "topic" )
+    @OneToMany(mappedBy = "topic")
     private Set<Question> question;
 
     // various topics belong to one single course
     // course is foreign key
     // @JsonIgnore
-    @ManyToOne (fetch = FetchType.EAGER)  // EAGER is default, alternative would be LAZY
+    @ManyToOne // (fetch = FetchType.EAGER)  // EAGER is default, alternative would be LAZY
     @JoinColumn(nullable = false)
     private Course course;
 

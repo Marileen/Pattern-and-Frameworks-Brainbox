@@ -36,6 +36,5 @@ public class UserQuestionLS {
         this.question = question;
         this.learningState = learningState;
     }
-
 }
 
