@@ -71,6 +71,7 @@
       // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
       questions (newq, old) {
         this.handleSlideChange();
+        this.showLSImage();
       }
 
     },
@@ -85,7 +86,6 @@
     data()  {
       return {
         swiperOption: {
-          // some swiper options/callbacks
           pagination: {
             el: '.swiper-pagination',
             type: 'progressbar'
@@ -94,7 +94,6 @@
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
           },
-          //init: this.setTopic,
         },
 
         showAnswer : false,
@@ -107,14 +106,19 @@
         this.showAnswer = !this.showAnswer;
       },
 
+      showLSImage () {
+        //Bild für den Learningstate anhand der gerade angezeigten question abfragen
+        if (this.questions[this.swiper.activeIndex || 0].learningState) {               //sofern es einen LS gibt
+          this.setLearningStateImage(this.questions[this.swiper.activeIndex || 0].learningState.learningStateID);
+        }
+      },
+
       updateLearningstate (evt, data) {
 
         this.questions = data;
+        //since Learningstate may be changed, call the method that show the up-to-date image
+        this.showLSImage();
 
-        //Bild für den geänderten Learningstate abfragen
-        if (this.questions[this.swiper.activeIndex || 0].learningState) {
-          this.setLearningStateImage(this.questions[this.swiper.activeIndex || 0].learningState.learningStateID);
-        }
       },
 
       handleSlideChange() {
@@ -132,7 +136,6 @@
       async setLearningStateImage (lsId) {
 
         console.log('setLearningStateImage');
-        console.log(lsId);
         try {
           const response = await fetch('http://127.0.0.1:8050/state/' + lsId + '/image', {
             method: 'GET',
@@ -166,7 +169,6 @@
     },
 
     mounted (e) {
-      // todo: initital das active-topic setzen
       console.log('mounted:', this.questions[this.swiper.activeIndex]);
     }
 

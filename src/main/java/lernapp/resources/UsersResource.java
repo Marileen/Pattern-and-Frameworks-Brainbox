@@ -7,30 +7,29 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
+import lernapp.filter.AdminOnlyFilter;
 import lernapp.filter.JwtFilter;
 import lernapp.model.User;
-import lernapp.service.LearningStateService;
-import lernapp.service.QuestionService;
 import lernapp.service.UserService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/user")    // ist dann unter der url im Browser aufrufbar
+/**
+ * User endpoint (REST API)
+ *
+ */
+
+@Path("/user")
 public class UsersResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(UsersResource.class);
 
     UserService userService = new UserService();
-    QuestionService questionService = new QuestionService();
-    LearningStateService lsService = new LearningStateService();
 
     public UsersResource() {
     }
@@ -107,6 +106,20 @@ public class UsersResource {
                 return Response.status(409, "User with email already exists").build();
             }
             return Response.status(500, e.getMessage()).build();
+        }
+    }
+
+    @DELETE
+    @JwtFilter.JwtNeeded
+    @AdminOnlyFilter.AdminOnly      //only admin users are allowed to delete Users
+    @Path("/{id}")
+    public boolean deleteUser(@PathParam("id") Long id) {
+
+        try {
+            userService.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
