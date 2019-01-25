@@ -1,7 +1,5 @@
 package lernapp.service;
 
-import lernapp.model.*;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -117,10 +115,13 @@ public class BasicService<T> {
      */
     // Delete entity by id
     public void deleteById(Long id) {
+
         EntityManager em = EMF.createEntityManager();
         em.getTransaction().begin();
-        Question result = em.find(Question.class, id);
+
+        T result = em.find(entityClass, id);
         if (result != null) em.remove(result);
+
         em.getTransaction().commit();
         em.close();
     }
