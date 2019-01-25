@@ -48,13 +48,11 @@ public class TopicsResource {
     public Response postTopic(Topic topic, @Context UriInfo uriInfo) {
 
         try {
-
-            // Topic is persisted with a new generated id,
-            // The Topic entity is returned in the response location URI
+            // Topic is persisted with a new generated id, which is returned in the response location URI
             topicService.save(topic);
             URI uri = uriInfo.getAbsolutePathBuilder().path(topic.toString()).build();
 
-            return Response.created(uri).entity(topic).build(); // 201
+            return Response.created(uri).entity(topic).build(); // / produces status code 201
 
         } catch (Exception e) {
             return Response.status(500, e.getMessage()).build();

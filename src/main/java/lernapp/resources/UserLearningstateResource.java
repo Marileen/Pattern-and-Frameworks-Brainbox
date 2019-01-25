@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.net.URI;
+import java.lang.*;
 import java.util.List;
 
 /**
@@ -81,51 +82,51 @@ public class UserLearningstateResource {
         Question questionRef;
         User loggedInUser;
 
-        // read JSON like DOM Parser
-        try {
-            rootNode = objectMapper.readTree(userQuestionLS);
+        try { // checks if JSON is valid JSON
+            rootNode = objectMapper.readTree(userQuestionLS); // read JSON like DOM Parser
         } catch (IOException e) {
             return Response.status(400, "invalid json").build();
         }
 
-        try {
+        try { // checks if the key "question" exists in JSON
             JsonNode questionNode = rootNode.path("question");
-            // exception hier wenn key question nicht im json
             Question questionFromJson = objectMapper.treeToValue(questionNode, Question.class);
             questionRef = questionService.queryById(questionFromJson.getQuestionID());
-
         } catch (Exception e) {
             return Response.status(400, "json must provide an object with key 'question' which matches a Question " +
                     "and has at least a questionID field").build();
         }
 
-        try {
-
+        try { // checks if the key "user" exists in JSON
             JsonNode userNode = rootNode.path("user");
-            // exeption hier wenn kein "user" im json
             User userFromJson = objectMapper.treeToValue(userNode, User.class);
-            //loggedInUser = userService.queryByCredentials(userFromJson.email, userFromJson.password);
             loggedInUser = userService.queryById(userFromJson.getUserID());
-
         } catch (Exception e) {
             return Response.status(400, "json must provide an object with key 'user' which matches a User " +
                     "and has at least a userID field").build();
         }
 
-        try {
-
+        try { // checks if the key "learningState" exists in JSON
             JsonNode lsNode = rootNode.path("learningState");
-            // exeption hier wenn kein "learningState" im json
             LearningState lsFromJson = objectMapper.treeToValue(lsNode, LearningState.class);
             LearningState lsRef = lsService.queryById(lsFromJson.getLearningStateID());
 
-
-            //save or update
+            // save or update new LearningState
             try {
                 lsService.save(new UserQuestionLS(loggedInUser, questionRef, lsRef));
 
+                // Response status depends on whether an insert or an update has been executed
+                /*if (lsRef == null) {
+                    URI uri = new URI(uriInfo, lsRef.getLearningStateID(), );
+                    return Response.created(uri).build(); // 201
+                } else {
+                    return Response.noContent().build(); // 204
+                }
+*/
+                //URI uri = uriInfo.getAbsolutePathBuilder().path(product.id.toString()).build();
                 URI uri = uriInfo.getAbsolutePathBuilder().path("test").build();
-                return Response.created(uri).build(); // 201
+                return Response.created(uri).build(); // produces status code 201
+
             } catch (Exception e) {
                 return Response.status(400, "ungültiger Wert in einem der Felder wurde übermittelt. Message: " + e.getCause().getCause()).build();
             }
@@ -134,5 +135,4 @@ public class UserLearningstateResource {
             return Response.status(400, "json must provide an object with key 'learningState' which matches a Learningstate").build();
         }
     }
-
 }
