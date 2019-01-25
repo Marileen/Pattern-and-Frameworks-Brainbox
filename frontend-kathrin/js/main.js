@@ -157,6 +157,7 @@ $(function() {
 
         // ajax request with JWT
         var jwt = user.jsonWebToken;
+        var userID = user.userID;
         var learningStateID;
 
 
@@ -230,10 +231,13 @@ $(function() {
                                                             learningStateID = 1;
 
                                                             var clickedID = "question-box"+element.questionID; // question-box1
-
+                                                            console.log("userID: "+userID);
                                                             // console.log("clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
+                                                            console.log("fetchLSImage geht noch");
+                                                            setLearningState(userID, element.questionID, learningStateID, jwt);
+
                                                         })
                                                     )
                                                     .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>')
@@ -246,6 +250,7 @@ $(function() {
                                                             // console.log("clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
+                                                            setLearningState(userID, element.questionID, learningStateID, jwt);
                                                     }))
                                                     .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>')
                                                         .click(function() {
@@ -257,6 +262,7 @@ $(function() {
                                                             // console.log("clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
+                                                            setLearningState(userID, element.questionID, learningStateID, jwt);
                                                      }))
                                                 )
 
@@ -305,6 +311,49 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         }
     })
 } // end fetchLSImage
+
+
+    // set LearningState
+    function setLearningState (userID, questionID, learningStateID, jwt) {
+        $(".failureMessage").hide();
+        console.log("setLearningState gestartet");
+
+        var setState = {
+            "user" : {
+                "userID" : userID
+            },
+            "question" : {
+                "questionID" : questionID
+            },
+            "learningState" : {
+                "learningStateID" : learningStateID
+            }
+        };
+
+        $.ajax({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+            },
+            // host + /user/1/state/set
+            url: host + "/user/"+ userID +"/state/set",
+            method: "POST",
+            crossDomain: true,
+            data: JSON.stringify(setState),
+            contentType: "application/json",
+            success: function(data) {
+
+                if (typeof data == 'undefined') {
+                    console.log("setLearningState fehlgeschlagen!");
+                    return;
+                }
+            },
+            error: function() {
+                console.log("setLearningState error", arguments);
+            }
+        }) // end ajax
+    }; // end setState
 
 
     // LOGIN AND REGISTRATION
@@ -461,6 +510,8 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         function(){$("#testQuestions").animate ({color: blue, opacity: 0.6}, 1000);},
         function () {$("#testQuestions").show("scale", {percent: 200, direction: 'vertical' }, 2000)}
     ); */
+
+
 
     //
     $(".card").hover( function (e) {
