@@ -313,7 +313,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
 } // end fetchLSImage
 
 
-    // set LearningState
+    // sets LearningState
     function setLearningState (userID, questionID, learningStateID, jwt) {
         $(".failureMessage").hide();
         console.log("setLearningState gestartet");
@@ -338,7 +338,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
             },
             // host + /user/1/state/set
             url: host + "/user/"+ userID +"/state/set",
-            method: "POST",
+            method: "PUT",
             crossDomain: true,
             data: JSON.stringify(setState),
             contentType: "application/json",
@@ -504,14 +504,6 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
             }
         }) // end ajax
     });
-
-    /* noch irgendwo einbauen?
-    $("#testQuestions").hover(
-        function(){$("#testQuestions").animate ({color: blue, opacity: 0.6}, 1000);},
-        function () {$("#testQuestions").show("scale", {percent: 200, direction: 'vertical' }, 2000)}
-    ); */
-
-
 
     //
     $(".card").hover( function (e) {

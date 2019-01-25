@@ -60,7 +60,7 @@ public class QuestionsResource {
     @Path("/user/{userId}/state/{stateId}") // fetches questions for a certain LearningState of a User
     public List<Question> getMarkedQuestions (@PathParam("userId") Long userId, @PathParam("stateId") Long stateId ) {
 
-        //todo: gucken ob der eingeloggte user auch der ist, für den die Fragen geholt werden
+        //todo: check, if logged in user requests questions for himself - or for another user
         return lsService.queryQuestionsForLearningStateAndUser(userId, stateId);
     }
 

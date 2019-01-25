@@ -69,7 +69,7 @@ public class UserLearningstateResource {
     // sets a LearningState for a certain user an a certain question
     @JwtFilter.JwtNeeded
     @Path("set")
-    @POST
+    @PUT
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     public Response setLS (String userQuestionLS, @Context UriInfo uriInfo) {
