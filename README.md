@@ -125,31 +125,9 @@ https://mvnrepository.com/
 
 ## Endpoints
 
-### GET
-
-**Jeweils alle Entitäten:**  
-http://127.0.0.1:8050/courses   
-http://127.0.0.1:8050/topics    
-http://127.0.0.1:8050/questions
-
-**Topics zu einen bestimmten Kurs**     
-http://127.0.0.1:8050/topics/DB
-
-**Fragen zu einem Kurs:**   
-http://127.0.0.1:8050/questions/BWL
-
-**Fragen zu einem Kurs und einem Topic:**       
-http://127.0.0.1:8050/questions/DB/Wissensfragen
-
-**Learningstate zu einem User und einer Question abrufen**
-http://127.0.0.1:8050/state/1/11   
-state/{userId}/{questionId}
-
-**get marked Questions for User and Learning State**
-http://127.0.0.1:8050/state/0/3    
-state/{userId}/{stateId}
-
 ### POST
+
+
 
 **User registrieren**
 http://127.0.0.1:8050/user/register
@@ -162,8 +140,6 @@ Beispiel:
   "password": "467"
 }
 
-**Setzen eines Status für User, Question und Status**
-http://127.0.0.1:8050/state/set
 
 **Fragen anlegen**  
 http://127.0.0.1:8050/questions
@@ -178,15 +154,3 @@ http://127.0.0.1:8050/questions
   }
 }
 </pre>
-
-
-### Überlegung zu weiteren Routen:
-
-* Fragen ändern
-* Fragen löschen
-
-* topic anlegen
-* topic ändern
-    
-* course anlegen
-* course ändern
