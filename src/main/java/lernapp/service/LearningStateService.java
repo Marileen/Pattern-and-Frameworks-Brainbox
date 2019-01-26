@@ -29,7 +29,7 @@ public class LearningStateService extends BasicService<LearningState> {
     }
 
     /**
-     * save a LearningState for a certain user and a certain question
+     * saves a LearningState for a certain user and a certain question
      * @param UserQuestionLS
      * @return UserQuestionLS
      *

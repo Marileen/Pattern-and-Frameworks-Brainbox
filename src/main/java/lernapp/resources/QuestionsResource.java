@@ -72,10 +72,9 @@ public class QuestionsResource {
     public Response postQuestion(Question question, @Context UriInfo uriInfo) {
 
         // Question is persisted with a new generated id,
-        // The Question entity is returned in the response location URI
         try {
             questionService.save(question);
-            URI uri = uriInfo.getAbsolutePathBuilder().path(question.toString()).build();
+            URI uri = uriInfo.getAbsolutePathBuilder().path( Long.toString( question.getQuestionID() ) ).build();
             return Response.created(uri).entity(question).build(); // produces status code 201
         } catch (Exception e) {
             return Response.status(500, e.getMessage()).build();

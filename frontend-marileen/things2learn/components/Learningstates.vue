@@ -48,7 +48,7 @@
 
         try {
           const response = await fetch('http://127.0.0.1:8050/user/' + JSON.parse(window.sessionStorage.getItem("user")).userID + '/state/set', {
-            method: 'POST',
+            method: 'PUT',
             mode: 'cors',
             headers: {
               'Authorization': 'Bearer ' + JSON.parse(window.sessionStorage.getItem("user")).jsonWebToken,

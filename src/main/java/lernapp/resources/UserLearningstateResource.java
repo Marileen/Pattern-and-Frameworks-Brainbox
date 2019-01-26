@@ -11,6 +11,7 @@ import lernapp.service.LearningStateService;
 import lernapp.service.QuestionService;
 import lernapp.service.UserService;
 
+import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -18,8 +19,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.net.URI;
-import java.lang.*;
-import java.util.List;
 
 /**
  * LearningState endpoint for a certain user (REST API)
@@ -52,13 +51,12 @@ public class UserLearningstateResource {
             User user = userService.queryById(userId);
 
             // checks if there is a LearningState for this question and this user
-            try {
-                learningState = lsService.queryLearningState(user, question);
-                return Response.ok().entity(learningState).build();
-            } catch (Exception e) {
-                // returns status code 204 - no content
-                return Response.status(204, "No State found for User and Question").build();
-            }
+            learningState = lsService.queryLearningState(user, question);
+            return Response.ok().entity(learningState).build();
+
+        }  catch (NoResultException e) {
+            // returns status code 404 - not found
+            return Response.status(404, "No State found for User and Question").build();
 
         } catch (Exception e) {
             // returns status code 400
@@ -67,7 +65,43 @@ public class UserLearningstateResource {
     }
 
 
-    // sets a LearningState for a certain user an a certain question
+    // sets LearningState for a certain user an a certain question:
+    @JwtFilter.JwtNeeded
+    @Path("/question/{questionId}")
+    @PUT
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response putLearningStage (LearningState learningState, @PathParam("userId") Long userId, @PathParam("questionId") Long qId, @Context UriInfo uriInfo) {
+
+        // save or update new LearningState for user and question
+        try {
+            Question question = questionService.queryById(qId);
+            User user = userService.queryById(userId);
+
+            //find Learningstate
+            LearningState lsRef = lsService.queryById(learningState.getLearningStateID());
+
+            UserQuestionLS uqls = new UserQuestionLS(user, question, lsRef);
+            lsService.save(uqls);
+
+            // Response status depends on whether an insert or an update has been executed
+            return Response.ok().entity(lsRef).build(); // produces status code 200
+
+
+        } catch (Exception e) {
+            return Response.status(500, e.getMessage()).build();
+        }
+    }
+
+
+
+    // OLD VERSION that sets a LearningState for a certain user an a certain question:
+
+    // We leave this here for now because it is already used in our frontend apps
+    // This is a Learning during the development of the concepts of the restful pinciple,
+    // that it is not about thinking of operations (set, get) but about thinking
+    // of objects (user and question that builds together an unique key)
+
     @JwtFilter.JwtNeeded
     @Path("set")
     @PUT
@@ -115,14 +149,6 @@ public class UserLearningstateResource {
             try {
                 lsService.save(new UserQuestionLS(loggedInUser, questionRef, lsRef));
 
-                // Response status depends on whether an insert or an update has been executed
-                /*if (lsRef == null) {
-                    URI uri = new URI(uriInfo, lsRef.getLearningStateID(), );
-                    return Response.created(uri).build(); // 201
-                } else {
-                    return Response.noContent().build(); // 204
-                }
-*/
                 //URI uri = uriInfo.getAbsolutePathBuilder().path(product.id.toString()).build();
                 URI uri = uriInfo.getAbsolutePathBuilder().path("test").build();
                 return Response.created(uri).build(); // produces status code 201
@@ -135,4 +161,5 @@ public class UserLearningstateResource {
             return Response.status(400, "json must provide an object with key 'learningState' which matches a Learningstate").build();
         }
     }
+
 }
