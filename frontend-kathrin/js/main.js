@@ -8,8 +8,6 @@
 
 $(function() {
 
-    // console.log("INIT");
-
     var host = "http://localhost:8050";
     var user = {};
 
@@ -32,17 +30,14 @@ $(function() {
     });
 
     // prevents reload of the page caused by the form elements default behaviour
-    $("form").submit(function(e) { // war vorher ohne das .login
+    $("form").submit(function(e) {
         console.log("form submit default behavior prevented by submit callback.");
         e.preventDefault(e);
     });
 
-
-    // LEARNING STATE
-
     renderCoursesMain();
 
-    // displays all questions through click on Alle Fragen button
+    // displays all questions by click on 'Alle Fragen' button
     $("#nav-questions").click(function () {
         if(jwt==null) {
             var message = warning+ "Um diese Inhalte zu sehen musst Du Dich erst einloggen."+ '</div>';
@@ -52,7 +47,6 @@ $(function() {
         }
         var jwt = user.jsonWebToken;
         renderQuestions();
-
     });
 
 
@@ -70,8 +64,7 @@ $(function() {
                 $.each(data, function (index, element) {
                     console.log(element, $("#courseID" + element.courseID));
 
-                    // hier wird die CourseCard zs.gebaut, die danach zs. mit dem Course in der
-                    // fetchTopics verwurstet wird
+                    // building the CourseCard which will be handed over to function showTopicsOnCard
                     var courseCard =
                         $('<div class="col scale"/>').append(
                             $('<div class="card scale" />')
@@ -110,7 +103,7 @@ $(function() {
 
                     coursesElement.append(courseCard); // end of all appends
 
-                    fetchTopics(courseCard, element.courseName);
+                    showTopicsOnCard(courseCard, element.courseName);
 
                 });
             }
@@ -118,10 +111,10 @@ $(function() {
     } // end function renderCoursesMain
 
     // TOPICS
-        // fetches topics for a certain course
-        function fetchTopics (courseCard, courseName) {
+        // fetches topics for a certain course in order to make them available on the courseCard
+        function showTopicsOnCard (courseCard, courseName) {
             $.ajax({
-                type: 'GET',
+                method: 'GET',
                 url: host + "/topics/" +courseName,
                 success: function (data) {
 
@@ -131,15 +124,15 @@ $(function() {
                     });
                 }
             });
-        } // end fetchTopics
+        } // end showTopicsOnCard
 
 
     // QUESTIONS
 
     // QUESTIONS PAGE
-    // Rendering questions
+    // ajax request with JWT and dynamic creation of questions page
     function renderQuestions() {
-        // ajax request with JWT
+
         $("#courses").hide();
 
         var jwt = user.jsonWebToken;
@@ -197,7 +190,6 @@ $(function() {
                                                     'aria-controls':"collapse"+element.questionID
                                                 })
                                                 .append($('<div class="col-6 ls-icon" style="width: 18rem;"/>')
-                                                   // .append($('<img src="img/icon_3.jpg"/>')
                                                         .append($('<p>Noch kein Lernstatus festgelegt</p>'))
                                                     )
                                                 .append($('<div class="ls-text col-6">')
@@ -227,27 +219,26 @@ $(function() {
                                                 .append($('<div name="ev-b" class="btn-group ls-icon ev-b" role="group" aria-label="Basic example"/>')
                                                     .append($('<button name="ls1-button" type="button" class="btn btn-secondary standard-button ls1-button">kann ich</button>')
                                                         .click(function() {
-                                                            console.log("Clicked on left button of question", element.questionID, "element: ", this);
-                                                            learningStateID = 1;
+                                                            // console.log("Clicked on left button of question", element.questionID, "element: ", this);
 
+                                                            learningStateID = 1;
                                                             var clickedID = "question-box"+element.questionID; // question-box1
-                                                            console.log("userID: "+userID);
-                                                            // console.log("clickedID: "+clickedID);
+
+                                                            // console.log("userID: "+userID + "clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
-                                                            console.log("fetchLSImage geht noch");
                                                             setLearningState(userID, element.questionID, learningStateID, jwt);
 
                                                         })
                                                     )
                                                     .append($('<button name="ls2-button" type="button" class="btn btn-secondary standard-button ls2-button">geht so</button>')
                                                         .click(function() {
-                                                            console.log("Clicked on middle button of question", element.questionID, "element: ", this);
-                                                            learningStateID = 2;
+                                                            // console.log("Clicked on middle button of question", element.questionID, "element: ", this);
 
+                                                            learningStateID = 2;
                                                             var clickedID = "question-box"+element.questionID; // question-box2
 
-                                                            // console.log("clickedID: "+clickedID);
+                                                            // console.log("userID: "+userID + "clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
                                                             setLearningState(userID, element.questionID, learningStateID, jwt);
@@ -255,17 +246,16 @@ $(function() {
                                                     .append($('<button name="ls3-button" type="button" class="btn btn-secondary standard-button ls3-button">noch nicht</button>')
                                                         .click(function() {
                                                             // console.log("Clicked on right button of question", element.questionID, "element: ", this);
-                                                            learningStateID = 3;
 
+                                                            learningStateID = 3;
                                                             var clickedID = "question-box"+element.questionID; // question-box3
 
-                                                            // console.log("clickedID: "+clickedID);
+                                                            // console.log("userID: "+userID + "clickedID: "+clickedID);
 
                                                             fetchLSImage(learningStateID, clickedID, jwt);
                                                             setLearningState(userID, element.questionID, learningStateID, jwt);
                                                      }))
                                                 )
-
                                                 .append($('<p id="evaluation-text">Aktueller Lernstatus</p>'))
                                     ) // end append collapseOne
                                      // end appends #question-box
@@ -298,10 +288,8 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
             console.log("data "+data);
             var image = data;
 
-            console.log("clickedID: "+clickedID);
+            // console.log("clickedID: "+clickedID);
 
-
-            //$("#question-box1").find('.ls-icon').html($('<p>anderer Text</p>')); // funktioniert
             $("#"+clickedID).find('.ls-icon').html($("<img>", {src: window.URL.createObjectURL(image)}));
 
             //console.log("questionID ist "+ questionID);
@@ -379,7 +367,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         var json = {
             "email": $('#email').val(),
             "password": b64_sha256($('#password').val())+"="
-            // "password": $('#password').val()
+           // "password": $('#password').val()
         };
         var pwVal = $('#password').val();
 
@@ -468,7 +456,8 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         var mail= $("#reg-email").val();
         var fn = $('#firstname').val();
         var ln = $('#lastname').val();
-        var pw = b64_sha256($('#reg-pw').val())+"=";
+        var pw = b64_sha256($('#reg-pw').val());
+       // var pw = b64_sha256($('#reg-pw').val())+"=";
 
         var regJson = {
             "email": mail,

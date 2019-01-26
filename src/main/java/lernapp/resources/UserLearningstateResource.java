@@ -37,7 +37,7 @@ public class UserLearningstateResource {
     }
 
 
-    // fetches LearningState for a certain User and a certain Question
+    // fetches LearningState for a certain user and a certain question
     @JwtFilter.JwtNeeded
     @Path("/question/{questionId}")
     @GET

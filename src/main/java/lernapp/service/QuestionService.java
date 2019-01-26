@@ -33,7 +33,6 @@ public class QuestionService extends BasicService<Question> {
         query.setParameter("course", course );
 
         return query.getResultList();
-
     }
 
     /**
