@@ -69,7 +69,7 @@ typings/
 .nuxt
 
 # Nuxt generate
-# dist
+# dist            #added this because kahtrin wouldnt install the complete stuff
 
 # vuepress build output
 .vuepress/dist
