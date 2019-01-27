@@ -39,7 +39,7 @@ public class QuestionsResource {
     @GET
     @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/{coursename}") // fetches all questions for a certain course e. g. /questions/Datenbanken
+    @Path("course/{coursename}") // fetches all questions for a certain course e. g. /questions/Datenbanken
     public List<Question> getCourseQuestions(@PathParam("coursename") String coursename) {
         List list = questionService.queryCourseQuestions(coursename);
         return list;
@@ -48,7 +48,7 @@ public class QuestionsResource {
     @GET
     // @JwtFilter.JwtNeeded
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/{coursename}/{topicname}") // fetches all questions for a topic, e. g. questions/Datenbanken/Wissensfragen
+    @Path("course/{coursename}/topic/{topicname}") // fetches all questions for a topic, e. g. questions/Datenbanken/Wissensfragen
     public List<Question> getTopicQuestions(@PathParam("coursename") String coursename, @PathParam("topicname") String topicname) {
         List list = questionService.queryTopicQuestions(coursename, topicname);
         return list;

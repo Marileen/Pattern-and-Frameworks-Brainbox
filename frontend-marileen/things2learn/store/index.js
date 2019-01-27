@@ -142,7 +142,7 @@ export const actions = {
     if (courseName != undefined ) {
 
       try {
-        const response = await fetch('http://127.0.0.1:8050/questions/' + courseName , {
+        const response = await fetch('http://127.0.0.1:8050/questions/course/' + courseName , {
           method: 'GET',
           mode: 'cors',
           headers: {
@@ -183,7 +183,7 @@ export const actions = {
     if (courseName != undefined ) {
 
       try {
-        const response = await fetch('http://127.0.0.1:8050/topics/' + courseName, {
+        const response = await fetch('http://127.0.0.1:8050/topics/course' + courseName, {
           method: 'GET',
           mode: 'cors',
           headers: {

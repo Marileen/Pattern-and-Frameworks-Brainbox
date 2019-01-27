@@ -34,7 +34,7 @@ public class TopicsResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("/{coursename}") // fetches topics for a certain course e. g. /topics/Computergrafik
+    @Path("/course/{coursename}") // fetches topics for a certain course e. g. /topics/Computergrafik
     public List<Topic> getCourseTopics(@PathParam("coursename") String coursename) {
         List list = topicService.queryCourseTopics(coursename);
         return list;
