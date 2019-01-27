@@ -27,8 +27,6 @@ import javax.ws.rs.core.Response;
 @Path("/user")
 public class UsersResource {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UsersResource.class);
-
     UserService userService = new UserService();
 
     public UsersResource() {
@@ -39,10 +37,10 @@ public class UsersResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     public Response login(User user) {
-        // mit queryByCr... prüfen wir, ob diese Email & passwort in der DB vorhanden ist
+
+        // checks if there is a user in the database with the given credentials
         User loggedInUser = userService.queryByCredentials(user.getEmail(), user.getPassword());
 
-        LOG.info("login");
         if (loggedInUser != null) {
             try {
                 // Map user object to JSON
@@ -56,7 +54,7 @@ public class UsersResource {
                 // Use a secret key for HS256
                 byte[] secret = JwtFilter.SECRET.getBytes();
 
-                // MAC - Message Authentication Code = Signatur
+                // MAC - Message Authentication Code = Signature
                 // Apply the HMAC to the JWS object and send the token to the client
                 jwsObject.sign(new MACSigner(secret));
                 loggedInUser.setJsonWebToken(jwsObject.serialize());
@@ -69,7 +67,7 @@ public class UsersResource {
             }
         }
 
-        //user is null, weil er über seine credentials nicht gefunden wurde
+        // user is null because he couldn`t be found by the given credentials
         return Response.status(400, "Credentials incorrect").build();
 
     }
@@ -81,27 +79,27 @@ public class UsersResource {
     public Response register(User user) {
 
         if ( isNullOrEmpty(user.getEmail()) ) {
-            //zurückgeben dass email nicht leer sein darf
+            // returns status code 400 if email field is blank
             return Response.status(400, "Email field should be provided").build();
         }
 
         if ( isNullOrEmpty(user.getPassword()) ) {
-            //zurückgeben dass pw nicht leer sein darf
+            // returns status code 400 if password field is blank
             return Response.status(400, "Password field should be provided").build();
         }
 
         if ( isNullOrEmpty(user.getFirstname()) ) {
-            //zurückgeben dass firstname nicht leer sein darf
+            // returns status code 400 if first name field is blank
             return Response.status(400, "Firstname field should be provided").build();
         }
 
         try {
-            // USER SPEICHERN UND EINLOGGEN
+            // save user and perform login
             User registeredUser = userService.save(user);
             return login(registeredUser);
 
         } catch (Exception e) {
-            //kann man instanceof rufen, wenn getCause null ist? JA
+            // returns status code 409 if user tries to register with existing email (conflict)
             if (e.getCause() != null && e.getCause().getCause() instanceof ConstraintViolationException) {
                 return Response.status(409, "User with email already exists").build();
             }

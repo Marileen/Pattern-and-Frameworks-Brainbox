@@ -5,7 +5,7 @@ Semesterprojektaufgabe WS 2018/19 von Kathrin Köhler und Marileen Stamer
 ## gemeinsame Backend-Anwendung
 
 stellt Enddpoints für User Registrierung, Daten zu Kursen, Topics, Fragen und Antworten sowie die Infos zu einem User 
-und seiner Markierung für verschiedene Fragen. Liefert Bilder.
+und seiner LearningStates für verschiedene Fragen. Liefert Bilder.
 
 
 ## Start
@@ -18,7 +18,7 @@ und seiner Markierung für verschiedene Fragen. Liefert Bilder.
 entwickelt wurde mit der Java-Version 10
 
 #### Einrichten der Anwendung
-Import des mitgelieferten Datenbank dumps paf_lernapp_Koehler_stamer.sql in die o. g. Datenbank
+Import des mitgelieferten Datenbank dumps paf_lernapp_koehler_stamer.sql in die o. g. Datenbank
 Projekt muss per Gradle-Datei in der IDE geöffnet / importiert werden
 ggf. muss Hibernate als JPA Provider in der IDE eingerichtet werden
 
@@ -48,9 +48,13 @@ aufgerufen.
 Die Quelldateien liegen im Projekt unter frontend-kathrin
 
 
-Ein bereits angelegter Benutzer für die Lernapp kann sich mit den folgenden Zugangsdaten einloggen:
+Es gibt zwei bereits angelegte Benutzer für die Lernapp, die sich mit den folgenden Zugangsdaten einloggen können:
 User name:	greg@gmx.de
 Password:	123
+
+User name: annalog@gmx.de   (dieser Benutzer hat den Status "Admin")
+Password: 456
+
  
 
 #### Weitere Hinweise:
@@ -72,7 +76,7 @@ Das dist-Verzeichnis (welches als docroot vom Grizzly Webserver verwendet wird) 
 
 ### Gradle
 
-Als Build-System haben wir **gradle** verwendet
+Als Build-System haben wir **gradle** verwendet.
 
 ### Hibernate
 
@@ -82,9 +86,8 @@ Bei Marileen auf dem Mac müssen hier unbedingt die Entity Klassen eintragen sei
 Mit Autodetection geht es nicht.
 
 ### MariaDB
-<a name="mariaDB" id="mariaDB"></a>
 
-Sollte lokal installiert sein
+Sollte lokal installiert sein.
 
 Mini-Anleitung dazu:   
 1) brew install mariadb
@@ -120,19 +123,54 @@ https://mariadb.com/kb/en/library/mariadb-basics/
 ## Maven Central
 
 Wenn man Gradle (Maven) Module sucht, dann findet man sie hier:
-
 https://mvnrepository.com/
 
 ## Endpoints
 
-### POST
+### Courses
+Kurs anhand der ID holen, erstellen, löschen:
+/courses (GET, POST)
+
+### Topics
+Thema anhand der ID holen, erstellen, löschen:
+/topics (GET, POST)
+Thema zu einem bestimmten Kurs holen:
+/topics/course/{coursename}
+
+### Questions
+Fragen anhand der ID holen, erstellen, löschen:
+/questions (GET, POST)
+/questions/{id} (DELETE)
+Fragen zu einem bestimmten Kurs holen:
+/questions/course/{coursename} (GET)
+Fragen mit einem bestimmten Lernstatus abrufen (getMarkedQuestions, user-spezifisch):
+/questions/user/{userId}/state/{stateId}
+Fragen zu einem Kurs und einem Topic:
+/questions/course/{coursename}/topic/{topicname} (GET)
+
+### LearningState
+Lernstatus anhand der ID holen, erstellen, löschen:
+/state/ (GET, POST)
+/state/{stateId} (DELETE)
+Bild zu einem Lernstatus:
+/state/{stateId}/image (GET)
+Lernstatus zu einem bestimmten User und einer bestimmten Frage holen:
+/user/{userId}/state/question/{questionId} (GET)
+Setzen eines Lernstatus für einen bestimmten User und eine bestimmte Frage:
+/user/{userId}/state/set (PUT) & /user/{userId}/state/question/{questionId} (PUT)
+
+### User
+User registrieren:
+/user/register (POST)
+User einloggen:
+/user/login (POST)
+User löschen:
+/user/{userId} (DELETE)
 
 
-
-**User registrieren**
+**Beispiel User registrieren**
 http://127.0.0.1:8050/user/register
 
-Beispiel:   
 {
   "email": "test@test.de",
   "firstname": "Uschi",
@@ -141,7 +179,7 @@ Beispiel:
 }
 
 
-**Fragen anlegen**  
+**Beispiel Fragen anlegen**  
 http://127.0.0.1:8050/questions
 
 <pre>

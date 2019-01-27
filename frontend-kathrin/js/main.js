@@ -115,7 +115,7 @@ $(function() {
         function showTopicsOnCard (courseCard, courseName) {
             $.ajax({
                 method: 'GET',
-                url: host + "/topics/" +courseName,
+                url: host + "/topics/course/" +courseName,
                 success: function (data) {
 
                     $.each(data, function (index, element) {
@@ -162,10 +162,9 @@ $(function() {
                 xhr.setRequestHeader("Authorization", "Bearer "+jwt);
             },
 
-            url: host + "/questions", // holt erstmal alle Questions
+            url: host + "/questions", // queries all questions
             success: function (data) {
-                var testQuestionsElement = $("#questions"); // Aequivalent zu coursesElement
-                console.log("xhr-Request laeuft");
+                var testQuestionsElement = $("#questions");
 
                 $.each(data, function (index, element) {
                     console.log("each "+element.questionID);
@@ -345,7 +344,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
 
 
     // LOGIN AND REGISTRATION
-    // Registrierung
+    // shows Registration form
     $('#register-button').click( function () {
         $(".login").hide();
         $(".registration").fadeTo(400, 1);
@@ -367,7 +366,6 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         var json = {
             "email": $('#email').val(),
             "password": b64_sha256($('#password').val())+"="
-           // "password": $('#password').val()
         };
         var pwVal = $('#password').val();
 
@@ -456,8 +454,7 @@ function fetchLSImage(learningStateID, clickedID, jwt) {
         var mail= $("#reg-email").val();
         var fn = $('#firstname').val();
         var ln = $('#lastname').val();
-        var pw = b64_sha256($('#reg-pw').val());
-       // var pw = b64_sha256($('#reg-pw').val())+"=";
+        var pw = b64_sha256($('#reg-pw').val())+"=";
 
         var regJson = {
             "email": mail,

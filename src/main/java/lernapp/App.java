@@ -17,7 +17,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        // HTTP Server starten
+        // starts HTTP Server
         ResourceConfig rc = new ResourceConfig().packages("lernapp");
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8050"), rc);
 
