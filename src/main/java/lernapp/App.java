@@ -34,6 +34,12 @@ public class App {
         things2learnHandler.setFileCacheEnabled(false); // change to true in the deploy time
         server.getServerConfiguration().addHttpHandler(things2learnHandler, "/mstamer");
 
+        // Serve App from Kathrin Koehler
+        final StaticHttpHandler MedieninformatikLernappHandler = new StaticHttpHandler("frontend-kathrin");
+        MedieninformatikLernappHandler.setFileCacheEnabled(false); // change to true in the deploy time
+        server.getServerConfiguration().addHttpHandler(MedieninformatikLernappHandler, "/kkoehler");
+
+
         try {
             server.start();
         } catch (Exception e) {

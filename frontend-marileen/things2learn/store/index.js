@@ -1,4 +1,11 @@
 
+/*
+ * Centralized State Management with vuex
+ * Manage state, mutations and actions
+ * like in vuex described https://vuex.vuejs.org/
+ *
+ */
+
 import {supportsCrypto, hash, encode64} from '../utils/hashing.js'
 
 export const state = () => ({
@@ -8,7 +15,7 @@ export const state = () => ({
   questions : [],
   learningStates : [],
   user : []
-})
+});
 
 
 export const mutations = {
@@ -33,7 +40,7 @@ export const mutations = {
   setUser (state, user) {
     state.user = user;
   }
-}
+};
 
 export const actions = {
 
@@ -225,7 +232,7 @@ export const actions = {
       console.log(e)
     }
   }
-}
+};
 
 async function getLearningState( userId, questionId, token ) {
 
@@ -246,14 +253,13 @@ async function getLearningState( userId, questionId, token ) {
       switch (await response.status) {
         case 200 : {
           console.log('ls ok');
-          //commit('setLearningstate', { learningState : await response.json(), questionId : questionId });
 
           return await response.json();
           break;
         }
 
-        case 204 : {
-          console.log('ls no content');
+        case 404 : {
+          console.log('no Learningstate found');
           return null;
           break;
         }

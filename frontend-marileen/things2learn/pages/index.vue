@@ -25,7 +25,6 @@
    * @Components: Courses
    */
 
-import Logo from '~/components/Logo.vue'
 import Courses from '~/components/Courses.vue'
 
 import { mapState } from 'vuex'

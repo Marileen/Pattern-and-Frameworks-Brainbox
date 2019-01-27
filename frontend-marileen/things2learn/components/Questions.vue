@@ -58,10 +58,10 @@
       },
       ...mapState(['user', 'learningStates', 'questions']),
 
-      // questions: {
-      //   get () { return this.$store.state.questions},
-      //   set (newValue) { console.log('new questions', newValue) }
-      // }
+      questions: {
+        get () { return this.$store.state.questions},
+        set (newValue) { console.log('new questions', newValue) }
+      }
 
     },
 

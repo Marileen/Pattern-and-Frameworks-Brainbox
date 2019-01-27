@@ -47,29 +47,21 @@
         console.log('setNewLearningstate');
 
         try {
-          const response = await fetch('http://127.0.0.1:8050/user/' + JSON.parse(window.sessionStorage.getItem("user")).userID + '/state/set', {
+          //const response = await fetch('http://127.0.0.1:8050/user/' + JSON.parse(window.sessionStorage.getItem("user")).userID + '/state/set', {
+          const response = await fetch('http://127.0.0.1:8050/user/' + JSON.parse(window.sessionStorage.getItem("user")).userID + '/state/question/' + this.question.questionID, {
             method: 'PUT',
             mode: 'cors',
             headers: {
               'Authorization': 'Bearer ' + JSON.parse(window.sessionStorage.getItem("user")).jsonWebToken,
               'Content-Type': 'application/json'
             },
-            body : JSON.stringify(  {
-              "user" : {
-                "userID" : JSON.parse(window.sessionStorage.getItem("user")).userID
-              },
-
-              "question" : {
-                "questionID" : this.question.questionID
-              },
-              "learningState" : {
-                "learningStateID" : e.target.id
-              }
+            body: JSON.stringify({
+              "learningStateID": e.target.id
             })
           });
 
           switch (response.status) {
-            case 201 : {
+            case 200 : {
               console.log('new ls set ok');
 
               // der neue ls muss hier rangepackt werden:
@@ -82,11 +74,6 @@
                 questions:  this.$store.state.questions
               });
 
-              break;
-            }
-
-            case 204 : {
-              console.log('no content');
               break;
             }
 
@@ -130,7 +117,6 @@
       padding: 2px 10px;
       border-radius: 15px;
       margin: 0 10px 0 0;
-
 
     }
   }
