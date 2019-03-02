@@ -66,15 +66,16 @@
       },
       logout () {
         this.$store.dispatch('logout');
-        this.$nuxt.$router.replace({ path: '/' })
-
+        this.$nuxt.$router.replace({ path: '/' });
       }
     },
     mounted() {
       //get user state from session, since user can stay logged in
-      if (window.sessionStorage.getItem("user") != null) {
-        this.$store.commit( 'setUser', JSON.parse(window.sessionStorage.getItem("user")) );
-      }
+      this.$store.dispatch('checklogin');
+    },
+
+    created() {
+      this.$store.dispatch('initBackend');
     }
   }
 </script>

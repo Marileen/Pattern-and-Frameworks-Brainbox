@@ -7,6 +7,7 @@
  */
 
 import {supportsCrypto, hash, encode64} from '../utils/hashing.js'
+import { db } from 'baqend'
 
 export const state = () => ({
   counter : 0,
@@ -44,6 +45,16 @@ export const mutations = {
 
 export const actions = {
 
+  async initBackend ({ commit }) {
+    await console.log(db.connect('things2learn'));
+  },
+
+  checklogin ({commit}) {
+    if (window.sessionStorage.getItem("user") != null) {
+      commit( 'setUser', JSON.parse(window.sessionStorage.getItem("user")) );
+    }
+  },
+
   async login({commit}, { email, password }) {
 
     console.log('login');
@@ -53,10 +64,8 @@ export const actions = {
     // todo Kommentar dass mir bewusst ist dass es hier krachen kann
     // todo um pw schutz einzubauen, was anderes machen
     if ( supportsCrypto() ) {
-      console.log('encrypt pw');
       hashedPassword = await hash('SHA-256', password);
       hashedPassword = await encode64(hashedPassword);
-      console.log(hashedPassword);
     }
 
     try {
