@@ -1,10 +1,14 @@
 <template>
   <div>
-    <div class="layout--default" data-layout="login">
+    <div class="layout--default" data-layout="menu">
 
       <div class="col-12 text-center">
 
-        <nuxt-link to="/" class="menu-item"><span>Start</span></nuxt-link>
+        <!--<Burgermenu></Burgermenu>-->
+
+        <nuxt-link to="/" class="logo">
+          <img src="/mstamer/logo/logo-things2learn.svg" />
+        </nuxt-link>
 
         <form v-if="!user.isLoggedIn" v-on:submit.prevent="login()">
           <input type="text" placeholder="email" v-model="email"/>
@@ -36,8 +40,14 @@
    */
 
   import { mapState } from 'vuex';
+  import Burgermenu from '~/components/Burgermenu.vue';
 
   export default {
+
+    components : {
+      Burgermenu
+    },
+
     data() {
       return {
         password: '',
@@ -120,10 +130,17 @@
     background-color: #35495e;
   }
 
-  div[data-layout="login"] {
+  div[data-layout="menu"] {
     //background-color: #41b883;
     background-color: #3b8070;
     padding: 20px 0;
+
+    .logo {
+
+      img {
+        width: 180px;
+      }
+    }
   }
 
 </style>

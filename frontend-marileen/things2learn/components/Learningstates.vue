@@ -5,8 +5,10 @@
     <form>
       <label :for="ls.learningStateID" class="state-item" :class="'color-learningstate' + ++key" v-for="(ls, key) in learningStates" :key="ls.learningStateID">
       <input type="radio" name="stateItem" :id="ls.learningStateID" v-on:change="setNewLearningstate" :checked="question.learningState ? question.learningState.learningStateID == ls.learningStateID : false">
-        <span>{{ ls.stateName }}</span>
+        <span>{{ ls.stateName }} ({{ ls.count }})</span>
       </label>
+
+      <span>ohne Status: {{questionsWithoutState}}</span>
     </form>
 
 
@@ -25,7 +27,8 @@
 
     props : {
       question : Object,
-      learningStates : Array
+      learningStates : Array,
+      questionsWithoutState : Number
     },
 
     fetch({ store }) {

@@ -6,7 +6,7 @@
 
             <div class="learningstate">
 
-              <Learningstates :question="question" :learning-states="learningStates" v-on:newLearningstate="updateLearningstate"></Learningstates>
+              <Learningstates v-bind:questionsWithoutState="questionsWithoutState" :question="question" :learning-states="learningStates" v-on:newLearningstate="updateLearningstate"></Learningstates>
 
               <figure v-if="question.learningState">
                 <p>Du beherrscht diese Frage {{ question.learningState.stateName | lower }}</p>
@@ -72,6 +72,9 @@
       questions (newq, old) {
         this.handleSlideChange();
         this.showLSImage();
+
+        this.getLearningStatesCount();
+
       }
 
     },
@@ -97,10 +100,52 @@
         },
 
         showAnswer : false,
-        lsImage : null
+        lsImage : null,
+        questionsWithoutState :0
       }
     },
     methods : {
+
+
+      getLearningStatesCount () {
+
+        //todo : gucken welche es gibt und dann mappen
+
+        var lsGut = this.learningStates.find(ls => {
+          return ls.stateName == 'gut'
+        });
+        lsGut.count = this.questions.filter(obj => {
+          if (obj.learningState) {
+            return obj.learningState.stateName == 'gut'
+          }
+          return false;
+        }).length;
+
+        var lsMittel = this.learningStates.find(ls => {
+          return ls.stateName == 'mittelmäßig'
+        });
+        lsMittel.count = this.questions.filter(obj => {
+          if (obj.learningState) {
+            return obj.learningState.stateName == 'mittelmäßig'
+          }
+          return false;
+        }).length;
+
+        var lsNicht = this.learningStates.find(ls => {
+          return ls.stateName == 'noch nicht'
+        });
+        lsNicht.count = this.questions.filter(obj => {
+          if (obj.learningState) {
+            return obj.learningState.stateName == 'noch nicht'
+          }
+          return false;
+        }).length;
+
+        this.questionsWithoutState = this.questions.length - lsGut.count - lsMittel.count - lsNicht.count;
+
+        console.log(this.questionsWithoutState);
+
+      },
 
       toggleAnswer () {
         this.showAnswer = !this.showAnswer;
@@ -169,7 +214,7 @@
     },
 
     mounted (e) {
-      console.log('mounted:', this.questions[this.swiper.activeIndex]);
+      console.log('questions:', this.questions);
     }
 
   }
@@ -204,17 +249,31 @@
     color : #fff !important;
   }
 
+  $lsHeight : 65px;
+
   .swiper-slide {
 
     position: relative;
 
     .learningstate {
-      height: 40px;
+      height: $lsHeight;
       margin: 40px 0 3px 0;
       padding: 0 25px;
 
-      display: flex;
-      justify-content: space-between;
+      //display: flex;
+      //justify-content: space-between;
+      section {
+        float: left;
+
+
+        p {
+          color: $color-text-dark;
+        }
+      }
+
+      figure {
+        float: right;
+      }
 
       p {
         margin: 0;
@@ -262,7 +321,7 @@
 
   .swiper-button-next {
     right:0;
-    top:124px;
+    top:85px + $lsHeight;
 
     width: 0px;
     height: 0px;
@@ -274,7 +333,7 @@
 
   .swiper-button-prev {
     left:0;
-    top:124px;
+    top:85px + $lsHeight;
 
     background: none;
     width: 0px;

@@ -12,6 +12,7 @@
 
       <Courses></Courses>
 
+
     </div>
   </section>
 </template>
@@ -33,6 +34,8 @@ export default {
   components: {
     Courses
   },
+
+  methods : {}
 
 }
 </script>
@@ -61,4 +64,27 @@ export default {
 .links {
   padding-top: 15px;
 }
+
+
+/// Stroke font-character
+/// @param  {Integer} $stroke - Stroke width
+/// @param  {Color}   $color  - Stroke color
+/// @return {List}            - text-shadow list
+@function stroke($stroke, $color) {
+  $shadow: ();
+  $from: $stroke*-1;
+
+  $x: $stroke;
+  $y: 0;
+  $radiusError: 1 - $x;
+
+
+  @for $i from $from through $stroke {
+    @for $j from $from through $stroke {
+      $shadow: append($shadow, $i*1px $j*1px 0 $color, comma);
+    }
+  }
+  @return $shadow;
+}
+
 </style>

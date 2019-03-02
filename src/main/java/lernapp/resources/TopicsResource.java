@@ -31,7 +31,6 @@ public class TopicsResource {
         return topicService.queryAll();
     }
 
-
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/course/{coursename}") // fetches topics for a certain course e. g. /topics/Computergrafik

@@ -2,7 +2,7 @@
 
   <section class="">
       <div class="component" data-component="topics">
-        <div data-atom="card" v-for="topic in topics" :key="topic.topicName" :id="topic.topicID" :class="{ active:activeTopic == topic.topicName }">
+        <div data-atom="card" v-for="topic in topics" :key="topic.topicName" :id="topic.topicID" :class="{ active : activeTopic == topic.topicName }">
           <span>{{ topic.topicName }}</span>
         </div>
       </div>

@@ -65,6 +65,9 @@
     beforeMount(){
       this.$store.dispatch('getTopics', this.$route.params.course );
       this.$store.dispatch('getQuestions', { courseName : this.$route.params.course, user : JSON.parse(window.sessionStorage.getItem("user")) } );
+    },
+
+    mounted () {
     }
 
   }
