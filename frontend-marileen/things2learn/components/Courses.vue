@@ -34,7 +34,6 @@
         'courses',
         'user'
       ]),
-      //isLoggedIn : this.$store.state.user.isLoggedIn
     },
 
     watch : {
@@ -57,10 +56,6 @@
     },
     beforeMount(){
       this.$store.dispatch('getCourses');
-
-      if (window.sessionStorage.getItem("user") != null) {
-        this.isLoggedIn = JSON.parse(window.sessionStorage.getItem("user")).isLoggedIn;
-      }
     },
 
     mounted() {
