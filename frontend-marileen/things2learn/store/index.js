@@ -52,6 +52,7 @@ export const actions = {
   checklogin ({commit}) {
     if (window.sessionStorage.getItem("user") != null) {
       commit( 'setUser', JSON.parse(window.sessionStorage.getItem("user")) );
+      return (window.sessionStorage.getItem("user")).isLoggedIn;
     }
   },
 
@@ -239,7 +240,44 @@ export const actions = {
     } catch (e) {
       console.log(e)
     }
+  },
+
+  async setNewLearningstate ({commit}, ls, lsID, userID, question, questionID, jsonWebToken) {
+    console.log('setNewLearningstate');
+
+    try {
+      const response = await fetch('http://127.0.0.1:8050/user/' + userID + '/state/question/' + questionID, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+          'Authorization': 'Bearer ' + jsonWebToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "learningStateID": lsID
+        })
+      });
+
+      switch (response.status) {
+        case 200 : {
+          commit('setQuestion', { question : question, ls : ls });
+          console.log('new ls set ok');
+
+          break;
+        }
+
+        default : {
+          console.log('set new learningStates failed');
+
+        }
+      }
+
+    } catch (e) {
+      console.log('error in set new LearningState: ', e);
+    }
+
   }
+
 };
 
 async function getLearningState( userId, questionId, token ) {
