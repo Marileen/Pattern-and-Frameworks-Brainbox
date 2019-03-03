@@ -254,13 +254,13 @@ export const actions = {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "learningStateID": ls.id
+          "learningStateID": ls.learningStateID
         })
       });
 
       switch (response.status) {
         case 200 : {
-          commit('setQuestion', { question : question, ls : ls.name });
+          commit('setQuestion', { question : question, ls : ls });
           console.log('new ls set ok');
 
           break;

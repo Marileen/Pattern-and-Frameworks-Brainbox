@@ -49,9 +49,7 @@
       async setNewLearningstate (e) {
 
         var lsIndex = e.target.id - 1; //ID fängt bei 1 an, index bei 0
-        var ls = {};
-        ls.name = this.learningStates[lsIndex];
-        ls.id = e.target.id;
+        var ls = this.learningStates[lsIndex];
 
         await this.$store.dispatch('setNewLearningstate', {ls : ls, question : this.question});
 
@@ -90,8 +88,6 @@
 
     }
   }
-
-
 
 </style>
 
