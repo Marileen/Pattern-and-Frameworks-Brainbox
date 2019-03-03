@@ -242,25 +242,25 @@ export const actions = {
     }
   },
 
-  async setNewLearningstate ({commit}, ls, lsID, userID, question, questionID, jsonWebToken) {
-    console.log('setNewLearningstate');
+  async setNewLearningstate ({commit}, {ls, question}) {
+    console.log('store: setNewLearningstate');
 
     try {
-      const response = await fetch('http://127.0.0.1:8050/user/' + userID + '/state/question/' + questionID, {
+      const response = await fetch('http://127.0.0.1:8050/user/' + this.state.user.userID + '/state/question/' + question.questionID, {
         method: 'PUT',
         mode: 'cors',
         headers: {
-          'Authorization': 'Bearer ' + jsonWebToken,
+          'Authorization': 'Bearer ' + this.state.user.jsonWebToken,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "learningStateID": lsID
+          "learningStateID": ls.id
         })
       });
 
       switch (response.status) {
         case 200 : {
-          commit('setQuestion', { question : question, ls : ls });
+          commit('setQuestion', { question : question, ls : ls.name });
           console.log('new ls set ok');
 
           break;

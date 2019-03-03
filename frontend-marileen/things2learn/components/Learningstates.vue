@@ -27,7 +27,7 @@
 
     props : {
       question : Object,
-      learningStates : Array,
+      learningStates : Array,         //the (three) learningstates
       questionsWithoutState : Number
     },
 
@@ -47,50 +47,17 @@
     methods : {
 
       async setNewLearningstate (e) {
-        console.log('setNewLearningstate');
 
-        try {
-          //const response = await fetch('http://127.0.0.1:8050/user/' + JSON.parse(window.sessionStorage.getItem("user")).userID + '/state/set', {
-          const response = await fetch('http://127.0.0.1:8050/user/' + JSON.parse(window.sessionStorage.getItem("user")).userID + '/state/question/' + this.question.questionID, {
-            method: 'PUT',
-            mode: 'cors',
-            headers: {
-              'Authorization': 'Bearer ' + JSON.parse(window.sessionStorage.getItem("user")).jsonWebToken,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              "learningStateID": e.target.id
-            })
-          });
+        var lsIndex = e.target.id - 1; //ID fängt bei 1 an, index bei 0
+        var ls = {};
+        ls.name = this.learningStates[lsIndex];
+        ls.id = e.target.id;
 
-          switch (response.status) {
-            case 200 : {
-              console.log('new ls set ok');
+        await this.$store.dispatch('setNewLearningstate', {ls : ls, question : this.question});
 
-              // der neue ls muss hier rangepackt werden:
-              //this.question.learningState = this.learningStates[e.target.id];
-              var lsIndex = e.target.id - 1; //ID fängt bei 1 an, index bei 0
-              console.log('setNewLearningState, this.learningStates[lsIndex]', this.learningStates[lsIndex]);
-              this.$store.commit('setQuestion', { question : this.question, ls : this.learningStates[lsIndex]});
-
-              this.$emit('newLearningstate', {
-                questions:  this.$store.state.questions
-              });
-
-              break;
-            }
-
-            default : {
-              console.log('set new learningStates failed');
-
-            }
-          }
-
-
-        } catch (e) {
-          console.log('error in set new LearningState');
-          console.log(e);
-        }
+        this.$emit('newLearningstate', {
+          questions:  this.$store.state.questions
+        });
 
       }
 
