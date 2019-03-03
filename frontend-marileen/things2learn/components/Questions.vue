@@ -109,7 +109,7 @@
 
       getLearningStatesCount () {
 
-        //todo : gucken welche es gibt und dann mappen
+        //todo : gucken welche ls es gibt und dann mappen
 
         var lsGut = this.learningStates.find(ls => {
           return ls.stateName == 'gut'
@@ -180,29 +180,8 @@
 
       async setLearningStateImage (lsId) {
 
-        console.log('setLearningStateImage');
-        try {
-          const response = await fetch('http://127.0.0.1:8050/state/' + lsId + '/image', {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
+        this.lsImage = await this.$store.dispatch('setLearningStateImage', { lsId : lsId });
 
-          if (response.ok) {
-
-            console.log('ls image ok');
-            var imgStream = await response.blob();
-            this.lsImage = URL.createObjectURL(imgStream);
-
-          } else {
-            console.log('ls image failed');
-          }
-
-        } catch (e) {
-          console.log(e)
-        }
       }
 
     },

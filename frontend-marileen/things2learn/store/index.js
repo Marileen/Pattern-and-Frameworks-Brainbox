@@ -276,6 +276,35 @@ export const actions = {
       console.log('error in set new LearningState: ', e);
     }
 
+  },
+
+  async setLearningStateImage ({commit}, { lsId }) {
+
+    console.log('store: setLearningStateImage');
+    try {
+      const response = await fetch('http://127.0.0.1:8050/state/' + lsId + '/image', {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+
+        console.log('ls image ok');
+        let imgStream = await response.blob();
+        return URL.createObjectURL(imgStream);
+
+      } else {
+        console.log('ls image failed');
+        return null;
+      }
+
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   }
 
 };
