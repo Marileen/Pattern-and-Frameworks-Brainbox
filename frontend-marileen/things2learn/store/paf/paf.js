@@ -7,7 +7,6 @@
  */
 
 import {supportsCrypto, hash, encode64} from '../../utils/hashing.js'
-import { db } from 'baqend'
 
 export const state = () => ({
   counter : 0,
@@ -29,7 +28,13 @@ export const mutations = {
     state.topics = topics;
   },
   setQuestion (state, {question, ls} ) {
-    question.learningState = ls;
+    //state.questions.question.learningState = ls;
+    state.questions = state.questions.map(q => {
+      if (q === question) {
+        q.learningState = ls
+      }
+      return q
+    });
   },
   setQuestions (state, questions ) {
     state.questions = questions
@@ -43,10 +48,6 @@ export const mutations = {
 };
 
 export const actions = {
-
-  async initBackend ({ commit }) {
-    await console.log(db.connect('things2learn'));
-  },
 
   checklogin ({commit}) {
     if (window.sessionStorage.getItem("user") != null) {
@@ -82,9 +83,10 @@ export const actions = {
         })
       });
 
+      var userData = [];
       if (response.ok) {
 
-        var userData = await response.json();
+        userData = await response.json();
         userData.isLoggedIn = true;
 
         //write to Vuex store and Browser Session Store
@@ -92,7 +94,6 @@ export const actions = {
         commit('setUser', userData);
 
       } else {
-        var userData = [];
         userData.loginFailed = true;
         commit('setUser', userData);
       }
@@ -110,8 +111,7 @@ export const actions = {
   },
 
   async getLearningStates({commit}) {
-    console.log('loading learning states')
-    try {
+    console.log('loading learning states');
       const response = await fetch('http://127.0.0.1:8050/state', {
         method: 'GET',
         mode: 'cors',
@@ -120,35 +120,26 @@ export const actions = {
         }
       });
 
-      switch (response.status) {
-        case 200 : {
-          console.log('ok');
-          commit('setLearningStates', await response.json());
-          break;
-        }
-
-        case 204 : {
-          console.log('no content');
-          break;
-        }
-
-        default : {
-          console.log('get all learningStates failed');
-
-        }
+      if (!response.ok) {
+        throw new Error('not ok - get all learningStates failed');
       }
 
+      console.log('ok');
+      let learningStates = await response.json();
 
-    } catch (e) {
-      console.log('error in getLearningStates (all)');
-      console.log(e);
-    }
+    await Promise.all(
+      learningStates.map(async ls => {
+        ls.image = await loadLearningStateImage(ls.learningStateID);
+      })
+    );
+
+    commit('setLearningStates', learningStates);
 
   },
 
   async getQuestions ({commit}, { courseName, user }) {
 
-    if (courseName != undefined ) {
+    if (courseName !== undefined ) {
 
       try {
         const response = await fetch('http://127.0.0.1:8050/questions/course/' + courseName , {
@@ -276,41 +267,39 @@ export const actions = {
     }
 
   },
-
-  async setLearningStateImage ({commit}, { lsId }) {
-
-    console.log('store: setLearningStateImage');
-    try {
-      const response = await fetch('http://127.0.0.1:8050/state/' + lsId + '/image', {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-
-        console.log('ls image ok');
-        let imgStream = await response.blob();
-        return URL.createObjectURL(imgStream);
-
-      } else {
-        console.log('ls image failed');
-        return null;
-      }
-
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-  }
 };
 
+async function loadLearningStateImage (lsId ) {
+
+  try {
+    const response = await fetch('http://127.0.0.1:8050/state/' + lsId + '/image', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+
+      console.log('ls image ok');
+      let imgStream = await response.blob();
+      return URL.createObjectURL(imgStream);
+
+    } else {
+      console.log('ls image failed');
+      return null;
+    }
+
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
 
 async function getLearningState( userId, questionId, token ) {
 
-  if (userId != undefined && questionId != undefined) {
+  if (userId !== undefined && questionId !== undefined) {
 
     try {
       const response = await fetch('http://127.0.0.1:8050/user/' + userId + '/state/question/' + questionId, {

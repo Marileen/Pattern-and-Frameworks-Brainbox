@@ -6,11 +6,11 @@
 
             <div class="learningstate">
 
-              <Learningstates v-bind:questionsWithoutState="questionsWithoutState" :question="question" :learning-states="learningStates" v-on:newLearningstate="updateLearningstate"></Learningstates>
+              <Learningstates v-bind:questionsWithoutState="questionsWithoutState" :question="question" :learning-states="learningStates"></Learningstates>
 
               <figure v-if="question.learningState">
                 <p>Du beherrscht diese Frage {{ question.learningState.stateName | lower }}</p>
-                <img :src="lsImage" />
+                <img :src="getLsImageUrl(question.learningState)" />
               </figure>
 
             </div>
@@ -97,12 +97,19 @@
         },
 
         showAnswer : false,
-        lsImage : null,
         questionsWithoutState :0
       }
     },
     methods : {
 
+      getLsImageUrl(learningState) {
+
+        let item = this.learningStates.find(ls => {
+          return learningState ? learningState.learningStateID === ls.learningStateID : false;
+        });
+
+        return item.image;
+      },
 
       getLearningStatesCount () {
 
@@ -112,31 +119,31 @@
         console.log(this.learningStates);
 
         var lsGut = this.learningStates.find(ls => {
-          return ls.stateName == 'gut'
+          return ls.stateName === 'gut'
         });
         lsGut.count = this.questions.filter(obj => {
           if (obj.learningState) {
-            return obj.learningState.stateName == 'gut'
+            return obj.learningState.stateName === 'gut'
           }
           return false;
         }).length;
 
         var lsMittel = this.learningStates.find(ls => {
-          return ls.stateName == 'mittelmäßig'
+          return ls.stateName === 'mittelmäßig'
         });
         lsMittel.count = this.questions.filter(obj => {
           if (obj.learningState) {
-            return obj.learningState.stateName == 'mittelmäßig'
+            return obj.learningState.stateName === 'mittelmäßig'
           }
           return false;
         }).length;
 
         var lsNicht = this.learningStates.find(ls => {
-          return ls.stateName == 'noch nicht'
+          return ls.stateName === 'noch nicht'
         });
         lsNicht.count = this.questions.filter(obj => {
           if (obj.learningState) {
-            return obj.learningState.stateName == 'noch nicht'
+            return obj.learningState.stateName === 'noch nicht'
           }
           return false;
         }).length;
@@ -151,21 +158,6 @@
         this.showAnswer = !this.showAnswer;
       },
 
-      showLSImage () {
-        //Bild für den Learningstate anhand der gerade angezeigten question abfragen
-        if (this.questions[this.swiper.activeIndex || 0].learningState) {               //sofern es einen LS gibt
-          this.setLearningStateImage(this.questions[this.swiper.activeIndex || 0].learningState.learningStateID);
-        }
-      },
-
-      updateLearningstate (evt, data) {
-
-        this.questions = data;
-        //since Learningstate may be changed, call the method that show the up-to-date image
-        this.showLSImage();
-
-      },
-
       handleSlideChange() {
 
         //initially hide the answer on every new slide
@@ -177,12 +169,6 @@
         });
 
       },
-
-      async setLearningStateImage (lsId) {
-
-        this.lsImage = await this.$store.dispatch('setLearningStateImage', { lsId : lsId });
-
-      }
 
     },
 
@@ -198,9 +184,7 @@
       // dieses  sorgt dafür, dass beim Laden der ersten Frage im Slider (da das SlideChange Event noch nicht auftrat)
       // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
       this.handleSlideChange();
-      this.showLSImage();
       this.getLearningStatesCount();
-
 
     }
 

@@ -53,10 +53,6 @@
 
         await this.$store.dispatch('setNewLearningstate', {ls : ls, question : this.question});
 
-        this.$emit('newLearningstate', {
-          questions:  this.$store.state.questions
-        });
-
       }
 
     },

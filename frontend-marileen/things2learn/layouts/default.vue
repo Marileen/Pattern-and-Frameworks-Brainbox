@@ -75,7 +75,7 @@
     },
 
     created() {
-      this.$store.dispatch('initBackend');
+      //this.$store.dispatch('initBackend');
     }
   }
 </script>
