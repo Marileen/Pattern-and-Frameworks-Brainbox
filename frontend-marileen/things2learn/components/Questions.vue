@@ -48,34 +48,31 @@
       swiperSlide
     },
 
-    fetch({ store }) {
-
-    },
-
     computed: {
       swiper() {
         return this.$refs.questionSwiper.swiper
       },
       ...mapState(['user', 'learningStates', 'questions']),
 
-      questions: {
-        get () { return this.$store.state.questions},
-        set (newValue) { console.log('new questions', newValue) }
-      }
+      // questions: {
+      //   get () { return this.$store.state.questions},
+      //   set (newValue) { console.log('new questions', newValue) }
+      // }
 
     },
 
     watch : {
 
-      // dieses watch sorgt dafür, dass beim Laden der ersten Frage im Slider (da das SlideChange Event noch nicht auftrat)
-      // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
-      questions (newq, old) {
-        this.handleSlideChange();
-        this.showLSImage();
-
-        this.getLearningStatesCount();
-
-      }
+      //
+      // // dieses watch sorgt dafür, dass beim Laden der ersten Frage im Slider (da das SlideChange Event noch nicht auftrat)
+      // // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
+      // questions (newq, old) {
+      //   this.handleSlideChange();
+      //   this.showLSImage();
+      //
+      //   this.getLearningStatesCount();
+      //
+      // }
 
     },
 
@@ -110,6 +107,9 @@
       getLearningStatesCount () {
 
         //todo : gucken welche ls es gibt und dann mappen
+
+        console.log('states')
+        console.log(this.learningStates);
 
         var lsGut = this.learningStates.find(ls => {
           return ls.stateName == 'gut'
@@ -186,14 +186,22 @@
 
     },
 
-    beforeMount(){
-      // für alle Questions werden einmal initial die LS geholt und an die Kind-Komponente LearningState dann weitergereicht
-      // da die Kind-Komponente mehrmals eingebunden wird, würde sonst das store event öfter gefeuert werden, was nicht nötig ist
-      this.$store.dispatch('getLearningStates');
-    },
+    // beforeMount(){
+        // das asnychrone Holen der LS muss in die fetch methode, aber die fetch methode gibt es nur in page components
+        // dort wird diese ausgeführt bevor die Comp. gerendert wird
+    //   this.$store.dispatch('getLearningStates');
+    // },
 
     mounted (e) {
       console.log('questions:', this.questions);
+
+      // dieses  sorgt dafür, dass beim Laden der ersten Frage im Slider (da das SlideChange Event noch nicht auftrat)
+      // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
+      this.handleSlideChange();
+      this.showLSImage();
+      this.getLearningStatesCount();
+
+
     }
 
   }

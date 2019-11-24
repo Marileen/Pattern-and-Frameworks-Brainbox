@@ -38,11 +38,13 @@
     async fetch ({ store, error, params : { course } }) {
       await store.dispatch('getCourses');
 
-      console.log(store.state.courses);
-
       if (!store.state.courses.some( (c) => c.courseName === course )) {
         error('Dieser Kurs existiert leider nicht');
       }
+
+      await store.dispatch('getTopics', course );
+      await store.dispatch('getQuestions', { courseName : course, user : JSON.parse(window.sessionStorage.getItem("user")) } );
+      await store.dispatch('getLearningStates');
 
     },
 
@@ -63,8 +65,8 @@
     },
 
     beforeMount(){
-      this.$store.dispatch('getTopics', this.$route.params.course );
-      this.$store.dispatch('getQuestions', { courseName : this.$route.params.course, user : JSON.parse(window.sessionStorage.getItem("user")) } );
+      // this.$store.dispatch('getTopics', this.$route.params.course );
+      // this.$store.dispatch('getQuestions', { courseName : this.$route.params.course, user : JSON.parse(window.sessionStorage.getItem("user")) } );
     },
 
     mounted () {

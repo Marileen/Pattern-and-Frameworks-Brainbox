@@ -110,7 +110,7 @@ export const actions = {
   },
 
   async getLearningStates({commit}) {
-
+    console.log('loading learning states')
     try {
       const response = await fetch('http://127.0.0.1:8050/state', {
         method: 'GET',
