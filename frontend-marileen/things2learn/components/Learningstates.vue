@@ -3,12 +3,12 @@
   <section class="learningState">
 
     <form>
-      <label :for="ls.learningStateID" class="state-item" :class="'color-learningstate' + ++key" v-for="(ls, key) in learningStates" :key="ls.learningStateID">
-      <input type="radio" name="stateItem" :id="ls.learningStateID" v-on:change="setNewLearningstate" :checked="question.learningState ? question.learningState.learningStateID == ls.learningStateID : false">
-        <span>{{ ls.stateName }} ({{ ls.count }})</span>
+      <label :for="question.questionID + '-' + ls.learningStateID" class="state-item" :class="'color-learningstate' + ++key" v-for="(ls, key) in learningStates" :key="ls.learningStateID">
+      <input type="radio" name="stateItem" :id="question.questionID + '-' + ls.learningStateID" v-on:change="setNewLearningstate(ls)" :checked="question.learningState ? question.learningState.learningStateID == ls.learningStateID : false">
+        <span>{{ ls.stateName }} ({{ lsCount[ls.stateName] }})</span>
       </label>
 
-      <span>ohne Status: {{questionsWithoutState}}</span>
+      <span>ohne Status: {{lsCount['other']}}</span>
     </form>
 
 
@@ -28,7 +28,7 @@
     props : {
       question : Object,
       learningStates : Array,         //the (three) learningstates
-      questionsWithoutState : Number
+      lsCount : Object
     },
 
     fetch({ store }) {
@@ -46,10 +46,7 @@
     },
     methods : {
 
-      async setNewLearningstate (e) {
-
-        var lsIndex = e.target.id - 1; //ID fängt bei 1 an, index bei 0
-        var ls = this.learningStates[lsIndex];
+      async setNewLearningstate (ls) {
 
         await this.$store.dispatch('setNewLearningstate', {ls : ls, question : this.question});
 

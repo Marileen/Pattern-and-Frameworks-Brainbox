@@ -6,7 +6,7 @@
 
             <div class="learningstate">
 
-              <Learningstates v-bind:questionsWithoutState="questionsWithoutState" :question="question" :learning-states="learningStates"></Learningstates>
+              <Learningstates :lsCount="lsCount" :question="question" :learning-states="learningStates"></Learningstates>
 
               <figure v-if="question.learningState">
                 <p>Du beherrscht diese Frage {{ question.learningState.stateName | lower }}</p>
@@ -62,17 +62,9 @@
     },
 
     watch : {
-
-      //
-      // // dieses watch sorgt dafür, dass beim Laden der ersten Frage im Slider (da das SlideChange Event noch nicht auftrat)
-      // // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
-      // questions (newq, old) {
-      //   this.handleSlideChange();
-      //   this.showLSImage();
-      //
-      //   this.getLearningStatesCount();
-      //
-      // }
+      questions (newq, old) {
+        this.lsCount = this.getLearningStatesCount(newq);
+      }
 
     },
 
@@ -94,16 +86,16 @@
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
           },
+          threshold : 25
         },
 
         showAnswer : false,
-        questionsWithoutState :0
+        lsCount : {}
       }
     },
+
     methods : {
-
       getLsImageUrl(learningState) {
-
         let item = this.learningStates.find(ls => {
           return learningState ? learningState.learningStateID === ls.learningStateID : false;
         });
@@ -111,47 +103,20 @@
         return item.image;
       },
 
-      getLearningStatesCount () {
+      getLearningStatesCount (questions) {
+        let lsCount = {};
 
-        //todo : gucken welche ls es gibt und dann mappen
-
-        console.log('states')
-        console.log(this.learningStates);
-
-        var lsGut = this.learningStates.find(ls => {
-          return ls.stateName === 'gut'
+        this.learningStates.forEach(ls => {
+          lsCount[ls.stateName] = questions.filter(q => {
+            return q.learningState && q.learningState.stateName === ls.stateName
+          }).length;
         });
-        lsGut.count = this.questions.filter(obj => {
-          if (obj.learningState) {
-            return obj.learningState.stateName === 'gut'
-          }
-          return false;
+
+        lsCount['other'] = questions.filter(q => {
+          return !q.learningState
         }).length;
 
-        var lsMittel = this.learningStates.find(ls => {
-          return ls.stateName === 'mittelmäßig'
-        });
-        lsMittel.count = this.questions.filter(obj => {
-          if (obj.learningState) {
-            return obj.learningState.stateName === 'mittelmäßig'
-          }
-          return false;
-        }).length;
-
-        var lsNicht = this.learningStates.find(ls => {
-          return ls.stateName === 'noch nicht'
-        });
-        lsNicht.count = this.questions.filter(obj => {
-          if (obj.learningState) {
-            return obj.learningState.stateName === 'noch nicht'
-          }
-          return false;
-        }).length;
-
-        this.questionsWithoutState = this.questions.length - lsGut.count - lsMittel.count - lsNicht.count;
-
-        console.log(this.questionsWithoutState);
-
+        return lsCount
       },
 
       toggleAnswer () {
@@ -159,7 +124,6 @@
       },
 
       handleSlideChange() {
-
         //initially hide the answer on every new slide
         this.showAnswer = false;
 
@@ -167,9 +131,7 @@
         this.$emit('active-topic', {
           activeTopic : this.questions[this.swiper.activeIndex || 0].topic.topicName
         });
-
       },
-
     },
 
     // beforeMount(){
@@ -179,15 +141,11 @@
     // },
 
     mounted (e) {
-      console.log('questions:', this.questions);
-
       // dieses  sorgt dafür, dass beim Laden der ersten Frage im Slider (da das SlideChange Event noch nicht auftrat)
       // dass das active-topic gesetzt wird und so an die Topics Kind-Komponente gegeben wird, dass das aktive Topic gesetzt werden kann
       this.handleSlideChange();
-      this.getLearningStatesCount();
-
+      this.lsCount = this.getLearningStatesCount(this.questions);
     }
-
   }
 
 </script>

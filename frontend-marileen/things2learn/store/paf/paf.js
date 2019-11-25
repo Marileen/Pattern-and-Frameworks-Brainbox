@@ -31,7 +31,7 @@ export const mutations = {
     //state.questions.question.learningState = ls;
     state.questions = state.questions.map(q => {
       if (q === question) {
-        q.learningState = ls
+        return { learningState : ls, ...q }
       }
       return q
     });
